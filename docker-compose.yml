@@ -1,0 +1,14 @@
+services:
+  homeledger:
+    image: ghcr.io/sucraft-hub/homeledger:latest
+    container_name: homeledger
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      SESSION_SECRET: "47710ee9e8ed626c57b49f3ec69949f8349dd3364123581b52c618545904ecc8"
+      ADMIN_USER: "admin"
+      ADMIN_PASSWORD: "123456"
+    ports:
+      - "8899:5111"
+    volumes:
+      - ./data:/data
