@@ -21,6 +21,7 @@ const SUITES = [
   'verify-ssj-xlsx.js',
   'verify-ssj-import.js',
   'verify-people-participants.js',
+  'verify-salary-allocation.js',
 ];
 
 function healthz(timeoutMs) {

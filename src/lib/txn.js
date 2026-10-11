@@ -277,6 +277,59 @@ function markReimbursed(ids, ledgerId, userId, accountId) {
   });
 }
 
+/* ----------------------------- 工资按比例分配 ------------------------------ */
+
+/**
+ * 按比例把总金额（分）分配到各账户（整数分精确分配，余数按比例降序、并列取 id 升序逐户补 1 分）。
+ * @param {number} totalCents 总金额（分）
+ * @param {Array<{id:number, alloc_ratio:number}>} accounts 参与分配的账户（alloc_ratio 0~100）
+ * @returns {Array<{account_id:number, cents:number}>} alloc_ratio<=0 的账户不参与
+ */
+function computeAllocation(totalCents, accounts) {
+  const total = Math.round(Number(totalCents) || 0);
+  const rows = (accounts || [])
+    .map((a) => ({ account_id: Number(a.id), ratio: Math.max(0, Math.min(100, Math.round(Number(a.alloc_ratio) || 0))) }))
+    .filter((a) => a.ratio > 0);
+  const parts = rows.map((a) => ({ ...a, cents: Math.floor((total * a.ratio) / 100) }));
+  const order = [...parts].sort((x, y) => (y.ratio - x.ratio) || (x.account_id - y.account_id));
+  let remainder = total - parts.reduce((s, p) => s + p.cents, 0);
+  for (let i = 0; remainder > 0 && order.length; i = (i + 1) % order.length) { order[i].cents++; remainder--; }
+  return parts;
+}
+
+/**
+ * 工资收入按比例分配落账：每个「其他」账户各生成一笔收入交易（同组 group_id 串联）。
+ * @param {object} p { totalCents, txn_date, category_id, note, tags, people, source }
+ */
+function createSalaryAllocation(ledgerId, userId, p) {
+  const accounts = all(
+    `SELECT id, name, alloc_ratio FROM accounts WHERE ledger_id = ? AND type = 'other' AND is_archived = 0 ORDER BY sort_order, id`,
+    ledgerId
+  );
+  if (!accounts.length) throw new Error('账本中没有「其他」类型账户，请先到账户管理创建');
+  const sumRatio = accounts.reduce((s, a) => s + (Number(a.alloc_ratio) || 0), 0);
+  if (sumRatio !== 100) throw new Error(`分配比例总和为 ${sumRatio}%，必须等于 100%，请到账户管理调整各「其他」账户的比例`);
+  const totalCents = Math.round(Number(p.totalCents) || 0);
+  if (totalCents <= 0) throw new Error('请输入有效的工资金额');
+  const parts = computeAllocation(totalCents, accounts);
+  const groupId = `salary-${Date.now()}`;
+  return tx(() => {
+    const ids = parts.map((part) => createTransaction(ledgerId, userId, {
+      type: 'income',
+      amount_cents: part.cents,
+      account_id: part.account_id,
+      category_id: p.category_id ?? null,
+      txn_date: p.txn_date,
+      note: p.note || null,
+      tags: p.tags,
+      people: p.people,
+      source: p.source || 'manual',
+      group_id: groupId,
+    }));
+    return { ids, parts, total: totalCents };
+  });
+}
+
 /* ---------------------------------- 标签 ---------------------------------- */
 
 function applyTags(txnId, ledgerId, tagsInput, replace = false) {
@@ -576,6 +629,7 @@ module.exports = {
   INCOME_TYPES, EXPENSE_TYPES, TXN_SELECT, decorate,
   listTransactions, groupByDate, getTransaction,
   createTransaction, updateTransaction, softDelete, bulkDelete, markReimbursed,
+  computeAllocation, createSalaryAllocation,
   applyTags, saveSplits, splitsOf,
   summary, categoryBreakdown, subcategoryBreakdown, monthlyTrend, memberBreakdown,
   tagBreakdown, participantBreakdown, applyParticipants, ensurePerson,

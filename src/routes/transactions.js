@@ -77,7 +77,8 @@ router.get('/', auth.requireLogin, (req, res) => {
 
 router.get('/new', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
   const ledgerId = Number(res.locals.ledger.id);
-  const type = TXN_TYPE_MAP[req.query.type] ? req.query.type : 'expense';
+  // type=salary 是「工资收入」表单模式（非交易类型，落账为按比例拆分的 income，见 design D1）
+  const type = req.query.type === 'salary' ? 'salary' : (TXN_TYPE_MAP[req.query.type] ? req.query.type : 'expense');
   const form = fd.txFormData(ledgerId, req.session.userId);
   const prefill = {
     type,
@@ -107,6 +108,32 @@ router.post('/', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
   const ledgerId = Number(res.locals.ledger.id);
   const data = readForm(req.body);
   const wantsJson = req.body._json === '1' || (req.headers.accept || '').includes('application/json');
+  // 工资收入模式（表单隐藏字段 type=salary）：按比例分配到「其他」账户，每账户各生成一笔收入（服务端重算分配，不信任客户端）
+  if (req.body.type === 'salary') {
+    try {
+      const r = txn.createSalaryAllocation(ledgerId, req.session.userId, {
+        totalCents: data.amount_cents,
+        txn_date: data.txn_date,
+        category_id: data.category_id,
+        note: data.note,
+        tags: data.tags,
+        people: data.people,
+        source: data.source,
+      });
+      auth.audit(req, 'txn.create', { entity: 'transaction', entityId: r.ids[0], ledgerId, detail: `工资分配 ${r.parts.length} 笔共 ${(r.total / 100).toFixed(2)}` });
+      if (wantsJson) return res.json({ ok: true, ids: r.ids, redirect: '/transactions' });
+      res.flash('success', `工资已按比例分配入账 ✓（生成 ${r.parts.length} 笔收入，共 ${(r.total / 100).toFixed(2)}）`);
+      return res.redirect(req.body.back || '/transactions');
+    } catch (e) {
+      if (wantsJson) return res.status(400).json({ ok: false, error: e.message });
+      const form = fd.txFormData(ledgerId, req.session.userId);
+      return res.status(400).render('txn-form', {
+        title: '记一笔', activeNav: 'new', mode: 'create', form,
+        t: { ...data, type: 'salary', amount: (data.amount_cents / 100).toFixed(2) },
+        splitRows: [], splits: [], back: req.body.back || '/transactions', error: e.message,
+      });
+    }
+  }
   try {
     const id = txn.createTransaction(ledgerId, req.session.userId, data);
     auth.audit(req, 'txn.create', { entity: 'transaction', entityId: id, ledgerId, detail: `${data.type} ${(data.amount_cents / 100).toFixed(2)}` });

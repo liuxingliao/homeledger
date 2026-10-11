@@ -290,10 +290,19 @@ router.post('/debts/:id/settle', auth.requireLogin, auth.requireLedgerWrite, (re
   const amount = Math.min(u.parseAmountToCents(req.body.amount) || Number(d.balance_cents), Number(d.balance_cents));
   if (!amount) { res.flash('error', '金额无效'); return res.redirect('/debts'); }
 
+  // 找到该对手方关联的应收/应付账户（历史上借贷交易录入的对手方账户），核销时同步减记
+  const cp = get(
+    `SELECT t.to_account_id AS id FROM transactions t JOIN accounts a ON a.id = t.to_account_id
+     WHERE t.ledger_id = ? AND t.deleted_at IS NULL AND t.merchant = ? AND a.type IN ('receivable','payable')
+     LIMIT 1`,
+    ledgerId, d.counterparty
+  );
+
   txn.createTransaction(ledgerId, req.session.userId, {
     type: d.direction === 'receivable' ? 'repay_receive' : 'repay_pay',
     amount_cents: amount,
     account_id: req.body.account_id || d.account_id,
+    to_account_id: cp ? cp.id : null,
     txn_date: req.body.date || todayStr(),
     merchant: d.counterparty,
     note: (d.direction === 'receivable' ? ((TXN_TYPE_MAP.repay_receive?.label || '收债') + ' · ') : ((TXN_TYPE_MAP.repay_pay?.label || '还款') + ' · ')) + d.counterparty,

@@ -5,10 +5,13 @@
   var moreTypes = TXN_TYPES.filter(function(x){ return ['日常','借贷'].indexOf(x.group) < 0; })
     .map(function(x){ return { key: x.key, label: x.label, icon: x.icon }; });
   var cur = t.type || 'expense';
+  // 「工资收入」是表单模式（非交易类型）：按比例分配到「其他」账户，落账为多笔 income（design D1）
+  var isSalary = mode === 'create' && cur === 'salary';
+  var salaryAccounts = form.accounts.filter(function(a){ return a.type === 'other'; });
   var isExtra = moreTypes.some(function(x){ return x.key === cur; });
   var multiAccount = ['transfer','invest_buy','invest_sell'].includes(cur);
   var noCategory = ['transfer','adjust'].includes(cur);
-  var catKind = cur === 'income' ? 'income' : 'expense';
+  var catKind = (cur === 'income' || isSalary) ? 'income' : 'expense';
   var amountValue = t.amount !== undefined ? t.amount : (t.amount_cents !== undefined && t.amount_cents !== null ? (t.amount_cents / 100).toFixed(2) : '');
   if (typeof amountValue === 'number') amountValue = amountValue.toFixed(2);
   var action = mode === 'edit' ? ('/transactions/' + t.id) : '/transactions';
@@ -39,6 +42,9 @@
           <% moreTypes.forEach(function(x){ %>
             <button type="button" class="chip <%= cur === x.key ? 'primary' : '' %>" data-type="<%= x.key %>"><%= x.icon %> <%= x.label %></button>
           <% }); %>
+          <% if (mode === 'create') { %>
+            <button type="button" class="chip <%= isSalary ? 'primary' : '' %>" data-type="salary" title="按比例分配到各「其他」账户">💰 工资收入</button>
+          <% } %>
         </div>
 
         <div class="field">
@@ -75,7 +81,7 @@
           <% } %>
         </div>
 
-        <div class="row wrap" style="gap:12px">
+        <div class="row wrap <%= isSalary ? 'hidden' : '' %>" id="acc-row" style="gap:12px">
           <div class="field" style="flex:1;min-width:160px">
             <label id="acc-label">支付账户</label>
             <select name="account_id" id="f-account">
@@ -85,15 +91,36 @@
               <% }); %>
             </select>
           </div>
-          <div class="field" data-for-type="transfer,invest_buy,invest_sell" style="flex:1;min-width:160px">
-            <label>转入 / 投资账户</label>
-            <select name="to_account_id">
+          <div class="field" data-for-type="transfer,invest_buy,invest_sell,lend,borrow,repay_receive,repay_pay" style="flex:1;min-width:160px">
+            <label id="to-acc-label">转入 / 投资账户</label>
+            <select name="to_account_id" id="f-to-account">
               <option value="">请选择账户…</option>
               <% form.accounts.forEach(function(a){ %>
-                <option value="<%= a.id %>" <%= Number(t.to_account_id) === Number(a.id) ? 'selected' : '' %>><%= a.icon %> <%= a.name %></option>
+                <option value="<%= a.id %>" <%= Number(t.to_account_id) === Number(a.id) ? 'selected' : '' %>><%= a.icon %> <%= a.name %><%= ['receivable','payable'].includes(a.type) ? '（' + (a.type === 'receivable' ? '应收' : '应付') + '）' : '' %></option>
               <% }); %>
             </select>
           </div>
+        </div>
+
+        <div class="field <%= isSalary ? '' : 'hidden' %>" id="salary-alloc">
+          <label>分配到以下账户 <span class="muted tiny">（按账户管理中为「其他」账户配置的工资分配比例）</span></label>
+          <% if (!salaryAccounts.length) { %>
+            <div class="notice small">账本中还没有「其他」类型账户。请先到 <a href="/accounts">账户管理</a> 创建「其他」账户并配置分配比例，再使用工资收入。</div>
+          <% } else { %>
+            <div id="salary-rows" style="border:1px solid var(--border);border-radius:10px;padding:4px 12px">
+              <% salaryAccounts.forEach(function(a){ var r = Number(a.alloc_ratio) || 0; %>
+                <div class="row between salary-row" data-ratio="<%= r %>" style="padding:8px 0;border-bottom:1px dashed var(--border)">
+                  <div class="small"><%= a.icon %> <%= a.name %> <span class="muted tiny">（<%= helpers.fmtAmount(a.balance_cents) %>）</span></div>
+                  <div class="right small">
+                    <b class="salary-preview">0.00</b>
+                    <span class="muted tiny"><%= r %>%<%= r ? '' : ' · 未设置比例' %></span>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+            <div class="tiny muted mt8" id="salary-sum-hint"></div>
+          <% } %>
+          <div class="small mt8" id="salary-error" style="color:var(--expense);display:none"></div>
         </div>
 
         <div class="field">
@@ -108,8 +135,18 @@
 
         <div class="row wrap" style="gap:12px">
           <div class="field" style="flex:1;min-width:150px">
-            <label>标签</label>
-            <input type="text" name="tags" value="<%= t.tag_names || '' %>" placeholder="多个用空格分隔">
+            <label>标签 <span class="muted tiny">（可从已有标签选择，点标签快速加入）</span></label>
+            <input type="text" name="tags" id="f-tags" value="<%= t.tag_names || '' %>" list="tags-datalist" placeholder="多个用空格分隔" autocomplete="off">
+            <datalist id="tags-datalist">
+              <% (form.tags || []).forEach(function(g){ %><option value="<%= g.name %>"></option><% }); %>
+            </datalist>
+            <% if ((form.tags || []).length) { %>
+            <div class="row wrap" style="gap:6px;margin-top:6px" id="tag-chips">
+              <% (form.tags || []).forEach(function(g){ %>
+                <button type="button" class="btn btn-sm btn-ghost tag-chip" data-name="<%= g.name %>">#<%= g.name %></button>
+              <% }); %>
+            </div>
+            <% } %>
           </div>
           <div class="field" style="flex:1;min-width:150px">
             <label>状态</label>
@@ -245,6 +282,7 @@
 (function(){
   // 类型相关的字段显隐（服务端已渲染，JS 仅做交互增强）
   var curType = <%- JSON.stringify(cur) %>;
+  function fType(){ return document.getElementById('f-type'); }
   function applyType(type){
     document.querySelectorAll('[data-for-type]').forEach(function(el){
       el.classList.toggle('hidden', !el.dataset.forType.split(',').includes(type));
@@ -254,10 +292,19 @@
     });
     var catWrap = document.getElementById('f-cat-wrap');
     if (catWrap) catWrap.classList.toggle('hidden', type === 'transfer' || type === 'adjust');
-    var kind = type === 'income' ? 'income' : 'expense';
+    var isSal = type === 'salary';
+    var kind = (type === 'income' || isSal) ? 'income' : 'expense';
     document.querySelectorAll('.cat-section').forEach(function(el){
       el.classList.toggle('hidden', el.dataset.catKind !== kind);
     });
+    // 工资模式：隐藏单个账户下拉，显示分配账户行
+    var accRow = document.getElementById('acc-row');
+    if (accRow) accRow.classList.toggle('hidden', isSal);
+    var alloc = document.getElementById('salary-alloc');
+    if (alloc) {
+      alloc.classList.toggle('hidden', !isSal);
+      if (isSal) updateSalaryPreview();
+    }
     // 账户字段标签随类型变化
     var accLabel = document.getElementById('acc-label');
     if (accLabel) {
@@ -272,6 +319,16 @@
         : type === 'invest_sell' ? '收款账户'
         : '账户';
     }
+    // 借贷类对手方账户标签（应收/应付）
+    var toAccLabel = document.getElementById('to-acc-label');
+    if (toAccLabel) {
+      toAccLabel.textContent = type === 'lend' ? '代付到哪个账户（应收）'
+        : type === 'borrow' ? '从哪个账户借入（应付）'
+        : type === 'repay_receive' ? '核销哪个应收账户'
+        : type === 'repay_pay' ? '核销哪个应付账户'
+        : type === 'transfer' ? '转入账户'
+        : '转入 / 投资账户';
+    }
   }
   applyType(curType);
   document.querySelectorAll('.type-tabs [data-type]').forEach(function(btn){
@@ -280,6 +337,7 @@
   document.querySelectorAll('.chip[data-type]').forEach(function(btn){
     btn.addEventListener('click', function(){
       document.querySelectorAll('.chip[data-type]').forEach(function(b){ b.classList.toggle('primary', b === btn); });
+      if (fType()) fType().value = btn.dataset.type;
       applyType(btn.dataset.type);
     });
   });
@@ -304,6 +362,72 @@
       if (cur.indexOf(name) < 0) cur.push(name);
       input.value = cur.join(' ');
     });
+  });
+  // 已有标签点选快速加入
+  document.querySelectorAll('.tag-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var input = document.getElementById('f-tags');
+      if (!input) return;
+      var name = chip.dataset.name;
+      var cur = input.value.split(/[,，\s]+/).filter(Boolean);
+      if (cur.indexOf(name) < 0) cur.push(name);
+      input.value = cur.join(' ');
+    });
+  });
+
+  /* 工资收入：按比例分配预览（与服务端 computeAllocation 同一整数规则） */
+  function parseCents(v){
+    var n = Math.round(parseFloat(String(v).replace(/[^\d.]/g, '')) * 100);
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  }
+  function updateSalaryPreview(){
+    var rows = document.querySelectorAll('.salary-row');
+    if (!rows.length) return;
+    var total = parseCents((document.getElementById('f-amount') || {}).value);
+    var parts = [];
+    rows.forEach(function(r){
+      var ratio = Number(r.dataset.ratio) || 0;
+      parts.push({ el: r, ratio: ratio, cents: Math.floor((total * ratio) / 100) });
+    });
+    // 余数按比例降序逐户补 1 分（DOM 顺序即 id 升序，sort 稳定，与服务端并列规则一致）
+    var order = parts.slice().sort(function(a, b){ return b.ratio - a.ratio; });
+    var rem = total - parts.reduce(function(s, p){ return s + p.cents; }, 0);
+    for (var i = 0; rem > 0 && order.length; i = (i + 1) % order.length) { order[i].cents++; rem--; }
+    parts.forEach(function(p){
+      var el = p.el.querySelector('.salary-preview');
+      if (el) el.textContent = (p.cents / 100).toFixed(2);
+    });
+    var sum = parts.reduce(function(s, p){ return s + p.ratio; }, 0);
+    var hint = document.getElementById('salary-sum-hint');
+    if (hint) {
+      hint.textContent = sum === 100
+        ? '分配比例总和 100% ✓，合计分配 ' + (total / 100).toFixed(2) + ' 元'
+        : '⚠️ 分配比例总和为 ' + sum + '%（应为 100%），请到账户管理调整';
+    }
+  }
+  var amtInput = document.getElementById('f-amount');
+  if (amtInput) amtInput.addEventListener('input', function(){ updateSalaryPreview(); });
+  updateSalaryPreview();
+
+  /* 工资模式提交守卫（点击保存时校验；金额与比例总和最终以服务端校验为准） */
+  var submitBtn = document.getElementById('submit-btn');
+  if (submitBtn) submitBtn.addEventListener('click', function(e){
+    if (!fType() || fType().value !== 'salary') return;
+    var err = document.getElementById('salary-error');
+    var rows = document.querySelectorAll('.salary-row');
+    var msg = '';
+    if (!rows.length) {
+      msg = '账本中没有「其他」类型账户，请先到账户管理创建并配置分配比例';
+    } else if (!parseCents(amtInput ? amtInput.value : 0)) {
+      msg = '请输入有效的工资金额';
+    } else {
+      var sum = 0;
+      rows.forEach(function(r){ sum += Number(r.dataset.ratio) || 0; });
+      if (sum !== 100) msg = '分配比例总和为 ' + sum + '%（应为 100%），请到账户管理调整';
+    }
+    if (!msg) return;
+    e.preventDefault();
+    if (err) { err.textContent = msg; err.style.display = ''; }
   });
 })();
 </script>

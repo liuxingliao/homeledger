@@ -112,6 +112,13 @@ check('借还台账含刘妈/刘志杰(应收)与润辛妈(应付)',
   && debtRows.some((d) => d.counterparty === '刘志杰' && d.direction === 'receivable')
   && debtRows.some((d) => d.counterparty === '润辛妈' && d.direction === 'payable'), JSON.stringify(debtRows));
 
+// 借贷双录:应收/应付账户余额 = Σ对手方效应(代付+,收债−;借入−,还款+)
+const balOf = (name) => Number(db.get('SELECT balance_cents FROM accounts WHERE ledger_id = ? AND name = ?', ledgerId, name).balance_cents);
+check('「刘妈欠款」余额 = 代付 100000.00(应收)', balOf('刘妈欠款') === 10000000, String(balOf('刘妈欠款')));
+check('「刘志杰欠款」余额 = 代付 10000 − 收债 10000 = 0', balOf('刘志杰欠款') === 0, String(balOf('刘志杰欠款')));
+check('「欠润辛妈」余额 = 借入 50000.00(应付,负值)', balOf('欠润辛妈') === -5000000, String(balOf('欠润辛妈')));
+check('「欠工商银行」不受双录影响(仅负债变更)', balOf('欠工商银行') === expectBank, String(balOf('欠工商银行')));
+
 console.log('\n=== B. 重复导入与指纹判重 ===\n');
 
 // 二次导入同一文件:全部按「日期|金额|源时间」指纹跳过
@@ -146,6 +153,39 @@ check('CSV 导入 2 条成功', r3.imported === 2, JSON.stringify({ imported: r3
 check('CSV 路径不产生参与成员(people 为空)', cnt('SELECT COUNT(*) AS c FROM transaction_participants tp JOIN ledger_people lp ON lp.id = tp.person_id WHERE lp.ledger_id = ?', ledgerId) === 897);
 const csvTxn = db.get("SELECT type, amount_cents FROM transactions WHERE ledger_id = ? AND note LIKE '%地铁%'", ledgerId);
 check('CSV 记录类型/金额正确', csvTxn && csvTxn.type === 'expense' && csvTxn.amount_cents === 1250);
+
+console.log('\n=== D. 借贷双录与核销联动 ===\n');
+
+const txn = require('../src/lib/txn');
+const accAsset = db.run('INSERT INTO accounts (ledger_id, name, type, created_at) VALUES (?,?,?,?)',
+  ledgerId, '双录测试资产', 'debit', db.nowStr()).lastInsertRowid;
+const accRecv = db.run('INSERT INTO accounts (ledger_id, name, type, created_at) VALUES (?,?,?,?)',
+  ledgerId, '双录测试应收', 'receivable', db.nowStr()).lastInsertRowid;
+const bal2 = () => ({
+  a: Number(db.get('SELECT balance_cents FROM accounts WHERE id = ?', accAsset).balance_cents),
+  r: Number(db.get('SELECT balance_cents FROM accounts WHERE id = ?', accRecv).balance_cents),
+});
+
+txn.createTransaction(ledgerId, userId, {
+  type: 'lend', amount_cents: 50000, account_id: accAsset, to_account_id: accRecv,
+  txn_date: '2026-10-11', merchant: '双录测试人',
+});
+let b = bal2();
+check('代付双录:资产 −50 / 应收 +50(净资产不变)', b.a === -50000 && b.r === 50000, JSON.stringify(b));
+
+txn.createTransaction(ledgerId, userId, {
+  type: 'repay_receive', amount_cents: 20000, account_id: accAsset, to_account_id: accRecv,
+  txn_date: '2026-10-11', merchant: '双录测试人',
+});
+b = bal2();
+check('收债核销:资产 +20 / 应收 −20(余额 30)', b.a === -30000 && b.r === 30000, JSON.stringify(b));
+
+// 台账核销路由的对手方定位 SQL:按 merchant 找到录入时的应收/应付账户
+const cp = db.get(
+  `SELECT t.to_account_id AS id FROM transactions t JOIN accounts a ON a.id = t.to_account_id
+   WHERE t.ledger_id = ? AND t.deleted_at IS NULL AND t.merchant = ? AND a.type IN ('receivable','payable')
+   LIMIT 1`, ledgerId, '双录测试人');
+check('台账核销能定位对手方账户', cp && Number(cp.id) === Number(accRecv), JSON.stringify(cp));
 
 footer();
 process.exit(fail ? 1 : 0);

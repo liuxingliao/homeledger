@@ -40,6 +40,7 @@
                   <% if (a.card_no) { %> · 尾号 <%= a.card_no %><% } %>
                   <% if (a.bill_day) { %> · 账单日 <%= a.bill_day %> 号<% } %>
                   <% if (a.due_day) { %> · 还款日 <%= a.due_day %> 号<% } %>
+                  <% if (a.type === 'other') { %> · 工资分配比例 <%= Number(a.alloc_ratio) || 0 %>%<% } %>
                 </div>
               </a>
               <div class="right">
@@ -74,6 +75,9 @@
                   <div class="field" style="flex:1;min-width:110px"><label>额度</label><input type="text" name="credit_limit" inputmode="decimal" value="<%= a.credit_limit ? (a.credit_limit/100).toFixed(2) : '' %>"></div>
                   <div class="field" style="flex:1;min-width:90px"><label>账单日</label><input type="number" name="bill_day" min="1" max="31" value="<%= a.bill_day || '' %>"></div>
                   <div class="field" style="flex:1;min-width:90px"><label>还款日</label><input type="number" name="due_day" min="1" max="31" value="<%= a.due_day || '' %>"></div>
+                  <% if (a.type === 'other') { %>
+                    <div class="field" style="flex:1;min-width:100px"><label>分配比例 %</label><input type="number" name="alloc_ratio" min="0" max="100" step="1" value="<%= Number(a.alloc_ratio) || 0 %>"></div>
+                  <% } %>
                 </div>
                 <div class="row">
                   <label class="check"><input type="checkbox" name="include_in_net" value="1" <%= a.include_in_net ? 'checked' : '' %>> 计入净资产</label>
@@ -147,6 +151,7 @@
       <div class="field" style="flex:1;min-width:130px"><label>额度（信用卡）</label><input type="text" name="credit_limit" inputmode="decimal"></div>
       <div class="field" style="flex:1;min-width:100px"><label>账单日</label><input type="number" name="bill_day" min="1" max="31"></div>
       <div class="field" style="flex:1;min-width:100px"><label>还款日</label><input type="number" name="due_day" min="1" max="31"></div>
+      <div class="field" style="flex:1;min-width:100px;display:none" id="new-acc-ratio-wrap"><label>分配比例 %</label><input type="number" name="alloc_ratio" min="0" max="100" step="1" placeholder="0"></div>
       <div class="field" style="flex:2;min-width:150px"><label>备注</label><input type="text" name="note"></div>
     </div>
     <div class="row">
@@ -178,6 +183,8 @@
     var map = { cash:'💵', debit:'🏦', credit:'💳', virtual:'📱', prepaid:'🎫', investment:'📈', receivable:'📥', payable:'📤', loan:'🏚️', other:'📦' };
     var iconInput = document.querySelector('input[name="icon"]');
     if (iconInput && map[sel.value]) iconInput.value = map[sel.value];
+    var ratioWrap = document.getElementById('new-acc-ratio-wrap');
+    if (ratioWrap) ratioWrap.style.display = sel.value === 'other' ? '' : 'none';
   });
 })();
 </script>

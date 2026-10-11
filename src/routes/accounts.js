@@ -9,6 +9,13 @@ const u = require('../lib/util');
 
 const router = express.Router();
 
+/** 分配比例：仅「其他」类型账户可配置（0~100 整数百分比），其他类型一律 0 */
+function parseAllocRatio(body, type) {
+  if (type !== 'other') return 0;
+  const n = Math.round(Number(body.alloc_ratio));
+  return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : 0;
+}
+
 /* ---------------------------------- 账户 ---------------------------------- */
 
 router.get('/accounts', auth.requireLogin, (req, res) => {
@@ -52,8 +59,8 @@ router.post('/accounts', auth.requireLogin, auth.requireLedgerWrite, (req, res) 
   const initial = u.parseAmountToCents(req.body.initial_balance);
   const info = run(
     `INSERT INTO accounts (ledger_id, name, type, icon, currency, initial_cents, balance_cents, credit_limit,
-      bill_day, due_day, institution, card_no, note, include_in_net, sort_order, created_at)
-     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+      bill_day, due_day, institution, card_no, note, include_in_net, sort_order, alloc_ratio, created_at)
+     VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
     ledgerId, name.slice(0, 30), type, req.body.icon || ACCOUNT_TYPE_MAP[type].icon, req.body.currency || 'CNY',
     initial, initial,
     req.body.credit_limit ? u.parseAmountToCents(req.body.credit_limit) : null,
@@ -63,7 +70,9 @@ router.post('/accounts', auth.requireLogin, auth.requireLedgerWrite, (req, res) 
     req.body.card_no ? String(req.body.card_no).slice(-4) : null,
     req.body.note ? String(req.body.note).slice(0, 200) : null,
     req.body.include_in_net === undefined ? 1 : (req.body.include_in_net ? 1 : 0),
-    Number(req.body.sort_order) || 50, nowStr()
+    Number(req.body.sort_order) || 50,
+    parseAllocRatio(req.body, type),
+    nowStr()
   );
   auth.audit(req, 'account.create', { entity: 'account', entityId: info.lastInsertRowid, ledgerId });
   res.flash('success', `账户「${name}」已创建`);
@@ -76,11 +85,16 @@ router.post('/accounts/:id', auth.requireLogin, auth.requireLedgerWrite, (req, r
   const acc = get('SELECT * FROM accounts WHERE id = ? AND ledger_id = ?', id, ledgerId);
   if (!acc) { res.flash('error', '账户不存在'); return res.redirect('/accounts'); }
   const initial = req.body.initial_balance !== undefined ? u.parseAmountToCents(req.body.initial_balance) : Number(acc.initial_cents);
+  const newType = ACCOUNT_TYPE_MAP[req.body.type] ? req.body.type : acc.type;
+  // 未提交比例字段时保持原值（避免无该字段的表单误清零）；非 other 类型一律归 0
+  const allocRatio = req.body.alloc_ratio === undefined
+    ? (newType === 'other' ? Number(acc.alloc_ratio) || 0 : 0)
+    : parseAllocRatio(req.body, newType);
   run(
     `UPDATE accounts SET name=?, type=?, icon=?, currency=?, initial_cents=?, credit_limit=?, bill_day=?, due_day=?,
-      institution=?, note=?, include_in_net=?, sort_order=? WHERE id=?`,
+      institution=?, note=?, include_in_net=?, sort_order=?, alloc_ratio=? WHERE id=?`,
     String(req.body.name || acc.name).slice(0, 30),
-    ACCOUNT_TYPE_MAP[req.body.type] ? req.body.type : acc.type,
+    newType,
     req.body.icon || acc.icon,
     req.body.currency || acc.currency,
     initial,
@@ -91,6 +105,7 @@ router.post('/accounts/:id', auth.requireLogin, auth.requireLedgerWrite, (req, r
     req.body.note ? String(req.body.note).slice(0, 200) : null,
     req.body.include_in_net ? 1 : 0,
     Number(req.body.sort_order) || acc.sort_order,
+    allocRatio,
     id
   );
   txn.recalcBalancesLedger = undefined;

@@ -46,8 +46,13 @@ const run = (sql, ...p) => {
   const r = prep(sql).run(...p);
   return { changes: Number(r.changes), lastInsertRowid: Number(r.lastInsertRowid) };
 };
+let txDepth = 0;
 function tx(fn) {
+  // 可重入：嵌套调用（如事务内 createTransaction → recalcBalances 再开事务）复用外层事务，
+  // 内层异常向上抛由最外层统一 ROLLBACK，保证整体原子性
+  if (txDepth > 0) return fn();
   db.exec('BEGIN');
+  txDepth = 1;
   try {
     const r = fn();
     db.exec('COMMIT');
@@ -55,6 +60,8 @@ function tx(fn) {
   } catch (e) {
     try { db.exec('ROLLBACK'); } catch { /* ignore */ }
     throw e;
+  } finally {
+    txDepth = 0;
   }
 }
 
@@ -143,6 +150,7 @@ CREATE TABLE IF NOT EXISTS accounts (
   include_in_net  INTEGER NOT NULL DEFAULT 1,
   is_archived     INTEGER NOT NULL DEFAULT 0,
   sort_order      INTEGER NOT NULL DEFAULT 0,
+  alloc_ratio     INTEGER NOT NULL DEFAULT 0,
   created_at      TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_acc_ledger ON accounts(ledger_id);
@@ -435,6 +443,8 @@ const migrated = [];
 if (ensureColumn('transactions', 'subscription_id', 'INTEGER')) migrated.push('transactions.subscription_id');
 if (ensureColumn('users', 'avatar_path', 'TEXT')) migrated.push('users.avatar_path');
 if (ensureColumn('users', 'avatar_ver', 'INTEGER')) migrated.push('users.avatar_ver');
+// 工资分配比例（百分比 0~100，仅「其他」类型账户使用）
+if (ensureColumn('accounts', 'alloc_ratio', 'INTEGER NOT NULL DEFAULT 0')) migrated.push('accounts.alloc_ratio');
 if (migrated.length) console.log(`[db] 已补齐字段：${migrated.join('、')}`);
 // 订阅扣费生成的流水按订阅维度回查（必须在 ensureColumn 之后建索引）
 db.exec('CREATE INDEX IF NOT EXISTS idx_txn_subscription ON transactions(subscription_id);');
@@ -644,14 +654,22 @@ function txnEffects(t) {
   const push = (id, d) => { if (id) out.push({ accountId: Number(id), delta: d }); };
   switch (t.type) {
     case 'expense':
-    case 'lend':
-    case 'repay_pay':
     case 'fee':
       push(t.account_id, -a);
       break;
-    case 'income':
+    case 'lend':
+    case 'repay_pay':
+      // 借贷双录：钱出主账户，对手方（应收/应付账户）反向入账，净资产不变
+      push(t.account_id, -a);
+      push(t.to_account_id, a);
+      break;
     case 'borrow':
     case 'repay_receive':
+      // 借入/收债：钱进主账户，对手方（应付/应收账户）反向入账，净资产不变
+      push(t.account_id, a);
+      push(t.to_account_id, -a);
+      break;
+    case 'income':
     case 'reimburse':
     case 'refund':
     case 'interest':
