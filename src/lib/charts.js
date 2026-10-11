@@ -56,7 +56,8 @@ function barChart({ labels = [], series = [], height = 240, showLegend = true, v
     s += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${W - padR}" y2="${y.toFixed(1)}" stroke="${C.grid}" stroke-width="1"/>`;
     s += `<text x="${padL - 8}" y="${(y + 4).toFixed(1)}" font-size="11" fill="${C.axis}" text-anchor="end">${nf(val, val >= 1000 ? 0 : 0)}</text>`;
   }
-  // 柱子
+  // 柱子(X 轴标签抽稀:>14 隔一显示、>28 三取一,保留首尾;数据点不省略)
+  const labelStep = labels.length > 28 ? 3 : labels.length > 14 ? 2 : 1;
   labels.forEach((lab, i) => {
     const cx = padL + groupW * i + groupW / 2;
     const totalW = series.length * barW + (series.length - 1) * gap;
@@ -72,7 +73,9 @@ function barChart({ labels = [], series = [], height = 240, showLegend = true, v
       }
       x0 += barW + gap;
     });
-    s += `<text x="${cx.toFixed(1)}" y="${H - 10}" font-size="11" fill="${C.axis}" text-anchor="middle">${esc(lab)}</text>`;
+    if (labelStep === 1 || i % labelStep === 0 || i === labels.length - 1) {
+      s += `<text x="${cx.toFixed(1)}" y="${H - 10}" font-size="11" fill="${C.axis}" text-anchor="middle">${esc(lab)}</text>`;
+    }
   });
   // 图例
   if (showLegend) {
@@ -134,7 +137,8 @@ function lineChart({ labels = [], series = [], height = 220, fill = true, valueU
     s += `</g>`;
   });
   labels.forEach((lab, i) => {
-    if (n > 14 && i % 2 !== 0 && i !== n - 1) return;
+    const step = n > 28 ? 3 : n > 14 ? 2 : 1;
+    if (i % step !== 0 && i !== n - 1) return;
     s += `<text x="${xAt(i).toFixed(1)}" y="${H - 10}" font-size="11" fill="${C.axis}" text-anchor="middle">${esc(lab)}</text>`;
   });
   let lx = padL;

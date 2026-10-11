@@ -25,10 +25,30 @@
     <span class="spacer"></span>
     <a class="chip <%= kind === 'expense' ? 'primary' : '' %>" href="/reports?preset=<%= range.preset %>&month=<%= range.month || '' %>&kind=expense">支出视角</a>
     <a class="chip <%= kind === 'income' ? 'primary' : '' %>" href="/reports?preset=<%= range.preset %>&month=<%= range.month || '' %>&kind=income">收入视角</a>
+    <button type="button" class="btn btn-sm" id="mod-toggle">⚙ 模块设置</button>
   </div>
 </div>
 
-<div class="grid grid-4 mb16">
+<%
+  var REPORT_MODULES = [
+    ['stats','收支统计卡'], ['compare','同期对比'], ['trend','收支趋势'], ['donut','支出/收入构成'],
+    ['rank','分类排行榜'], ['tags','按标签分组'], ['people','按参与成员分组'], ['daily','每日支出走势'],
+    ['weekday','星期消费分布'], ['members','成员消费对比'], ['networth','净资产走势'], ['accounts','账户余额一览']
+  ];
+%>
+<div class="card tight mb16 hidden" id="mod-panel">
+  <div class="row wrap" style="gap:10px;align-items:center">
+    <span class="small bold">显示模块：</span>
+    <% REPORT_MODULES.forEach(function(m){ %>
+      <label class="check" style="font-size:12px"><input type="checkbox" data-mod-key="<%= m[0] %>" checked> <%= m[1] %></label>
+    <% }); %>
+    <button type="button" class="btn btn-sm btn-ghost" id="mod-reset">恢复默认</button>
+    <span class="muted tiny">偏好保存在本机浏览器</span>
+  </div>
+</div>
+<div class="notice info mb16 hidden" id="mod-empty">所有模块均已隐藏，点击右上角「⚙ 模块设置」恢复。</div>
+
+<div class="grid grid-4 mb16" data-module="stats">
   <div class="stat">
     <div class="label">支出合计</div>
     <div class="value amount expense"><%= helpers.fmtAmount(sum.expense) %></div>
@@ -52,7 +72,7 @@
 </div>
 
 <% if (compare) { %>
-<div class="card">
+<div class="card" data-module="compare">
   <div class="card-head"><h2>同期对比</h2></div>
   <div class="scroll-x">
     <table class="table">
@@ -91,8 +111,8 @@
 </div>
 <% } %>
 
-<div class="card">
-  <div class="card-head"><h2>近 12 个月收支趋势</h2></div>
+<div class="card" data-module="trend">
+  <div class="card-head"><h2>近 <%= trendMonths %> 个月收支趋势</h2></div>
   <div class="chart-box">
     <%- charts.barChart({
       labels: trend.map(function(t){ return helpers.monthShort(t.month); }),
@@ -105,7 +125,7 @@
 </div>
 
 <div class="grid grid-2">
-  <div class="card">
+  <div class="card" data-module="donut">
     <div class="card-head">
       <h2><%= kind === 'expense' ? '支出' : '收入' %>构成</h2>
       <span class="muted small">按一级分类 · <%= range.label %> · 二级明细见下方排行榜</span>
@@ -124,7 +144,7 @@
     <% } %>
   </div>
 
-  <div class="card">
+<div class="card" data-module="rank">
     <div class="card-head">
       <h2>分类排行榜</h2>
       <span class="muted small"><%= top ? '下钻：' + top : '一级分类' %></span>
@@ -147,7 +167,7 @@
 </div>
 
 <div class="grid grid-2">
-  <div class="card">
+<div class="card" data-module="tags">
     <div class="card-head">
       <h2>按标签分组</h2>
       <span class="muted small"><%= range.label %> · 项目以标签统计</span>
@@ -168,7 +188,7 @@
     <% } %>
   </div>
 
-  <div class="card">
+<div class="card" data-module="people">
     <div class="card-head"><h2>按参与成员分组</h2><span class="muted small">随手记式成员统计</span></div>
     <% if (!peopleStats.length) { %>
       <div class="empty"><span class="big">👥</span>没有数据</div>
@@ -186,7 +206,7 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-module="daily">
   <div class="card-head"><h2>每日支出走势</h2>
     <% if (maxDay) { %><span class="muted small">支出最高的一天：<%= maxDay.date %>（<%= helpers.fmtAmount(maxDay.expense) %>）</span><% } %>
   </div>
@@ -200,7 +220,7 @@
 </div>
 
 <div class="grid grid-2">
-  <div class="card">
+<div class="card" data-module="weekday">
     <div class="card-head"><h2>星期消费分布</h2><span class="muted small">看你的钱花在哪几天</span></div>
     <div class="chart-box">
       <%- charts.barChart({
@@ -211,7 +231,7 @@
     </div>
   </div>
 
-  <div class="card">
+<div class="card" data-module="members">
     <div class="card-head"><h2>成员消费对比</h2><span class="muted small">家庭账本很有用</span></div>
     <% if (!members.length) { %>
       <div class="empty"><span class="big">👨‍👩‍👧</span>没有数据</div>
@@ -229,8 +249,8 @@
   </div>
 </div>
 
-<div class="card">
-  <div class="card-head"><h2>净资产走势（近 12 个月）</h2><span class="muted small">含所有账户余额累计</span></div>
+<div class="card" data-module="networth">
+  <div class="card-head"><h2>净资产走势（近 <%= trendMonths %> 个月）</h2><span class="muted small">含所有账户余额累计</span></div>
   <div class="chart-box">
     <%- charts.lineChart({
       labels: netWorth.map(function(t){ return helpers.monthShort(t.month); }),
@@ -245,7 +265,7 @@
   </div>
 </div>
 
-<div class="card">
+<div class="card" data-module="accounts">
   <div class="card-head"><h2>账户余额一览</h2><a class="btn btn-sm btn-ghost" href="/accounts">管理 →</a></div>
   <table class="table responsive">
     <thead><tr><th>账户</th><th>类型</th><th class="num">初始余额</th><th class="num">当前余额</th><th class="num">占净资产</th></tr></thead>
@@ -263,3 +283,34 @@
     </tbody>
   </table>
 </div>
+
+<script>
+(function(){
+  var KEY = 'hl-reports-modules';
+  var hidden = {};
+  try { hidden = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { hidden = {}; }
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(hidden)); } catch (e) {} }
+  function apply(){
+    var boxes = [].slice.call(document.querySelectorAll('[data-mod-key]'));
+    document.querySelectorAll('[data-module]').forEach(function(el){
+      el.classList.toggle('hidden', !!hidden[el.dataset.module]);
+    });
+    boxes.forEach(function(cb){ cb.checked = !hidden[cb.dataset.modKey]; });
+    var empty = boxes.length > 0 && boxes.every(function(cb){ return hidden[cb.dataset.modKey]; });
+    var tip = document.getElementById('mod-empty');
+    if (tip) tip.classList.toggle('hidden', !empty);
+  }
+  var btn = document.getElementById('mod-toggle');
+  var panel = document.getElementById('mod-panel');
+  if (btn && panel) btn.addEventListener('click', function(){ panel.classList.toggle('hidden'); });
+  document.querySelectorAll('[data-mod-key]').forEach(function(cb){
+    cb.addEventListener('change', function(){
+      hidden[cb.dataset.modKey] = !cb.checked;
+      save(); apply();
+    });
+  });
+  var reset = document.getElementById('mod-reset');
+  if (reset) reset.addEventListener('click', function(){ hidden = {}; save(); apply(); });
+  apply();
+})();
+</script>

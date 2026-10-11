@@ -716,12 +716,12 @@ function accountOverview(ledgerId) {
 }
 
 /** 累计净支出（用于净资产走势的近似） */
-function netWorthTrend(ledgerId, months = 6) {
-  const list = lastMonths(months);
+function netWorthTrend(ledgerId, months = 6, ref = new Date()) {
+  const list = lastMonths(months, ref);
   const allTxns = all(
     `SELECT txn_date, type, amount_base_cents, account_id, to_account_id FROM transactions
-     WHERE ledger_id = ? AND deleted_at IS NULL ORDER BY txn_date`,
-    ledgerId
+     WHERE ledger_id = ? AND deleted_at IS NULL AND txn_date <= ? ORDER BY txn_date`,
+    ledgerId, `${list[list.length - 1]}-31`
   );
   const accounts = all('SELECT id, initial_cents FROM accounts WHERE ledger_id = ?', ledgerId);
   const initial = accounts.reduce((s, a) => s + Number(a.initial_cents), 0);

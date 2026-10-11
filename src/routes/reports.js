@@ -9,6 +9,15 @@ const u = require('../lib/util');
 
 const router = express.Router();
 
+/** 由区间起止求覆盖的月数(含起止月,上限 120) */
+function monthsBetween(start, end) {
+  const [sy, sm] = start.slice(0, 7).split('-').map(Number);
+  const [ey, em] = end.slice(0, 7).split('-').map(Number);
+  if (!sy || !ey) return 12;
+  return Math.min(120, Math.max(1, (ey - sy) * 12 + (em - sm) + 1));
+}
+
+
 function parseRange(q, ledgerId) {
   const today = todayStr();
   const curMonth = today.slice(0, 7);
@@ -50,12 +59,16 @@ router.get('/reports', auth.requireLogin, (req, res) => {
   const sum = txn.summary(ledgerId, range.start, range.end);
   const cats = txn.categoryBreakdown(ledgerId, range.start, range.end, kind);
   const subcats = txn.subcategoryBreakdown(ledgerId, range.start, range.end, kind, req.query.top || null);
-  const trend = txn.monthlyTrend(ledgerId, 12);
+  // 趋势图随筛选范围伸缩:月数=区间覆盖月数(上限 120),ref=区间末月
+  const trendMonths = monthsBetween(range.start, range.end);
+  const [ty, tm] = range.end.slice(0, 7).split('-').map(Number);
+  const trendRef = new Date(ty, tm - 1, 1);
+  const trend = txn.monthlyTrend(ledgerId, trendMonths, trendRef);
   const days = txn.dailyBreakdown(ledgerId, range.start, range.end);
   const members = txn.memberBreakdown(ledgerId, range.start, range.end);
   const tagStats = txn.tagBreakdown(ledgerId, range.start, range.end, kind);
   const peopleStats = txn.participantBreakdown(ledgerId, range.start, range.end);
-  const netWorth = txn.netWorthTrend(ledgerId, 12);
+  const netWorth = txn.netWorthTrend(ledgerId, trendMonths, trendRef);
   const overview = txn.accountOverview(ledgerId);
 
   // 同期对比
@@ -92,7 +105,7 @@ router.get('/reports', auth.requireLogin, (req, res) => {
 
   res.render('reports', {
     title: '报表分析', activeNav: 'reports',
-    range, kind, sum, cats, subcats, trend, days, members, netWorth, overview,
+    range, kind, sum, cats, subcats, trend, days, members, netWorth, overview, trendMonths,
     tagStats, peopleStats,
     compare, weekday, expenseCount, maxDay, activeDays,
     top: req.query.top || null,

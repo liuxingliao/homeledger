@@ -18,7 +18,8 @@ router.get('/', auth.requireLogin, (req, res, next) => {
     return res.render('no-ledger', { title: '开始使用', activeNav: 'home' });
   }
   const ledgerId = Number(ledger.id);
-  const month = /^\d{4}-\d{2}$/.test(String(req.query.month || '')) ? req.query.month : monthOfToday();
+  // 总览数据时效:默认展示上一个自然月(用户月底集中记账);显式 ?month= 仍覆盖
+  const month = /^\d{4}-\d{2}$/.test(String(req.query.month || '')) ? req.query.month : u.addMonths(monthOfToday(), -1);
   const range = { start: `${month}-01`, end: `${month}-31` };
 
   const cur = txn.summary(ledgerId, range.start, range.end);
@@ -26,7 +27,9 @@ router.get('/', auth.requireLogin, (req, res, next) => {
   const prev = txn.summary(ledgerId, `${prevMonth}-01`, `${prevMonth}-31`);
 
   const daily = txn.dailyBreakdown(ledgerId, range.start, range.end);
-  const trend = txn.monthlyTrend(ledgerId, 6);
+  // 收支趋势:以所选月(默认上月)为末月,往前 12 个月
+  const [ty, tm] = month.split('-').map(Number);
+  const trend = txn.monthlyTrend(ledgerId, 12, new Date(ty, tm - 1, 1));
   const cats = txn.categoryBreakdown(ledgerId, range.start, range.end, 'expense');
   const incomeCats = txn.categoryBreakdown(ledgerId, range.start, range.end, 'income');
   const overview = txn.accountOverview(ledgerId);
@@ -68,6 +71,8 @@ router.get('/', auth.requireLogin, (req, res, next) => {
     month,
     monthLabel: u.monthLabel(month),
     cur, prev, prevMonth,
+    monthLabel: u.monthLabel(month),
+    prevLabel: u.monthLabel(prevMonth),
     daily,
     trend,
     cats: cats.slice(0, 8),

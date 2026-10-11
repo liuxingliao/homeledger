@@ -25,6 +25,7 @@ const SUITES = [
   'verify-reports-range.js',
   'verify-txn-filter-trend.js',
   'verify-category-tag-mgmt.js',
+  'verify-reports-modules.js',
 ];
 
 function healthz(timeoutMs) {
