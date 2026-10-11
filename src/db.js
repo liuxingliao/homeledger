@@ -445,6 +445,8 @@ if (ensureColumn('users', 'avatar_path', 'TEXT')) migrated.push('users.avatar_pa
 if (ensureColumn('users', 'avatar_ver', 'INTEGER')) migrated.push('users.avatar_ver');
 // 工资分配比例（百分比 0~100，仅「其他」类型账户使用）
 if (ensureColumn('accounts', 'alloc_ratio', 'INTEGER NOT NULL DEFAULT 0')) migrated.push('accounts.alloc_ratio');
+// 标签图标（按含义设置）
+if (ensureColumn('tags', 'icon', "TEXT NOT NULL DEFAULT '🔖'")) migrated.push('tags.icon');
 if (migrated.length) console.log(`[db] 已补齐字段：${migrated.join('、')}`);
 // 订阅扣费生成的流水按订阅维度回查（必须在 ensureColumn 之后建索引）
 db.exec('CREATE INDEX IF NOT EXISTS idx_txn_subscription ON transactions(subscription_id);');

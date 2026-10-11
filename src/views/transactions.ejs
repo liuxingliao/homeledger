@@ -80,7 +80,7 @@
     </select></div>
     <div class="field"><select name="tag_id">
       <option value="">全部标签</option>
-      <% (form.tags || []).forEach(function(g){ %><option value="<%= g.id %>" <%= Number(f.tagId) === Number(g.id) ? 'selected' : '' %>>#<%= g.name %></option><% }); %>
+      <% (form.tags || []).forEach(function(g){ %><option value="<%= g.id %>" <%= Number(f.tagId) === Number(g.id) ? 'selected' : '' %>><%= g.icon || '🔖' %> <%= g.name %></option><% }); %>
     </select></div>
     <div class="field"><select name="sort">
       <option value="date_desc" <%= f.sort === 'date_desc' ? 'selected' : '' %>>最新在前</option>

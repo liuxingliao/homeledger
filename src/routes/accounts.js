@@ -289,7 +289,7 @@ router.post('/tags', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
   if (get('SELECT id FROM tags WHERE ledger_id = ? AND name = ?', ledgerId, name)) {
     res.flash('error', '标签已存在'); return res.redirect('/tags');
   }
-  run('INSERT INTO tags (ledger_id, name, color) VALUES (?,?,?)', ledgerId, name.slice(0, 20), req.body.color || u.colorFor(name));
+  run('INSERT INTO tags (ledger_id, name, color, icon) VALUES (?,?,?,?)', ledgerId, name.slice(0, 20), req.body.color || u.colorFor(name), req.body.icon || '🔖');
   res.flash('success', '标签已创建');
   res.redirect('/tags');
 });
@@ -302,8 +302,8 @@ router.post('/tags/:id', auth.requireLogin, auth.requireLedgerWrite, (req, res) 
   // 重命名防护:同账本同名(排除自身)不覆盖,避免撞 UNIQUE 抛 500
   const dup = get('SELECT id FROM tags WHERE ledger_id = ? AND name = ? AND id != ?', ledgerId, name, id);
   if (dup) { res.flash('error', `标签「${name}」已存在`); return res.redirect('/tags'); }
-  run('UPDATE tags SET name = ?, color = ? WHERE id = ? AND ledger_id = ?',
-    name, req.body.color || '#4f7cff', id, ledgerId);
+  run('UPDATE tags SET name = ?, color = ?, icon = ? WHERE id = ? AND ledger_id = ?',
+    name, req.body.color || '#4f7cff', req.body.icon || '🔖', id, ledgerId);
   res.flash('success', '标签已更新');
   res.redirect('/tags');
 });

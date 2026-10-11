@@ -9,7 +9,7 @@
       <% tags.forEach(function(t){ %>
         <span class="chip" style="border-color:<%= t.color %>55">
           <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:<%= t.color %>"></span>
-          <a href="/transactions?tag_id=<%= t.id %>" style="color:inherit"><%= t.name %></a>
+          <a href="/transactions?tag_id=<%= t.id %>" style="color:inherit"><%= t.icon || '🔖' %> <%= t.name %></a>
           <span class="muted tiny"><%= t.cnt %> 笔 · <%= helpers.fmtAmount(t.total) %></span>
           <a href="#" class="tag-edit" data-id="<%= t.id %>" style="font-size:10px">编辑</a>
           <% if (Number(t.cnt) === 0) { %>
@@ -22,6 +22,7 @@
         <span class="tag-edit-form hidden" data-id="<%= t.id %>" style="background:var(--card-2);padding:8px 10px;border-radius:8px;display:inline-flex;gap:6px;align-items:center">
           <form method="post" action="/tags/<%= t.id %>" class="inline-form" style="display:flex;gap:6px;align-items:center">
             <input type="hidden" name="_csrf" value="<%= csrf %>">
+            <input type="text" name="icon" value="<%= t.icon || '🔖' %>" style="width:52px" title="按标签含义选择图标">
             <input type="text" name="name" value="<%= t.name %>" required style="width:120px">
             <input type="color" name="color" value="<%= t.color %>" style="width:40px;padding:2px">
             <button class="btn btn-sm btn-primary" type="submit">保存</button>
@@ -36,6 +37,7 @@
   <div class="card-head"><h2>新建标签</h2></div>
   <form method="post" action="/tags" class="inline-form">
     <input type="hidden" name="_csrf" value="<%= csrf %>">
+    <div class="field"><input type="text" name="icon" value="🔖" style="width:52px" title="按标签含义选择图标"></div>
     <div class="field"><input type="text" name="name" placeholder="标签名称" required style="width:200px"></div>
     <div class="field"><input type="color" name="color" value="#4f7cff"></div>
     <div class="field"><button class="btn btn-primary" type="submit">创建</button></div>
