@@ -59,8 +59,16 @@ function buildWhere(ledgerId, f = {}) {
   }
 
   if (f.categoryId) {
-    where.push('(t.category_id = ? OR t.category_id IN (SELECT id FROM categories WHERE parent_id = ?))');
-    params.push(f.categoryId, f.categoryId);
+    // 支持单选与多选:多选时展开各分类及其子分类,按并集过滤
+    const catIds = [].concat(f.categoryId).map(Number).filter(Boolean);
+    if (catIds.length === 1) {
+      where.push('(t.category_id = ? OR t.category_id IN (SELECT id FROM categories WHERE parent_id = ?))');
+      params.push(catIds[0], catIds[0]);
+    } else if (catIds.length > 1) {
+      where.push(`(t.category_id IN (${catIds.map(() => '?').join(',')})
+        OR t.category_id IN (SELECT id FROM categories WHERE parent_id IN (${catIds.map(() => '?').join(',')})))`);
+      params.push(...catIds, ...catIds);
+    }
   }
   if (f.accountId) {
     where.push('(t.account_id = ? OR t.to_account_id = ?)');
@@ -85,9 +93,15 @@ function buildWhere(ledgerId, f = {}) {
   if (f.minCents) { where.push('t.amount_base_cents >= ?'); params.push(f.minCents); }
   if (f.maxCents) { where.push('t.amount_base_cents <= ?'); params.push(f.maxCents); }
   if (f.keyword) {
-    where.push('(t.note LIKE ? OR t.merchant LIKE ? OR c.name LIKE ? OR pc.name LIKE ? OR a.name LIKE ? OR CAST(t.amount_base_cents AS TEXT) LIKE ?)');
+    // 金额按值匹配:关键词是数字时换算成「分」的精确串(「88.5」命中 8850),其余列继续模糊 LIKE
+    const centsStr = /^\d+(\.\d+)?$/.test(String(f.keyword).trim())
+      ? String(Math.round(parseFloat(String(f.keyword).trim()) * 100))
+      : null;
+    const likeCols = ['t.note', 't.merchant', 'c.name', 'pc.name', 'a.name'];
     const kw = `%${f.keyword}%`;
-    params.push(kw, kw, kw, kw, kw, kw);
+    where.push(`(${likeCols.map((c) => `${c} LIKE ?`).join(' OR ')}${centsStr ? ' OR CAST(t.amount_base_cents AS TEXT) = ?' : ''})`);
+    params.push(...likeCols.map(() => kw));
+    if (centsStr) params.push(centsStr);
   }
   if (f.reimbursable === 'yes') where.push('t.is_reimbursable = 1 AND t.reimbursed_at IS NULL');
   if (f.reimbursable === 'done') where.push('t.is_reimbursable = 1 AND t.reimbursed_at IS NOT NULL');
@@ -542,6 +556,107 @@ function memberBreakdown(ledgerId, start, end) {
 }
 
 /** 按标签聚合（kind=expense|income；未打标签的交易归入「未打标签」行） */
+/* ------------------------------ 筛选走势聚合 ------------------------------- */
+
+const TREND_PALETTE = ['#4f7cff', '#13c2c2', '#fa8c16', '#eb2f96', '#722ed1', '#52c41a', '#fa541c', '#1677ff'];
+
+/**
+ * 筛选结果时间走势(design D3):粒度自动适配——范围 ≤31 天按日,否则按月;
+ * f.categoryId 多选时每个分类一条线(≤8,按金额取前 8),未选分类时支出/收入两条。
+ * @returns {{grain:string, start:string, end:string, labels:string[], series:Array<{name,color,data:number[]}>}}
+ */
+function trendBreakdown(ledgerId, f = {}) {
+  const today = todayStr();
+  let start = f.from || (f.month ? `${f.month}-01` : null);
+  let end = f.to || today;
+  if (!f.to && f.month) {
+    // 单月筛选:终点取真实月末,而非今天(否则跨度被拉长、粒度误判)
+    const [my, mm] = f.month.split('-').map(Number);
+    end = `${f.month}-${pad(new Date(my, mm, 0).getDate())}`;
+  }
+  if (!start) {
+    start = get('SELECT MIN(txn_date) AS d FROM transactions WHERE ledger_id = ? AND deleted_at IS NULL', ledgerId)?.d || `${today.slice(0, 7)}-01`;
+  }
+  if (start > end) start = end;
+  const spanDays = Math.round((new Date(`${end}T00:00:00`) - new Date(`${start}T00:00:00`)) / 86400000);
+  const byDay = spanDays <= 31;
+  const fmt = byDay ? '%Y-%m-%d' : '%Y-%m';
+
+  // 完整桶序列(零填充):日粒度逐日、月粒度逐月
+  const buckets = [];
+  if (byDay) {
+    const [y, m, d] = start.split('-').map(Number);
+    const cur = new Date(y, m - 1, d);
+    const key = (dt) => `${dt.getFullYear()}-${pad(dt.getMonth() + 1)}-${pad(dt.getDate())}`;
+    while (key(cur) <= end) { buckets.push(key(cur)); cur.setDate(cur.getDate() + 1); }
+  } else {
+    let [y, m] = start.slice(0, 7).split('-').map(Number);
+    const [ey, em] = end.slice(0, 7).split('-').map(Number);
+    while (y < ey || (y === ey && m <= em)) { buckets.push(`${y}-${pad(m)}`); m++; if (m > 12) { m = 1; y++; } }
+  }
+
+  const { sql, params } = buildWhere(ledgerId, f);
+  const from = 'FROM transactions t LEFT JOIN categories c ON c.id = t.category_id LEFT JOIN accounts a ON a.id = t.account_id LEFT JOIN categories pc ON pc.id = c.parent_id';
+  const catIds = [].concat(f.categoryId || []).map(Number).filter(Boolean);
+  const series = [];
+
+  if (catIds.length) {
+    // 每个筛选对象一条线;子分类金额归并到所选父分类(与列表过滤「含子分类」语义一致);超过 8 条取金额前 8
+    const rows = all(
+      `SELECT strftime('${fmt}', t.txn_date) AS bucket, t.category_id AS cid, SUM(t.amount_base_cents) AS s
+       ${from} WHERE ${sql} GROUP BY bucket, cid`,
+      ...params
+    );
+    const catRows = all('SELECT id, parent_id FROM categories WHERE ledger_id = ?', ledgerId);
+    const parentOf = new Map(catRows.map((c) => [Number(c.id), Number(c.parent_id) || 0]));
+    const resolveCat = (cid) => {
+      let cur = cid;
+      for (let hop = 0; hop < 2 && cur; hop++) {
+        if (catIds.includes(cur)) return cur;
+        cur = parentOf.get(cur) || 0;
+      }
+      return 0;
+    };
+    const totals = new Map();
+    const cell = new Map();
+    for (const r of rows) {
+      const target = resolveCat(Number(r.cid));
+      if (!target) continue;
+      const k = `${r.bucket}|${target}`;
+      cell.set(k, (cell.get(k) || 0) + (Number(r.s) || 0));
+      totals.set(target, (totals.get(target) || 0) + (Number(r.s) || 0));
+    }
+    let picked = [...catIds];
+    if (picked.length > 8) picked.sort((a, b) => (totals.get(b) || 0) - (totals.get(a) || 0)).slice(0, 8);
+    const catInfo = new Map(
+      all(`SELECT id, name, color FROM categories WHERE id IN (${picked.map(() => '?').join(',')})`, ...picked)
+        .map((c) => [Number(c.id), c])
+    );
+    picked.forEach((cid, i) => {
+      const info = catInfo.get(cid) || { name: '未知分类', color: null };
+      series.push({
+        name: info.name,
+        color: info.color || TREND_PALETTE[i % TREND_PALETTE.length],
+        data: buckets.map((b) => Math.abs(cell.get(`${b}|${cid}`) || 0)),
+      });
+    });
+  } else {
+    // 未选具体分类:支出/收入两条
+    const rows = all(
+      `SELECT strftime('${fmt}', t.txn_date) AS bucket,
+         COALESCE(SUM(CASE WHEN t.type IN (${EXPENSE_TYPES.map(() => '?').join(',')}) THEN t.amount_base_cents ELSE 0 END),0) AS e,
+         COALESCE(SUM(CASE WHEN t.type IN (${INCOME_TYPES.map(() => '?').join(',')}) THEN t.amount_base_cents ELSE 0 END),0) AS i
+       ${from} WHERE ${sql} GROUP BY bucket`,
+      ...EXPENSE_TYPES, ...INCOME_TYPES, ...params
+    );
+    const map = new Map(rows.map((r) => [r.bucket, r]));
+    series.push({ name: '支出', color: '#f5222d', data: buckets.map((b) => Math.abs(Number(map.get(b)?.e) || 0)) });
+    series.push({ name: '收入', color: '#52c41a', data: buckets.map((b) => Math.abs(Number(map.get(b)?.i) || 0)) });
+  }
+
+  return { grain: byDay ? 'day' : 'month', start, end, labels: buckets, series };
+}
+
 function tagBreakdown(ledgerId, start, end, kind = 'expense') {
   const types = kind === 'income' ? INCOME_TYPES : EXPENSE_TYPES;
   return all(
@@ -633,5 +748,6 @@ module.exports = {
   applyTags, saveSplits, splitsOf,
   summary, categoryBreakdown, subcategoryBreakdown, monthlyTrend, memberBreakdown,
   tagBreakdown, participantBreakdown, applyParticipants, ensurePerson,
+  trendBreakdown,
   dailyBreakdown, accountOverview, netWorthTrend, rangeOf, syncDebts,
 };

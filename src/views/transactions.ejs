@@ -4,13 +4,19 @@
     var parts = [];
     Object.keys(o).forEach(function(k){
       if (o[k] === '' || o[k] === null || o[k] === undefined) return;
-      var key = k === 'categoryId' ? 'category_id' : k === 'accountId' ? 'account_id' : k === 'memberId' ? 'member_id' : k === 'personId' ? 'person_id' : k === 'tagId' ? 'tag_id' : k;
-      parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(o[k]));
+      // keyword→q 与后端读取一致(修复:此前输出 keyword= 导致翻页/快捷条件丢搜索词)
+      var key = k === 'categoryId' ? 'category_id' : k === 'accountId' ? 'account_id' : k === 'memberId' ? 'member_id' : k === 'personId' ? 'person_id' : k === 'tagId' ? 'tag_id' : k === 'keyword' ? 'q' : k;
+      var vals = Array.isArray(o[k]) ? o[k] : [o[k]];
+      vals.forEach(function(v){
+        if (v === '' || v === null || v === undefined) return;
+        parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(v));
+      });
     });
     return parts.length ? '?' + parts.join('&') : '';
   };
   var monthNow = new Date();
   var curMonth = monthNow.getFullYear() + '-' + String(monthNow.getMonth() + 1).padStart(2, '0');
+  var catSelected = function(id){ return Array.isArray(f.categoryId) && f.categoryId.indexOf(Number(id)) >= 0; };
 %>
 
 <div class="card tight mb16">
@@ -32,6 +38,8 @@
   </div>
 
   <form method="get" action="/transactions" class="inline-form">
+    <% // 保留快捷条件:提交表单不清掉 chips 设置的 month/from/to/kind/source/reimbursable %>
+    <% ['kind','month','from','to','source','reimbursable'].forEach(function(k){ if (f[k]) { %><input type="hidden" name="<%= k %>" value="<%= f[k] %>"><% } }); %>
     <div class="field" style="flex:1;min-width:150px">
       <input type="search" name="q" value="<%= f.keyword %>" placeholder="搜索备注 / 商家 / 分类 / 金额">
     </div>
@@ -39,21 +47,21 @@
       <option value="">全部类型</option>
       <% TXN_TYPES.forEach(function(t){ %><option value="<%= t.key %>" <%= f.type === t.key ? 'selected' : '' %>><%= t.icon %> <%= t.label %></option><% }); %>
     </select></div>
-    <div class="field"><select name="category_id">
-      <option value="">全部分类</option>
+    <div class="field"><select name="category_id" multiple size="1" title="按住 Ctrl / Cmd 可多选分类">
+      <option value="" disabled>全部分类(可多选)</option>
       <optgroup label="支出">
         <% form.expenseCats.filter(function(c){ return !c.parent_id; }).forEach(function(c){ %>
-          <option value="<%= c.id %>" <%= Number(f.categoryId) === Number(c.id) ? 'selected' : '' %>>📁 <%= c.name %></option>
+          <option value="<%= c.id %>" <%= catSelected(c.id) ? 'selected' : '' %>>📁 <%= c.name %></option>
           <% form.expenseCats.filter(function(x){ return Number(x.parent_id) === Number(c.id); }).forEach(function(x){ %>
-            <option value="<%= x.id %>" <%= Number(f.categoryId) === Number(x.id) ? 'selected' : '' %>>　<%= x.icon %> <%= x.name %></option>
+            <option value="<%= x.id %>" <%= catSelected(x.id) ? 'selected' : '' %>>　<%= x.icon %> <%= x.name %></option>
           <% }); %>
         <% }); %>
       </optgroup>
       <optgroup label="收入">
         <% form.incomeCats.filter(function(c){ return !c.parent_id; }).forEach(function(c){ %>
-          <option value="<%= c.id %>" <%= Number(f.categoryId) === Number(c.id) ? 'selected' : '' %>>📁 <%= c.name %></option>
+          <option value="<%= c.id %>" <%= catSelected(c.id) ? 'selected' : '' %>>📁 <%= c.name %></option>
           <% form.incomeCats.filter(function(x){ return Number(x.parent_id) === Number(c.id); }).forEach(function(x){ %>
-            <option value="<%= x.id %>" <%= Number(f.categoryId) === Number(x.id) ? 'selected' : '' %>>　<%= x.icon %> <%= x.name %></option>
+            <option value="<%= x.id %>" <%= catSelected(x.id) ? 'selected' : '' %>>　<%= x.icon %> <%= x.name %></option>
           <% }); %>
         <% }); %>
       </optgroup>
@@ -70,6 +78,10 @@
       <option value="">全部参与人</option>
       <% (form.people || []).forEach(function(p){ %><option value="<%= p.id %>" <%= Number(f.personId) === Number(p.id) ? 'selected' : '' %>><%= p.name %></option><% }); %>
     </select></div>
+    <div class="field"><select name="tag_id">
+      <option value="">全部标签</option>
+      <% (form.tags || []).forEach(function(g){ %><option value="<%= g.id %>" <%= Number(f.tagId) === Number(g.id) ? 'selected' : '' %>>#<%= g.name %></option><% }); %>
+    </select></div>
     <div class="field"><select name="sort">
       <option value="date_desc" <%= f.sort === 'date_desc' ? 'selected' : '' %>>最新在前</option>
       <option value="date_asc" <%= f.sort === 'date_asc' ? 'selected' : '' %>>最早在前</option>
@@ -77,10 +89,28 @@
       <option value="amount_asc" <%= f.sort === 'amount_asc' ? 'selected' : '' %>>金额从小到大</option>
     </select></div>
     <div class="field"><button class="btn btn-primary" type="submit">筛选</button></div>
-    <% if (f.keyword || f.type || f.kind || f.categoryId || f.accountId || f.memberId || f.personId || f.month || f.from || f.to || f.source || f.reimbursable) { %>
+    <div class="field"><button class="btn" type="button" id="trend-toggle" title="按当前条件展示时间走势">📈 走势</button></div>
+    <% if (f.keyword || f.type || f.kind || f.categoryId || f.accountId || f.memberId || f.personId || f.month || f.from || f.to || f.source || f.reimbursable || f.tagId) { %>
       <div class="field"><a class="btn btn-ghost" href="/transactions">清空</a></div>
     <% } %>
   </form>
+</div>
+
+<div class="card tight mb16 hidden" id="trend-card">
+  <div class="card-head">
+    <h2>📈 筛选走势</h2>
+    <span class="muted small"><%= trend.grain === 'day' ? '按日' : '按月' %> · <%= trend.start %> ~ <%= trend.end %> · 点击图例可聚焦曲线,再点恢复</span>
+  </div>
+  <div id="trend-box">
+    <%- charts.lineChart({
+      labels: trend.labels.map(function(l){ return trend.grain === 'month' ? helpers.monthShort(l) : l.slice(5); }),
+      series: trend.series.map(function(s){ return { name: s.name, color: s.color, data: s.data.map(function(v){ return v / 100; }) }; }),
+      height: 240, valueUnit: ' 元'
+    }) %>
+  </div>
+  <% if (!trend.series.length || !trend.series.some(function(s){ return s.data.some(function(v){ return v > 0; }); })) { %>
+    <div class="empty small muted">当前条件下没有可绘制的走势数据</div>
+  <% } %>
 </div>
 
 <div class="row between mb12">
@@ -140,3 +170,29 @@
     </div>
   </div>
 </form>
+
+<script>
+(function(){
+  var btn = document.getElementById('trend-toggle');
+  var card = document.getElementById('trend-card');
+  if (btn && card) btn.addEventListener('click', function(){ card.classList.toggle('hidden'); });
+  var box = document.getElementById('trend-box');
+  if (box) {
+    // 图例点击:聚焦对应曲线,其余变暗;再点恢复
+    box.addEventListener('click', function(e){
+      var item = e.target.closest('.legend-item');
+      if (!item || !box.contains(item)) return;
+      var si = item.getAttribute('data-series');
+      if (box.getAttribute('data-focus') === si) {
+        box.removeAttribute('data-focus');
+        box.querySelectorAll('.trend-series').forEach(function(g){ g.style.opacity = ''; });
+        return;
+      }
+      box.setAttribute('data-focus', si);
+      box.querySelectorAll('.trend-series').forEach(function(g){
+        g.style.opacity = g.getAttribute('data-series') === si ? '' : '0.15';
+      });
+    });
+  }
+})();
+</script>

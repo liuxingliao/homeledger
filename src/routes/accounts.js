@@ -235,12 +235,13 @@ router.post('/categories/:id', auth.requireLogin, auth.requireLedgerWrite, (req,
   const id = Number(req.params.id);
   const c = get('SELECT * FROM categories WHERE id = ?', id);
   if (!c || (c.ledger_id !== null && Number(c.ledger_id) !== ledgerId)) {
-    res.flash('error', '系统内置分类不可修改（可新建自己的分类）');
+    res.flash('error', '分类不存在');
     return res.redirect('/categories');
   }
+  // 系统内置分类解锁:改名/图标/颜色全局生效(ledger_id 为空,跨账本共享)
   run('UPDATE categories SET name=?, icon=?, color=? WHERE id = ?',
     String(req.body.name || c.name).slice(0, 20), req.body.icon || c.icon, req.body.color || c.color, id);
-  res.flash('success', '分类已更新');
+  res.flash('success', c.ledger_id === null ? '分类已更新(系统内置分类,全局生效)' : '分类已更新');
   res.redirect('/categories');
 });
 
@@ -248,19 +249,22 @@ router.post('/categories/:id/delete', auth.requireLogin, auth.requireLedgerWrite
   const ledgerId = Number(res.locals.ledger.id);
   const id = Number(req.params.id);
   const c = get('SELECT * FROM categories WHERE id = ?', id);
-  if (!c || Number(c.ledger_id) !== ledgerId) {
-    res.flash('error', '系统内置分类不可删除');
+  if (!c || (c.ledger_id !== null && Number(c.ledger_id) !== ledgerId)) {
+    res.flash('error', '分类不存在');
     return res.redirect('/categories');
   }
-  const used = Number(get('SELECT COUNT(*) AS c FROM transactions WHERE category_id = ?', id)?.c || 0);
+  // 分类下有数据(含全部子分类的引用)一律拒绝删除,历史与统计保持不动
+  const used = Number(get(
+    `SELECT COUNT(*) AS c FROM transactions WHERE category_id IN
+       (SELECT ? UNION SELECT id FROM categories WHERE parent_id = ?)`, id, id
+  )?.c || 0);
   if (used > 0) {
-    run('UPDATE categories SET is_archived = 1 WHERE id = ?', id);
-    res.flash('success', '该分类下已有记录，已改为「归档」不再出现在选择列表');
-  } else {
-    run('DELETE FROM categories WHERE id = ?', id);
-    run('DELETE FROM categories WHERE parent_id = ?', id);
-    res.flash('success', '分类已删除');
+    res.flash('error', `该分类下有 ${used} 笔交易，不能删除。可先批量修改或删除相关交易。`);
+    return res.redirect('/categories');
   }
+  run('DELETE FROM categories WHERE id = ?', id);
+  run('DELETE FROM categories WHERE parent_id = ?', id);
+  res.flash('success', '分类已删除');
   res.redirect('/categories');
 });
 
@@ -293,8 +297,13 @@ router.post('/tags', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
 router.post('/tags/:id', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
   const ledgerId = Number(res.locals.ledger.id);
   const id = Number(req.params.id);
+  const name = String(req.body.name || '').trim().slice(0, 20);
+  if (!name) { res.flash('error', '请填写标签名'); return res.redirect('/tags'); }
+  // 重命名防护:同账本同名(排除自身)不覆盖,避免撞 UNIQUE 抛 500
+  const dup = get('SELECT id FROM tags WHERE ledger_id = ? AND name = ? AND id != ?', ledgerId, name, id);
+  if (dup) { res.flash('error', `标签「${name}」已存在`); return res.redirect('/tags'); }
   run('UPDATE tags SET name = ?, color = ? WHERE id = ? AND ledger_id = ?',
-    String(req.body.name || '').slice(0, 20), req.body.color || '#4f7cff', id, ledgerId);
+    name, req.body.color || '#4f7cff', id, ledgerId);
   res.flash('success', '标签已更新');
   res.redirect('/tags');
 });
@@ -302,7 +311,12 @@ router.post('/tags/:id', auth.requireLogin, auth.requireLedgerWrite, (req, res) 
 router.post('/tags/:id/delete', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
   const ledgerId = Number(res.locals.ledger.id);
   const id = Number(req.params.id);
-  run('DELETE FROM transaction_tags WHERE tag_id = ?', id);
+  // 标签下有数据一律拒绝删除
+  const used = Number(get('SELECT COUNT(*) AS c FROM transaction_tags WHERE tag_id = ?', id)?.c || 0);
+  if (used > 0) {
+    res.flash('error', `该标签下有 ${used} 笔交易，不能删除。可先移除相关交易的标签。`);
+    return res.redirect('/tags');
+  }
   run('DELETE FROM tags WHERE id = ? AND ledger_id = ?', id, ledgerId);
   res.flash('success', '标签已删除');
   res.redirect('/tags');

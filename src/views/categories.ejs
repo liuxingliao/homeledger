@@ -1,9 +1,9 @@
 <div class="notice info mb16">
-  系统内置了 <%= expenseTree.length + incomeTree.length %> 个一级分类、数百个二级分类，覆盖市面主流记账场景。你可以自由新建自己的分类；内置分类不可修改，但可以归档掉不用的。
+  系统内置了 <%= expenseTree.length + incomeTree.length %> 个一级分类、数百个二级分类。所有分类（含内置）都可修改名称、图标、颜色与删除——内置分类为全局共享，改名对所有账本生效；分类下有交易时不能删除，可先批量修改或删除相关交易。
 </div>
 
 <div class="grid grid-2">
-  <% [ { title:'支出分类', tree: expenseTree, kind:'expense' }, { title:'收入分类', tree: incomeTree, kind:'income' } ].forEach(function(sec){ %>
+  <% [ { title:'支出分类', tree: expenseTree }, { title:'收入分类', tree: incomeTree } ].forEach(function(sec){ %>
     <div class="card">
       <div class="card-head"><h2><%= sec.title %></h2>
         <span class="muted small">近一年使用统计</span>
@@ -12,19 +12,43 @@
         <div style="border-bottom:1px dashed var(--border);padding:8px 0">
           <div class="row between">
             <span class="bold"><%= root.icon %> <%= root.name %></span>
-            <span class="muted tiny">合计 <%= helpers.fmtAmount(root.children.reduce(function(s,c){ return s + Number(c.stat.total); }, 0) + Number(root.stat.total)) %></span>
+            <span class="row" style="gap:8px">
+              <span class="muted tiny">合计 <%= helpers.fmtAmount(root.children.reduce(function(s,c){ return s + Number(c.stat.total); }, 0) + Number(root.stat.total)) %></span>
+              <a href="#" class="cat-edit" data-id="<%= root.id %>" style="font-size:11px">编辑</a>
+              <form method="post" action="/categories/<%= root.id %>/delete" style="display:inline" data-confirm="删除一级分类「<%= root.name %>」？其子分类会一并处理；分类下有交易时将无法删除。">
+                <input type="hidden" name="_csrf" value="<%= csrf %>">
+                <button class="btn btn-sm btn-ghost" style="padding:0 2px;font-size:10px;color:var(--expense)">删除</button>
+              </form>
+            </span>
+          </div>
+          <div class="cat-edit-form hidden mt8" data-id="<%= root.id %>" style="background:var(--card-2);padding:10px;border-radius:10px">
+            <form method="post" action="/categories/<%= root.id %>" class="inline-form" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+              <input type="hidden" name="_csrf" value="<%= csrf %>">
+              <input type="text" name="name" value="<%= root.name %>" required style="width:140px">
+              <input type="text" name="icon" value="<%= root.icon %>" style="width:60px">
+              <input type="color" name="color" value="<%= root.color || '#4f7cff' %>" style="width:44px;padding:2px">
+              <button class="btn btn-sm btn-primary" type="submit">保存</button>
+            </form>
           </div>
           <div class="row wrap mt8" style="gap:6px">
             <% root.children.forEach(function(c){ %>
               <span class="chip" title="<%= c.stat.cnt %> 笔 · <%= helpers.fmtAmount(c.stat.total) %>">
                 <%= c.icon %> <%= c.name %>
                 <% if (Number(c.stat.cnt) > 0) { %><span class="muted tiny"><%= c.stat.cnt %></span><% } %>
-                <% if (Number(c.ledger_id) === ledger.id) { %>
-                  <form method="post" action="/categories/<%= c.id %>/delete" style="display:inline" data-confirm="删除分类「<%= c.name %>」？">
-                    <input type="hidden" name="_csrf" value="<%= csrf %>">
-                    <button class="btn btn-sm btn-ghost" style="padding:0 2px;font-size:10px">✕</button>
-                  </form>
-                <% } %>
+                <a href="#" class="cat-edit" data-id="<%= c.id %>" style="font-size:10px">编辑</a>
+                <form method="post" action="/categories/<%= c.id %>/delete" style="display:inline" data-confirm="删除分类「<%= c.name %>」？分类下有交易时将无法删除。">
+                  <input type="hidden" name="_csrf" value="<%= csrf %>">
+                  <button class="btn btn-sm btn-ghost" style="padding:0 2px;font-size:10px">✕</button>
+                </form>
+              </span>
+              <span class="cat-edit-form hidden" data-id="<%= c.id %>" style="background:var(--card-2);padding:6px 10px;border-radius:8px;display:inline-flex;gap:6px;align-items:center">
+                <form method="post" action="/categories/<%= c.id %>" class="inline-form" style="display:flex;gap:6px;align-items:center">
+                  <input type="hidden" name="_csrf" value="<%= csrf %>">
+                  <input type="text" name="name" value="<%= c.name %>" required style="width:120px">
+                  <input type="text" name="icon" value="<%= c.icon %>" style="width:52px">
+                  <input type="color" name="color" value="<%= c.color || '#4f7cff' %>" style="width:40px;padding:2px">
+                  <button class="btn btn-sm btn-primary" type="submit">保存</button>
+                </form>
               </span>
             <% }); %>
           </div>
@@ -68,3 +92,15 @@
     </div>
   </form>
 </div>
+
+<script>
+(function(){
+  document.querySelectorAll('.cat-edit').forEach(function(a){
+    a.addEventListener('click', function(e){
+      e.preventDefault();
+      var f = document.querySelector('.cat-edit-form[data-id="' + a.dataset.id + '"]');
+      if (f) f.classList.toggle('hidden');
+    });
+  });
+})();
+</script>

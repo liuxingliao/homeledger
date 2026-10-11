@@ -135,6 +135,40 @@ const csrfOf = (html) => (html.match(/name="_csrf"\s+value="([^"]+)"/) || [])[1]
   const vRef = (r.text.match(/app\.js\?v=([^"]+)/) || [])[1] || '';
   check('JS 引用带缓存戳（版本-mtime）', /-\w+$/.test(vRef), `v=${vRef}`);
 
+  /* --- 删除用户及其名下全部数据 --- */
+  // 开放注册 → 注册第二用户(自动建默认账本) → 记一笔(含参与成员) → 管理员彻底删除 → 数据清零
+  r = await req('GET', '/settings', { cookie });
+  await req('POST', '/settings/site', { cookie, form: { _csrf: csrfOf(r.text), 'site.name': '家账簿', 'site.currency': 'CNY', 'site.allow_register': '1', 'security.login_max_fail': '10' } });
+  // 注册需匿名会话:req() 的 cookie 传空串会回落到当前 jar,故直接清空 jar
+  const adminCookie = cookie;
+  jar = '';
+  r = await req('GET', '/register');
+  const regRes = await req('POST', '/register', { form: { _csrf: csrfOf(r.text), username: 'victim', password: 'victim888', password2: 'victim888', display_name: '待删用户' } });
+  const victimCookie = jar;
+  jar = adminCookie;
+  check('注册第二用户并自动登录', regRes.status === 302, `HTTP ${regRes.status}`);
+  r = await req('GET', '/transactions/new', { cookie: victimCookie });
+  const vCsrf = csrfOf(r.text);
+  const vAcc = (r.text.match(/name="account_id"[\s\S]*?<option value="(\d+)"/) || [])[1];
+  r = await req('POST', '/transactions', { cookie: victimCookie, form: { _csrf: vCsrf, type: 'expense', amount: '5.00', account_id: vAcc, txn_date: '2026-10-11', people: '测试宝宝', note: 'victim 交易' } });
+  check('victim 名下记一笔(带参与成员)', r.status === 302, `HTTP ${r.status}`);
+
+  // 切回管理员
+  jar = cookie;
+  r = await req('GET', '/settings', { cookie });
+  const txnTotal = (s) => { const i = s.indexOf('记账总数'); const m = s.slice(i, i + 300).match(/(\d+)/); return m ? Number(m[1]) : -1; };
+  check('删除前记账总数为 1', txnTotal(r.text) === 1, String(txnTotal(r.text)));
+  const i2 = r.text.indexOf('待删用户');
+  const uid = i2 >= 0 ? (r.text.slice(i2).match(/\/admin\/users\/(\d+)/) || [])[1] : null;
+  check('定位到 victim 用户 id', !!uid, String(uid));
+  r = await req('POST', `/admin/users/${uid}`, { cookie, form: { action: 'delete', hard: '1', _csrf: csrf } });
+  check('彻底删除用户成功', r.status === 302, `HTTP ${r.status}`);
+  r = await req('GET', '/settings', { cookie });
+  check('用户列表不再含该用户', !r.text.includes('待删用户'));
+  check('删除后记账总数归 0(账本连同交易一并清理)', txnTotal(r.text) === 0, String(txnTotal(r.text)));
+  r = await req('GET', '/', { cookie: victimCookie });
+  check('victim 会话已失效', r.status === 302, `HTTP ${r.status}`);
+
   console.log(`\n=== 结果：${pass} 通过 / ${fail} 失败 ===`);
   process.exit(fail ? 1 : 0);
 })().catch((e) => { console.error('FATAL', e); process.exit(1); });

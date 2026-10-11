@@ -333,17 +333,14 @@ router.post('/ledgers/:id/archive', auth.requireLogin, auth.requireLedgerManage,
   res.redirect('/ledgers');
 });
 
-router.post('/ledgers/:id/delete', auth.requireLogin, (req, res) => {
-  const id = Number(req.params.id);
-  const l = get('SELECT * FROM ledgers WHERE id = ? AND owner_id = ?', id, req.session.userId);
-  if (!l) { res.flash('error', '只有账本拥有者可以删除账本'); return res.redirect('/ledgers'); }
-  if (String(req.body.confirm || '') !== l.name) {
-    res.flash('error', '请准确输入账本名称以确认删除');
-    return res.redirect('/ledgers');
-  }
+/** 彻底清除一个账本及其全部子数据(账本删除与用户删除共用;参与成员须在删交易前清理) */
+function purgeLedger(id) {
   tx(() => {
     const ids = all('SELECT id FROM transactions WHERE ledger_id = ?', id).map((r) => r.id);
-    for (const tid of ids) run('DELETE FROM transaction_tags WHERE transaction_id = ?', tid);
+    for (const tid of ids) {
+      run('DELETE FROM transaction_tags WHERE transaction_id = ?', tid);
+      run('DELETE FROM transaction_participants WHERE transaction_id = ?', tid);
+    }
     run('DELETE FROM splits WHERE ledger_id = ?', id);
     run('DELETE FROM transactions WHERE ledger_id = ?', id);
     run('DELETE FROM attachments WHERE ledger_id = ?', id);
@@ -354,13 +351,23 @@ router.post('/ledgers/:id/delete', auth.requireLogin, (req, res) => {
     run('DELETE FROM debts WHERE ledger_id = ?', id);
     run('DELETE FROM tags WHERE ledger_id = ?', id);
     run('DELETE FROM categories WHERE ledger_id = ?', id);
-    run('DELETE FROM transaction_participants WHERE transaction_id IN (SELECT id FROM transactions WHERE ledger_id = ?)', id);
     run('DELETE FROM ledger_people WHERE ledger_id = ?', id);
     run('DELETE FROM ledger_members WHERE ledger_id = ?', id);
     run('DELETE FROM ledger_invites WHERE ledger_id = ?', id);
     run('DELETE FROM import_jobs WHERE ledger_id = ?', id);
     run('DELETE FROM ledgers WHERE id = ?', id);
   });
+}
+
+router.post('/ledgers/:id/delete', auth.requireLogin, (req, res) => {
+  const id = Number(req.params.id);
+  const l = get('SELECT * FROM ledgers WHERE id = ? AND owner_id = ?', id, req.session.userId);
+  if (!l) { res.flash('error', '只有账本拥有者可以删除账本'); return res.redirect('/ledgers'); }
+  if (String(req.body.confirm || '') !== l.name) {
+    res.flash('error', '请准确输入账本名称以确认删除');
+    return res.redirect('/ledgers');
+  }
+  purgeLedger(id);
   auth.audit(req, 'ledger.delete', { entity: 'ledger', entityId: id, detail: l.name });
   if (Number(req.session.ledgerId) === id) req.session.ledgerId = null;
   res.flash('success', `账本「${l.name}」及其全部数据已删除`);
@@ -764,10 +771,11 @@ router.post('/admin/users/:id', auth.requireLogin, auth.requireAdmin, (req, res)
       for (const l of owned) {
         const others = get('SELECT user_id FROM ledger_members WHERE ledger_id = ? AND user_id != ? LIMIT 1', l.id, id);
         if (others) run('UPDATE ledgers SET owner_id = ? WHERE id = ?', others.user_id, l.id);
-        else run('DELETE FROM ledgers WHERE id = ?', l.id);
+        else purgeLedger(l.id); // 连账本带全部子数据一并清理,不留孤儿
       }
       run('DELETE FROM ledger_members WHERE user_id = ?', id);
       run('DELETE FROM sessions WHERE user_id = ?', id);
+      run('DELETE FROM notifications WHERE user_id = ?', id);
       run("UPDATE users SET status = 'disabled', username = username || '_deleted_' || id WHERE id = ?", id);
       if (String(req.body.hard || '') === '1') run('DELETE FROM users WHERE id = ?', id);
       res.flash('success', '用户已删除（其名下账本已转交或清理）');

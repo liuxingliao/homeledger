@@ -122,6 +122,8 @@ function lineChart({ labels = [], series = [], height = 220, fill = true, valueU
     const pts = se.data.map((v, i) => [xAt(i), yAt(v)]);
     if (!pts.length) return;
     const d = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+    // data-series 供图例点击高亮/变暗交互(交易明细走势图)
+    s += `<g class="trend-series" data-series="${si}">`;
     if (fill) {
       s += `<path d="${d} L${pts[pts.length - 1][0].toFixed(1)},${(padT + innerH).toFixed(1)} L${pts[0][0].toFixed(1)},${(padT + innerH).toFixed(1)} Z" fill="url(#lg${si})"/>`;
     }
@@ -129,15 +131,17 @@ function lineChart({ labels = [], series = [], height = 220, fill = true, valueU
     pts.forEach((p, i) => {
       s += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.8" fill="#fff" stroke="${se.color}" stroke-width="2"><title>${esc(se.name)} ${esc(labels[i])}：${nf(se.data[i])}${esc(valueUnit)}</title></circle>`;
     });
+    s += `</g>`;
   });
   labels.forEach((lab, i) => {
     if (n > 14 && i % 2 !== 0 && i !== n - 1) return;
     s += `<text x="${xAt(i).toFixed(1)}" y="${H - 10}" font-size="11" fill="${C.axis}" text-anchor="middle">${esc(lab)}</text>`;
   });
   let lx = padL;
-  series.forEach((se) => {
-    s += `<line x1="${lx}" y1="14" x2="${lx + 14}" y2="14" stroke="${se.color}" stroke-width="2.5" stroke-linecap="round"/>`;
-    s += `<text x="${lx + 19}" y="18" font-size="12" fill="${C.text}">${esc(se.name)}</text>`;
+  series.forEach((se, si) => {
+    s += `<g class="legend-item" data-series="${si}" style="cursor:pointer"><rect x="${lx - 4}" y="2" width="${19 + se.name.length * 12 + 14}" height="22" fill="transparent"/>` +
+      `<line x1="${lx}" y1="14" x2="${lx + 14}" y2="14" stroke="${se.color}" stroke-width="2.5" stroke-linecap="round"/>` +
+      `<text x="${lx + 19}" y="18" font-size="12" fill="${C.text}">${esc(se.name)}</text></g>`;
     lx += 19 + se.name.length * 12 + 20;
   });
   s += `</svg>`;

@@ -318,9 +318,10 @@
                     <input type="hidden" name="action" value="reset">
                     <button class="btn btn-sm">重置密码</button>
                   </form>
-                  <form method="post" action="/admin/users/<%= u2.id %>" data-confirm="⚠️ 删除用户 <%= u2.display_name %>？其名下账本会转交给其他成员。">
+                  <form method="post" action="/admin/users/<%= u2.id %>" data-confirm="⚠️ 删除用户 <%= u2.display_name %>？名下账本将转交给其他成员或连数据一并删除。若勾选了「彻底删除」，用户记录本身也会被移除，不可恢复。">
                     <input type="hidden" name="_csrf" value="<%= csrf %>">
                     <input type="hidden" name="action" value="delete">
+                    <label class="check" style="font-size:10px" title="不勾选：仅禁用并改名（可恢复）；勾选：物理删除用户记录"><input type="checkbox" name="hard" value="1"> 彻底删除</label>
                     <button class="btn btn-sm btn-danger">删除</button>
                   </form>
                 </div>

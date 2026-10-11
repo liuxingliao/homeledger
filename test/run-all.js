@@ -23,6 +23,8 @@ const SUITES = [
   'verify-people-participants.js',
   'verify-salary-allocation.js',
   'verify-reports-range.js',
+  'verify-txn-filter-trend.js',
+  'verify-category-tag-mgmt.js',
 ];
 
 function healthz(timeoutMs) {

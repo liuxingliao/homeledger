@@ -40,35 +40,44 @@ function readForm(body) {
   };
 }
 
+/** 从查询串解析筛选条件(GET / 与视图共用,design D3) */
+function parseFilterQuery(query) {
+  const cats = [].concat(query.category_id || []).map(Number).filter(Boolean);
+  return {
+    type: query.type || '',
+    kind: query.kind || '',
+    categoryId: cats.length ? cats : null,
+    accountId: query.account_id ? Number(query.account_id) : null,
+    memberId: query.member_id ? Number(query.member_id) : null,
+    personId: query.person_id ? Number(query.person_id) : null,
+    tagId: query.tag_id ? Number(query.tag_id) : null,
+    source: query.source || '',
+    month: query.month || '',
+    from: query.from || '',
+    to: query.to || '',
+    // 兼容旧书签里的 keyword= 参数
+    keyword: query.q || query.keyword || '',
+    reimbursable: query.reimbursable || '',
+    sort: query.sort || 'date_desc',
+    page: Number(query.page) || 1,
+    pageSize: 40,
+  };
+}
+
 /* ---------------------------------- 列表 ---------------------------------- */
 
 router.get('/', auth.requireLogin, (req, res) => {
   const ledger = res.locals.ledger;
   if (!ledger) return res.redirect('/');
   const ledgerId = Number(ledger.id);
-  const f = {
-    type: req.query.type || '',
-    kind: req.query.kind || '',
-    categoryId: req.query.category_id ? Number(req.query.category_id) : null,
-    accountId: req.query.account_id ? Number(req.query.account_id) : null,
-    memberId: req.query.member_id ? Number(req.query.member_id) : null,
-    personId: req.query.person_id ? Number(req.query.person_id) : null,
-    tagId: req.query.tag_id ? Number(req.query.tag_id) : null,
-    source: req.query.source || '',
-    month: req.query.month || '',
-    from: req.query.from || '',
-    to: req.query.to || '',
-    keyword: req.query.q || '',
-    reimbursable: req.query.reimbursable || '',
-    sort: req.query.sort || 'date_desc',
-    page: Number(req.query.page) || 1,
-    pageSize: 40,
-  };
+  const f = parseFilterQuery(req.query);
   const result = txn.listTransactions(ledgerId, f);
   const form = fd.txFormData(ledgerId, req.session.userId);
+  // 筛选走势(服务端渲染,design D3):仅当有筛选条件或始终展示?始终按当前条件计算,视图默认收起
+  const trend = txn.trendBreakdown(ledgerId, f);
   res.render('transactions', {
     title: '账单明细', activeNav: 'transactions',
-    f, result, groups: txn.groupByDate(result.rows), form,
+    f, result, groups: txn.groupByDate(result.rows), form, trend,
     totalPages: result.pages,
   });
 });
