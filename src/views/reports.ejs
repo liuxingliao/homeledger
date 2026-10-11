@@ -108,7 +108,7 @@
   <div class="card">
     <div class="card-head">
       <h2><%= kind === 'expense' ? '支出' : '收入' %>构成</h2>
-      <span class="muted small"><%= range.label %></span>
+      <span class="muted small">按一级分类 · <%= range.label %> · 二级明细见下方排行榜</span>
     </div>
     <% if (!donutItems.length) { %>
       <div class="empty"><span class="big">📊</span>该区间没有数据</div>
