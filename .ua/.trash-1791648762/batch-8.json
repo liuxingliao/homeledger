@@ -1,0 +1,71 @@
+{
+  "nodes": [
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "项目主文档（中文），覆盖 Docker Compose / 纯 Docker / 源码三种部署方式、功能一览（记账内核、AI 截图与文本自动记账、家庭多人共享、规划提醒、报表图表、开放 API）、AI 识别配置、飞牛 fnOS .fpk 应用包、备份迁移与安全说明，并给出目录结构与 7 套件回归测试的运行方法。",
+      "tags": ["documentation", "entry-point", "deployment", "ai-记账", "备份恢复"],
+      "complexity": "moderate",
+      "languageNotes": "共 23 个 Markdown 章节，内嵌大量可直接复制粘贴的 docker-compose.yml 与 shell 命令块，属于典型的自托管项目「部署即文档」写法。"
+    },
+    {
+      "id": "config:docker-compose-bak.yml",
+      "type": "config",
+      "name": "docker-compose-bak.yml",
+      "filePath": "docker-compose-bak.yml",
+      "summary": "homeledger 服务的 Docker Compose 备份配置：本地构建镜像、映射 5111 端口、通过环境变量注入 SESSION_SECRET / 管理员账号 / Ollama 地址，并把 ./data 挂载为数据目录（SQLite 数据库与附件均落盘于此）。",
+      "tags": ["configuration", "containerization", "deployment", "docker-compose", "备份"],
+      "complexity": "simple",
+      "languageNotes": "使用 ${VAR:-默认值} 语法支持在命令行直接覆盖 SESSION_SECRET 与 ADMIN_PASSWORD，并通过 extra_hosts 的 host-gateway 让容器访问宿主机上的 Ollama 服务。"
+    },
+    {
+      "id": "config:package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "package.json",
+      "summary": "npm 项目清单：入口为 server.js，提供 start / dev（--watch 热重载）脚本，要求 Node >= 22.5.0（依赖内置 node:sqlite），运行时依赖仅 express、express-session 与 ejs 三个包。",
+      "tags": ["configuration", "npm", "entry-point", "build-system", "依赖管理"],
+      "complexity": "simple",
+      "languageNotes": "engines 强制 Node >= 22.5.0 以使用内置的 node:sqlite 模块，实现零原生编译依赖的纯后端 SSR 架构。"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:README.md",
+      "target": "file:server.js",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:README.md",
+      "target": "file:test/run-all.js",
+      "type": "documents",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "config:package.json",
+      "target": "file:server.js",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:docker-compose-bak.yml",
+      "target": "file:server.js",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:docker-compose-bak.yml",
+      "target": "service:Dockerfile",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

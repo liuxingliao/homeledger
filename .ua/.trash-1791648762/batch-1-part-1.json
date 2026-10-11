@@ -1,0 +1,1577 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/db.js",
+      "type": "file",
+      "name": "db.js",
+      "filePath": "src/db.js",
+      "summary": "基于 node:sqlite 的数据持久层：定义 users/ledgers/transactions/categories 等全套建表 DDL，提供 all/get/run/tx 查询封装、轻量列迁移（ensureColumn）、系统分类与汇率种子数据，以及账户余额重算等核心领域函数，是整个应用唯一的数据库访问入口。",
+      "tags": [
+        "data-model",
+        "database",
+        "service",
+        "migration",
+        "entry-point"
+      ],
+      "complexity": "complex",
+      "languageNotes": "使用 Node 22+ 内置 node:sqlite 模块（零依赖），通过 prepared statement 缓存和 BEGIN IMMEDIATE 手写事务封装提升性能；用 ensureColumn 实现 PRAGMA 驱动的增量列迁移。"
+    },
+    {
+      "id": "function:src/db.js:tx",
+      "type": "function",
+      "name": "tx",
+      "filePath": "src/db.js",
+      "lineRange": [
+        49,
+        59
+      ],
+      "summary": "事务封装：以 BEGIN IMMEDIATE 开启独占事务执行回调，成功则 COMMIT、异常则 ROLLBACK 后重新抛出。",
+      "tags": [
+        "utility",
+        "transaction",
+        "database"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/db.js:ensureColumn",
+      "type": "function",
+      "name": "ensureColumn",
+      "filePath": "src/db.js",
+      "lineRange": [
+        408,
+        412
+      ],
+      "summary": "轻量迁移助手：通过 PRAGMA table_info 检查列是否存在，缺失时执行 ALTER TABLE ADD COLUMN，实现平滑的 schema 升级。",
+      "tags": [
+        "migration",
+        "database",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/db.js:getSetting",
+      "type": "function",
+      "name": "getSetting",
+      "filePath": "src/db.js",
+      "lineRange": [
+        509,
+        512
+      ],
+      "summary": "按 key 读取 settings 键值表中的配置项，支持默认值回退，是 AI 配置、站点设置等读取的统一入口。",
+      "tags": [
+        "configuration",
+        "database",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/db.js:setSetting",
+      "type": "function",
+      "name": "setSetting",
+      "filePath": "src/db.js",
+      "lineRange": [
+        513,
+        518
+      ],
+      "summary": "以 UPSERT 方式写入或更新 settings 键值表中的配置项。",
+      "tags": [
+        "configuration",
+        "database",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/db.js:allSettings",
+      "type": "function",
+      "name": "allSettings",
+      "filePath": "src/db.js",
+      "lineRange": [
+        519,
+        523
+      ],
+      "summary": "读取全部 settings 键值对并返回为普通对象，供设置页展示。",
+      "tags": [
+        "configuration",
+        "database",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/db.js:seedSystemCategories",
+      "type": "function",
+      "name": "seedSystemCategories",
+      "filePath": "src/db.js",
+      "lineRange": [
+        527,
+        551
+      ],
+      "summary": "首次初始化时按内置树形种子数据递归插入系统级收支分类（含图标），仅当分类表为空时执行一次。",
+      "tags": [
+        "data-model",
+        "seed",
+        "initialization"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/db.js:seedExchangeRates",
+      "type": "function",
+      "name": "seedExchangeRates",
+      "filePath": "src/db.js",
+      "lineRange": [
+        559,
+        572
+      ],
+      "summary": "首次初始化时写入内置默认汇率（对 CNY）到 exchange_rates 表，仅当表为空时执行。",
+      "tags": [
+        "seed",
+        "initialization",
+        "data-model"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/db.js:createDefaultAccounts",
+      "type": "function",
+      "name": "createDefaultAccounts",
+      "filePath": "src/db.js",
+      "lineRange": [
+        575,
+        592
+      ],
+      "summary": "为新账本批量创建预设默认账户（现金、银行卡、支付宝、微信、信用卡等），在事务中执行。",
+      "tags": [
+        "data-model",
+        "factory",
+        "seed"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/db.js:addLedgerMember",
+      "type": "function",
+      "name": "addLedgerMember",
+      "filePath": "src/db.js",
+      "lineRange": [
+        595,
+        601
+      ],
+      "summary": "向账本成员表插入一条成员记录，建立用户与账本的多对多关联。",
+      "tags": [
+        "data-model",
+        "database"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/db.js:createDefaultLedger",
+      "type": "function",
+      "name": "createDefaultLedger",
+      "filePath": "src/db.js",
+      "lineRange": [
+        604,
+        613
+      ],
+      "summary": "用户注册后的引导逻辑：创建默认个人账本、将用户加为成员，并按默认货币创建一组默认账户。",
+      "tags": [
+        "factory",
+        "data-model",
+        "initialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/db.js:txnEffects",
+      "type": "function",
+      "name": "txnEffects",
+      "lineRange": [
+        621,
+        660
+      ],
+      "summary": "核心领域函数：根据交易类型（支出/收入/转账/投资/还款等）推算该笔交易对各相关账户余额的增减影响，返回 [{accountId, deltaCents}] 列表。",
+      "tags": [
+        "data-model",
+        "domain-logic",
+        "accounting"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/db.js:recalcBalances",
+      "type": "function",
+      "name": "recalcBalances",
+      "filePath": "src/db.js",
+      "lineRange": [
+        663,
+        681
+      ],
+      "summary": "全量重算指定账本内所有账户余额：遍历未删除交易逐笔累加 txnEffects 的余额增量，再在事务中回写 accounts 表。",
+      "tags": [
+        "domain-logic",
+        "accounting",
+        "database"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/db.js:init",
+      "type": "function",
+      "name": "init",
+      "filePath": "src/db.js",
+      "lineRange": [
+        686,
+        694
+      ],
+      "summary": "数据库初始化入口：执行建表 DDL、调用分类与设置种子数据、记录启动时间，供 server.js 启动时调用。",
+      "tags": [
+        "initialization",
+        "entry-point",
+        "database"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/lib/ai.js",
+      "type": "file",
+      "name": "ai.js",
+      "filePath": "src/lib/ai.js",
+      "summary": "AI 记账引擎：从 settings 读取 OpenAI 兼容配置，将账单截图/文本通过 chat completions 接口识别为结构化交易，内置中文关键词分类、日期与金额提取的规则兜底解析，另提供连接测试和模型列表拉取。",
+      "tags": [
+        "service",
+        "ai",
+        "nlp",
+        "api-client",
+        "serialization"
+      ],
+      "complexity": "complex",
+      "languageNotes": "LLM 不可用或失败时自动降级为纯正则规则解析（parseTextByRules），并通过 VISION_HINTS/NON_CHAT_HINTS 正则从模型 ID 推断其是否支持图片输入。"
+    },
+    {
+      "id": "function:src/lib/ai.js:getAiConfig",
+      "type": "function",
+      "name": "getAiConfig",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        44,
+        58
+      ],
+      "summary": "从 settings 聚合 AI 配置（apiKey/baseUrl/model/autoSave 等），并在读取时自动把历史明文密钥升级为脱敏占位符后回写。",
+      "tags": [
+        "configuration",
+        "security",
+        "singleton"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:isLocalUrl",
+      "type": "function",
+      "name": "isLocalUrl",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        61,
+        64
+      ],
+      "summary": "判断 baseUrl 是否为本地/内网地址（localhost、127.x、内网网段、host.docker.internal），本地端点视为免密钥可用。",
+      "tags": [
+        "validation",
+        "network",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:isAiReady",
+      "type": "function",
+      "name": "isAiReady",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        67,
+        70
+      ],
+      "summary": "判断 AI 功能是否已配置就绪：baseUrl 已填且（配置了密钥或指向本地/内网服务）。",
+      "tags": [
+        "validation",
+        "ai",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:isAiUsable",
+      "type": "function",
+      "name": "isAiUsable",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        73,
+        75
+      ],
+      "summary": "在 isAiReady 基础上要求已选择模型，即 AI 识别真正可用的最终判定。",
+      "tags": [
+        "validation",
+        "ai",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:classifyByKeywords",
+      "type": "function",
+      "name": "classifyByKeywords",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        224,
+        230
+      ],
+      "summary": "规则兜底分类：用内置中文关键词正则表（餐饮、交通、购物等）匹配文本推断支出/收入分类名。",
+      "tags": [
+        "nlp",
+        "domain-logic",
+        "classification"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:guessAccountName",
+      "type": "function",
+      "name": "guessAccountName",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        233,
+        238
+      ],
+      "summary": "从文本中按关键词（支付宝、微信、信用卡、现金等）猜测交易所属账户名称。",
+      "tags": [
+        "nlp",
+        "domain-logic",
+        "classification"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:parseDateWords",
+      "type": "function",
+      "name": "parseDateWords",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        241,
+        264
+      ],
+      "summary": "解析中文日期表述：将\"今天/昨天/前天\"等相对词及\"M月D日\"、\"M-D\"等格式换算为 YYYY-MM-DD 日期。",
+      "tags": [
+        "nlp",
+        "date",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai.js:extractAmount",
+      "type": "function",
+      "name": "extractAmount",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        267,
+        277
+      ],
+      "summary": "从账单文本提取金额：优先匹配 ¥/元 前后缀模式并转成分，否则取文本中最大数字作为金额兜底。",
+      "tags": [
+        "nlp",
+        "parsing",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:parseTextByRules",
+      "type": "function",
+      "name": "parseTextByRules",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        280,
+        305
+      ],
+      "summary": "纯规则文本解析：按行/标点切分账单文字，逐行提取金额、分类、收入/转账类型、日期与商户，作为 AI 不可用时的兜底引擎。",
+      "tags": [
+        "nlp",
+        "parsing",
+        "domain-logic",
+        "fallback"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai.js:cleanMerchant",
+      "type": "function",
+      "name": "cleanMerchant",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        307,
+        317
+      ],
+      "summary": "清洗商户名：剥除金额、支付渠道、时间词与标点，截取剩余文本作为商户/备注。",
+      "tags": [
+        "nlp",
+        "parsing",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:extractJson",
+      "type": "function",
+      "name": "extractJson",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        321,
+        338
+      ],
+      "summary": "从 LLM 返回文本中稳健提取 JSON：依次尝试 ```json 代码块、首尾大括号截取与裸 JSON 解析。",
+      "tags": [
+        "parsing",
+        "ai",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai.js:callModel",
+      "type": "function",
+      "name": "callModel",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        340,
+        385
+      ],
+      "summary": "调用 OpenAI 兼容 chat completions 接口：带超时 AbortController、密钥与自定义请求头，兼容 OpenAI/Claude 等不同响应结构并归一化输出文本。",
+      "tags": [
+        "api-client",
+        "ai",
+        "network"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai.js:buildContext",
+      "type": "function",
+      "name": "buildContext",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        388,
+        405
+      ],
+      "summary": "构造识别上下文：读取账本的分类树（支出/收入完整路径）、账户列表与成员名单，供系统提示词引用。",
+      "tags": [
+        "ai",
+        "domain-logic",
+        "prompt"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai.js:buildUserPrompt",
+      "type": "function",
+      "name": "buildUserPrompt",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        420,
+        429
+      ],
+      "summary": "拼接用户提示词：包含今天日期、可选分类完整路径、可用账户与成员，以及待识别的账单文字或截图说明。",
+      "tags": [
+        "ai",
+        "prompt",
+        "nlp"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:resolveCategoryId",
+      "type": "function",
+      "name": "resolveCategoryId",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        432,
+        465
+      ],
+      "summary": "将 AI 返回的分类名/路径模糊匹配到账本真实分类 ID：依次尝试完整路径、名称、路径尾段、包含关系，失败时按 kind 与关键词兜底。",
+      "tags": [
+        "domain-logic",
+        "matching",
+        "nlp"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai.js:resolveAccountId",
+      "type": "function",
+      "name": "resolveAccountId",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        468,
+        480
+      ],
+      "summary": "将账户名提示（含\"我的\"等前缀与支付渠道别名）模糊匹配到账本真实账户 ID。",
+      "tags": [
+        "domain-logic",
+        "matching"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:normalizeItem",
+      "type": "function",
+      "name": "normalizeItem",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        483,
+        511
+      ],
+      "summary": "把 AI/规则返回的原始条目规范化为可入库结构：校验类型与金额、解析分类与账户 ID、生成幂等 uid、补全日期与备注。",
+      "tags": [
+        "validation",
+        "serialization",
+        "domain-logic"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/ai.js:analyzeBill",
+      "type": "function",
+      "name": "analyzeBill",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        522,
+        574
+      ],
+      "summary": "AI 记账主入口：组合上下文与提示词，将最多 6 张截图（vision 消息）和文本交给 LLM 识别，解析并规范化为交易条目；AI 不可用或失败时自动降级为规则解析并给出警告。",
+      "tags": [
+        "ai",
+        "entry-point",
+        "fallback",
+        "domain-logic"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/lib/ai.js:testConnection",
+      "type": "function",
+      "name": "testConnection",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        577,
+        592
+      ],
+      "summary": "发送一条简短消息测试 AI 连接，返回成功与否及模型回复摘要，供设置页\"测试连接\"按钮使用。",
+      "tags": [
+        "ai",
+        "diagnostics",
+        "api-client"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:guessVision",
+      "type": "function",
+      "name": "guessVision",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        603,
+        608
+      ],
+      "summary": "依据模型 ID 中的关键词正则推测该模型是否支持图片（vision）输入。",
+      "tags": [
+        "ai",
+        "heuristic",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/ai.js:listModels",
+      "type": "function",
+      "name": "listModels",
+      "filePath": "src/lib/ai.js",
+      "lineRange": [
+        615,
+        661
+      ],
+      "summary": "拉取服务商 /v1/models 模型列表（支持传入临时的 baseUrl/key 覆盖），归一化为 {id, vision} 数组并按 ID 排序，供模型下拉选择。",
+      "tags": [
+        "api-client",
+        "ai",
+        "network"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/lib/importers.js",
+      "type": "file",
+      "name": "importers.js",
+      "filePath": "src/lib/importers.js",
+      "summary": "账单 CSV 导入/导出模块：自动识别支付宝、微信支付等账单格式与编码（UTF-8/GBK），解析表头并归一化为交易记录，导入时按 uid 去重、自动创建缺失账户，另提供标准 CSV 导出。",
+      "tags": [
+        "import",
+        "export",
+        "parsing",
+        "csv",
+        "serialization"
+      ],
+      "complexity": "complex",
+      "languageNotes": "针对国内账单场景做了多编码探测（UTF-8 失败再试 GBK）与表头候选词模糊匹配，导入在单个事务中完成并复用 AI 模块的分类/账户猜测函数。"
+    },
+    {
+      "id": "function:src/lib/importers.js:decodeBuffer",
+      "type": "function",
+      "name": "decodeBuffer",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        16,
+        25
+      ],
+      "summary": "按 UTF-8 优先解码上传的账单文件，出现乱码特征时降级用 GBK 解码，兼容国内常见导出编码。",
+      "tags": [
+        "parsing",
+        "encoding",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/importers.js:parseCsvLine",
+      "type": "function",
+      "name": "parseCsvLine",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        28,
+        44
+      ],
+      "summary": "手写单行 CSV 解析：正确处理引号包裹、转义引号与逗号分隔，返回单元格数组。",
+      "tags": [
+        "parsing",
+        "csv",
+        "utility"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/importers.js:parseCsv",
+      "type": "function",
+      "name": "parseCsv",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        46,
+        52
+      ],
+      "summary": "将整段 CSV 文本按行拆分并逐行解析为二维数组，过滤空行。",
+      "tags": [
+        "parsing",
+        "csv",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/importers.js:detectSource",
+      "type": "function",
+      "name": "detectSource",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        74,
+        79
+      ],
+      "summary": "根据表头关键词与文件前几百字符判断账单来源（alipay/wechat/generic），以适配不同列布局。",
+      "tags": [
+        "parsing",
+        "detection",
+        "csv"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/importers.js:normalizeRow",
+      "type": "function",
+      "name": "normalizeRow",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        85,
+        110
+      ],
+      "summary": "把一行业务列数据归一化为标准记录：解析金额（分）、收/支方向、日期、商户、备注，并过滤\"不计收支\"行。",
+      "tags": [
+        "parsing",
+        "normalization",
+        "csv"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/importers.js:normalizeDate",
+      "type": "function",
+      "name": "normalizeDate",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        112,
+        119
+      ],
+      "summary": "把多种日期字符串（YYYY-M-D、M月D日等）规范为 YYYY-MM-DD，无法解析时回退为今天。",
+      "tags": [
+        "parsing",
+        "date",
+        "utility"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/importers.js:parseBill",
+      "type": "function",
+      "name": "parseBill",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        123,
+        166
+      ],
+      "summary": "账单解析主入口：解码 CSV、定位表头行、探测来源、按候选列名映射字段，跳过非收支状态行，返回标准化记录与来源信息。",
+      "tags": [
+        "import",
+        "parsing",
+        "entry-point",
+        "csv"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/lib/importers.js:ensureAccount",
+      "type": "function",
+      "name": "ensureAccount",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        170,
+        183
+      ],
+      "summary": "按名称查找账户，不存在时依据名称关键词推断账户类型（信用卡/电子钱包/银行卡）自动创建并登记到已创建列表。",
+      "tags": [
+        "factory",
+        "data-model",
+        "import"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/lib/importers.js:importRecords",
+      "type": "function",
+      "name": "importRecords",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        194,
+        264
+      ],
+      "summary": "导入执行器：在单个事务中按 uid 去重后逐条入库，自动解析/创建账户与分类，完成后重算账本余额并记录导入日志，返回导入统计。",
+      "tags": [
+        "import",
+        "transaction",
+        "domain-logic",
+        "deduplication"
+      ],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:src/lib/importers.js:toCsv",
+      "type": "function",
+      "name": "toCsv",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        273,
+        278
+      ],
+      "summary": "把表头与行数据组装为 CSV 字符串，逐单元格做引号转义。",
+      "tags": [
+        "export",
+        "csv",
+        "serialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/importers.js:exportRows",
+      "type": "function",
+      "name": "exportRows",
+      "filePath": "src/lib/importers.js",
+      "lineRange": [
+        282,
+        289
+      ],
+      "summary": "把交易行（含金额分转元、外币金额）格式化为标准导出 CSV，供备份/导出下载。",
+      "tags": [
+        "export",
+        "csv",
+        "serialization"
+      ],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/routes/admin.js",
+      "type": "file",
+      "name": "admin.js",
+      "filePath": "src/routes/admin.js",
+      "summary": "Express 路由模块，集中承载设置页、账本与成员管理、分类/账户/预算/定期记账维护、支付宝/微信账单导入预览与执行、CSV 备份导出、数据清理及系统管理（用户、审计日志、头像上传）等大量页面与接口。",
+      "tags": [
+        "api-handler",
+        "router",
+        "admin",
+        "import-export",
+        "middleware"
+      ],
+      "complexity": "complex",
+      "languageNotes": "使用内存 Map 做导入预览缓存（定时清理过期 token），头像以 dataURL 上传并按魔数校验图片格式后落盘。"
+    },
+    {
+      "id": "function:src/routes/admin.js:parseAvatarDataUrl",
+      "type": "function",
+      "name": "parseAvatarDataUrl",
+      "filePath": "src/routes/admin.js",
+      "lineRange": [
+        150,
+        165
+      ],
+      "summary": "解析头像 dataURL：校验 MIME 与大小限制，并按文件魔数（PNG/JPEG/GIF/WEBP）二次校验真实图片格式，返回二进制与扩展名。",
+      "tags": [
+        "validation",
+        "security",
+        "parsing"
+      ],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/routes/admin.js:dirSize",
+      "type": "function",
+      "name": "dirSize",
+      "filePath": "src/routes/admin.js",
+      "lineRange": [
+        647,
+        657
+      ],
+      "summary": "递归统计目录总字节数，用于系统管理页展示上传目录占用空间。",
+      "tags": [
+        "utility",
+        "filesystem",
+        "diagnostics"
+      ],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "file:src/db.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "file:src/lib/util.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "file:src/db.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "file:src/lib/ai.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "file:src/lib/util.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:src/db.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:src/lib/ai.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:src/lib/auth.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:src/lib/formdata.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:src/lib/importers.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:src/lib/scheduler.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:src/lib/txn.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:src/lib/util.js",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:tx",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:ensureColumn",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:getSetting",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:setSetting",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:allSettings",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:seedSystemCategories",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:seedExchangeRates",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:createDefaultAccounts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:addLedgerMember",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:createDefaultLedger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:txnEffects",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:recalcBalances",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:init",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:getAiConfig",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:isLocalUrl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:isAiReady",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:isAiUsable",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:classifyByKeywords",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:guessAccountName",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:parseDateWords",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:extractAmount",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:parseTextByRules",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:cleanMerchant",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:extractJson",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:callModel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:buildContext",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:buildUserPrompt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:resolveCategoryId",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:resolveAccountId",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:normalizeItem",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:analyzeBill",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:testConnection",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:guessVision",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:listModels",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:decodeBuffer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:parseCsvLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:parseCsv",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:detectSource",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:normalizeRow",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:normalizeDate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:parseBill",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:ensureAccount",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:importRecords",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:toCsv",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:exportRows",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "function:src/routes/admin.js:parseAvatarDataUrl",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "function:src/routes/admin.js:dirSize",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:tx",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:ensureColumn",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:getSetting",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:setSetting",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:allSettings",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:createDefaultAccounts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:addLedgerMember",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:createDefaultLedger",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:txnEffects",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:recalcBalances",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/db.js",
+      "target": "function:src/db.js:init",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:getAiConfig",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:isLocalUrl",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:isAiReady",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:isAiUsable",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:classifyByKeywords",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:guessAccountName",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:parseTextByRules",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:resolveCategoryId",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:resolveAccountId",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:analyzeBill",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:testConnection",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:guessVision",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/lib/ai.js:listModels",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:parseCsv",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:detectSource",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:normalizeDate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:parseBill",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:importRecords",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/importers.js:exportRows",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/db.js:getSetting",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/ai.js",
+      "target": "function:src/db.js:setSetting",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/db.js:recalcBalances",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/ai.js:classifyByKeywords",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/ai.js:resolveCategoryId",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/lib/importers.js",
+      "target": "function:src/lib/ai.js:guessAccountName",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "function:src/lib/ai.js:resolveCategoryId",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "function:src/lib/ai.js:classifyByKeywords",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "function:src/lib/importers.js:parseBill",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "function:src/lib/importers.js:importRecords",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "function:src/lib/importers.js:exportRows",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

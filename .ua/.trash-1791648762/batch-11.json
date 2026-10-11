@@ -1,0 +1,252 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/views/transactions.ejs",
+      "type": "file",
+      "name": "transactions.ejs",
+      "filePath": "src/views/transactions.ejs",
+      "summary": "交易明细列表视图：提供时间范围/类型/来源快捷筛选 chips、关键字与分类/账户/成员/排序组合筛选表单、收支结余汇总条、分页器以及批量操作栏（删除、改分类、加标签、标记待报销、报销入账）。",
+      "tags": ["component", "view-template", "filtering", "bulk-operations", "pagination"],
+      "complexity": "moderate",
+      "languageNotes": "模板内定义 qs() 辅助函数做查询参数序列化（含 camelCase 到 snake_case 的映射），并大量使用服务端注入的 helpers（fmtAmount、addDays）保持纯 SSR 渲染。"
+    },
+    {
+      "id": "file:src/views/txn-form.ejs",
+      "type": "file",
+      "name": "txn-form.ejs",
+      "filePath": "src/views/txn-form.ejs",
+      "summary": "交易新建/编辑表单视图：覆盖 7 种基础类型与 7 种扩展类型（报销、退款、投资买卖、余额调整等）的类型切换，内嵌分类九宫格选择器、AA 分账行、多币种/汇率折叠区，编辑模式下还展示关联账单截图画廊与审计信息。",
+      "tags": ["component", "view-template", "form", "multi-type", "category-picker"],
+      "complexity": "complex",
+      "languageNotes": "服务端先按类型渲染好全部字段，内联脚本仅做交互增强（applyType 切换字段显隐与账户标签文案），体现「SSR 优先、JS 渐进增强」的前端架构。"
+    },
+    {
+      "id": "file:test/run-all.js",
+      "type": "file",
+      "name": "run-all.js",
+      "filePath": "test/run-all.js",
+      "summary": "全量回归跑批脚本：为 7 个 verify-* 端到端套件逐一启动干净的独立服务实例（独立 DATA_DIR、端口 8099），轮询 /healthz 就绪后运行套件并汇总通过/失败结果，任一套件失败则退出码为 1。",
+      "tags": ["test", "test-runner", "e2e", "orchestration", "entry-point"],
+      "complexity": "moderate",
+      "languageNotes": "每个套件跑完即 kill 服务实例并清除数据目录，保证套件间数据互不污染；通过正则解析套件输出的「N 通过 / M 失败」做汇总。"
+    },
+    {
+      "id": "file:test/selfcheck-static.js",
+      "type": "file",
+      "name": "selfcheck-static.js",
+      "filePath": "test/selfcheck-static.js",
+      "summary": "项目静态自检脚本：编译全部 EJS 模板、对 src/public/test/server.js 做语法检查、校验 package.json 与 about.js CHANGELOG 的版本一致性、检测对已删除视图的悬空引用、确认关键视图与静态资源存在，并清理根目录遗留临时文件。",
+      "tags": ["test", "static-analysis", "linting", "sanity-check"],
+      "complexity": "moderate",
+      "languageNotes": "不启动服务，纯文件系统 + 子进程检查（node --check、ejs.compile），是提交前最廉价的质量闸门。"
+    },
+    {
+      "id": "file:test/verify-ai-attachments.js",
+      "type": "file",
+      "name": "verify-ai-attachments.js",
+      "filePath": "test/verify-ai-attachments.js",
+      "summary": "AI 账单截图端到端回归：内置 OpenAI 兼容桩网关，覆盖模型列表接口、开放 API 发图入库后图片落盘并关联交易、令牌取图鉴权、最近记录携带 images、草稿模式留档策略，以及网页端 /api/ai/scan → /api/ai/confirm 截图记账全链路。",
+      "tags": ["test", "e2e", "ai", "attachments", "http"],
+      "complexity": "moderate",
+      "languageNotes": "用 node:http 起本地桩网关返回固定识别 JSON，从而在无真实 AI 服务时稳定回归；需外部先在 8099 端口起隔离实例并通过 DATA_DIR 共享上传目录。"
+    },
+    {
+      "id": "file:test/verify-ai-chat.js",
+      "type": "file",
+      "name": "verify-ai-chat.js",
+      "filePath": "test/verify-ai-chat.js",
+      "summary": "AI 记账助手端到端回归：覆盖未登录拒绝、空载荷 400、纯文字规则引擎自动记账（金额/相对日期解析）、文字+图片附件关联、仅图片零结果的友好降级返回，以及 FAB/面板/assistant.js/CSS 的页面挂载断言。",
+      "tags": ["test", "e2e", "ai", "chat", "http"],
+      "complexity": "moderate",
+      "languageNotes": "用本地日期（减 getTimezoneOffset）而非 toISOString 断言「昨天」解析，规避 UTC 时区导致的跨日假失败；自带简易 cookie jar 与 CSRF 令牌提取。"
+    },
+    {
+      "id": "file:test/verify-settings-admin.js",
+      "type": "file",
+      "name": "verify-settings-admin.js",
+      "filePath": "test/verify-settings-admin.js",
+      "summary": "系统管理并入设置页的端到端回归：覆盖 /admin 旧链接重定向、设置页系统管理区块（用户管理/后台任务/审计日志/统计卡）渲染、侧栏入口移除、后台任务手动触发回跳、用户名修改校验以及头像上传/清除全流程。",
+      "tags": ["test", "e2e", "settings", "admin", "http"],
+      "complexity": "moderate",
+      "languageNotes": "断言覆盖了大量 DOM 细节（data-tab 数量、锚点高亮脚本、userMenu 结构），是对模板输出做快照式字符匹配的回归风格。"
+    },
+    {
+      "id": "function:test/run-all.js:healthz",
+      "type": "function",
+      "name": "healthz",
+      "filePath": "test/run-all.js",
+      "lineRange": [23, 38],
+      "summary": "轮询 http://127.0.0.1:8099/healthz 直到返回 200 或超时（默认 15 秒），每 300ms 重试一次，用于等待测试实例就绪。",
+      "tags": ["utility", "polling", "health-check"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:test/verify-ai-attachments.js:req",
+      "type": "function",
+      "name": "req",
+      "filePath": "test/verify-ai-attachments.js",
+      "lineRange": [57, 73],
+      "summary": "端到端请求封装：基于 fetch 发送表单/JSON 请求，自动维护会话 cookie jar，将响应体一次性读入 Buffer 以同时支持文本断言与二进制（PNG）对比。",
+      "tags": ["utility", "http-client", "test-harness"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:test/verify-ai-attachments.js:uploadFiles",
+      "type": "function",
+      "name": "uploadFiles",
+      "filePath": "test/verify-ai-attachments.js",
+      "lineRange": [77, 86],
+      "summary": "递归列出 DATA_DIR/uploads 下的全部文件路径，用于断言图片是否真实落盘及文件数量变化。",
+      "tags": ["utility", "filesystem", "test-harness"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:test/verify-ai-chat.js:req",
+      "type": "function",
+      "name": "req",
+      "filePath": "test/verify-ai-chat.js",
+      "lineRange": [22, 39],
+      "summary": "端到端请求封装：发送表单/JSON 请求并自动携带 cookie jar 与 x-csrf-token 头，尝试将响应解析为 JSON，供后续断言使用。",
+      "tags": ["utility", "http-client", "test-harness"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:test/verify-settings-admin.js:req",
+      "type": "function",
+      "name": "req",
+      "filePath": "test/verify-settings-admin.js",
+      "lineRange": [21, 35],
+      "summary": "端到端请求封装：发送表单/JSON 请求，自动维护会话 cookie，并透传 302 重定向的 Location 头供回跳断言使用。",
+      "tags": ["utility", "http-client", "test-harness"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:test/run-all.js",
+      "target": "function:test/run-all.js:healthz",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:test/verify-ai-attachments.js",
+      "target": "function:test/verify-ai-attachments.js:req",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:test/verify-ai-attachments.js",
+      "target": "function:test/verify-ai-attachments.js:uploadFiles",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:test/verify-ai-chat.js",
+      "target": "function:test/verify-ai-chat.js:req",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:test/verify-settings-admin.js",
+      "target": "function:test/verify-settings-admin.js:req",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/routes/ai.js",
+      "target": "file:test/verify-ai-chat.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/ai.js",
+      "target": "file:test/verify-ai-attachments.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/dashboard.js",
+      "target": "file:test/verify-ai-chat.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/transactions.js",
+      "target": "file:test/verify-ai-attachments.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/transactions.js",
+      "target": "file:test/verify-ai-chat.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/routes/admin.js",
+      "target": "file:test/verify-settings-admin.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/views/txn-form.ejs",
+      "target": "file:test/verify-ai-attachments.js",
+      "type": "tested_by",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:test/run-all.js",
+      "target": "file:test/verify-settings-admin.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:test/run-all.js",
+      "target": "file:test/verify-ai-chat.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:test/run-all.js",
+      "target": "file:test/verify-ai-attachments.js",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/views/transactions.ejs",
+      "target": "file:src/views/partials/txn-list.ejs",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "file:src/views/transactions.ejs",
+      "target": "file:src/routes/transactions.js",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:src/views/txn-form.ejs",
+      "target": "file:src/routes/transactions.js",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {"path": "Dockerfile", "language": "dockerfile", "sizeLines": 29, "fileCategory": "infra"},
+    {"path": "docker-compose.yml", "language": "yaml", "sizeLines": 14, "fileCategory": "infra"}
+  ],
+  "batchImportData": {
+    "Dockerfile": [],
+    "docker-compose.yml": []
+  }
+}

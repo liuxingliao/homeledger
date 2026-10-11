@@ -1,0 +1,163 @@
+[
+  {
+    "id": "layer:api",
+    "name": "入口与路由层",
+    "description": "Express 服务器入口 server.js 与 src/routes 下的全部页面/接口路由，负责请求分发、鉴权过滤并将渲染结果返回客户端",
+    "nodeIds": [
+      "file:server.js",
+      "file:src/routes/admin.js",
+      "file:src/routes/ai.js",
+      "file:src/routes/openapi.js",
+      "file:src/routes/accounts.js",
+      "file:src/routes/transactions.js",
+      "file:src/routes/about.js",
+      "file:src/routes/auth.js",
+      "file:src/routes/dashboard.js",
+      "file:src/routes/planning.js",
+      "file:src/routes/reports.js",
+      "file:src/routes/subscriptions.js"
+    ]
+  },
+  {
+    "id": "layer:views",
+    "name": "视图层（SSR 模板）",
+    "description": "src/views 下的 32 个 EJS 模板（含 layout 布局与 txn-list 局部模板），承担纯后端 SSR 页面渲染",
+    "nodeIds": [
+      "file:src/views/about.ejs",
+      "file:src/views/account-detail.ejs",
+      "file:src/views/accounts.ejs",
+      "file:src/views/ai.ejs",
+      "file:src/views/attachments.ejs",
+      "file:src/views/budgets.ejs",
+      "file:src/views/calendar.ejs",
+      "file:src/views/categories.ejs",
+      "file:src/views/dashboard.ejs",
+      "file:src/views/debts.ejs",
+      "file:src/views/error.ejs",
+      "file:src/views/export.ejs",
+      "file:src/views/goals.ejs",
+      "file:src/views/import.ejs",
+      "file:src/views/layout-blank.ejs",
+      "file:src/views/layout.ejs",
+      "file:src/views/ledgers.ejs",
+      "file:src/views/login.ejs",
+      "file:src/views/members.ejs",
+      "file:src/views/no-ledger.ejs",
+      "file:src/views/notifications.ejs",
+      "file:src/views/partials/txn-list.ejs",
+      "file:src/views/recurring.ejs",
+      "file:src/views/register.ejs",
+      "file:src/views/reports.ejs",
+      "file:src/views/search.ejs",
+      "file:src/views/settings.ejs",
+      "file:src/views/setup.ejs",
+      "file:src/views/subscriptions.ejs",
+      "file:src/views/tags.ejs",
+      "file:src/views/transactions.ejs",
+      "file:src/views/txn-form.ejs"
+    ]
+  },
+  {
+    "id": "layer:frontend-assets",
+    "name": "前端静态资源层",
+    "description": "public 目录下的浏览器端 JS（app.js、assistant.js）、CSS 样式与 PWA manifest，为 SSR 页面提供交互与样式",
+    "nodeIds": [
+      "file:public/css/app.css",
+      "file:public/js/app.js",
+      "file:public/js/assistant.js",
+      "file:public/manifest.webmanifest"
+    ]
+  },
+  {
+    "id": "layer:service",
+    "name": "业务服务层",
+    "description": "src/lib 下的核心业务模块（AI 自动记账、导入器、订阅、定时任务、图表、附件、鉴权、表单解析等），被路由层大量复用",
+    "nodeIds": [
+      "file:src/lib/ai.js",
+      "file:src/lib/importers.js",
+      "file:src/lib/attachments.js",
+      "file:src/lib/txn.js",
+      "file:src/lib/util.js",
+      "file:src/lib/about.js",
+      "file:src/lib/charts.js",
+      "file:src/lib/auth.js",
+      "file:src/lib/scheduler.js",
+      "file:src/lib/subscriptions.js",
+      "file:src/lib/formdata.js"
+    ]
+  },
+  {
+    "id": "layer:data",
+    "name": "数据访问层",
+    "description": "src/db.js 基于 node:sqlite 的数据库初始化与访问基础模块，是路由层与服务层共同的底层依赖（fan-in 最高）",
+    "nodeIds": [
+      "file:src/db.js"
+    ]
+  },
+  {
+    "id": "layer:test",
+    "name": "测试层",
+    "description": "test 目录下的静态自检与 verify-* 功能验证脚本（AI、订阅、附件、设置等）及 run-all 汇总入口",
+    "nodeIds": [
+      "file:test/run-all.js",
+      "file:test/selfcheck-static.js",
+      "file:test/verify-ai-image.js",
+      "file:test/verify-model-list.js",
+      "file:test/verify-about.js",
+      "file:test/verify-subscriptions.js",
+      "file:test/verify-ai-attachments.js",
+      "file:test/verify-ai-chat.js",
+      "file:test/verify-settings-admin.js"
+    ]
+  },
+  {
+    "id": "layer:tooling",
+    "name": "工具与打包脚本层",
+    "description": "scripts 下的演示数据填充与密码重置脚本，以及 packaging/fpk 的 FPK 打包构建工具（shell/Python/命令入口）",
+    "nodeIds": [
+      "file:scripts/seed-demo.js",
+      "file:scripts/reset-password.js",
+      "file:packaging/fpk/build-fpk.sh",
+      "file:packaging/fpk/cmd-main",
+      "file:packaging/fpk/make-fpk.py"
+    ]
+  },
+  {
+    "id": "layer:infrastructure",
+    "name": "基础设施与配置层",
+    "description": "Dockerfile 与 docker-compose 编排（含服务定义及备份配置）实现容器化自托管部署，package.json 与 .ua/config.json 提供项目级配置",
+    "nodeIds": [
+      "service:Dockerfile",
+      "service:docker-compose.yml",
+      "service:docker-compose.yml:homeledger",
+      "config:docker-compose-bak.yml",
+      "config:package.json",
+      "config:.ua/config.json"
+    ]
+  },
+  {
+    "id": "layer:documentation",
+    "name": "文档与规范层",
+    "description": "README、OpenSpec 规范与变更记录（openspec/）、.claude 命令/技能文档以及 openclaw 记账技能说明等项目文档资产",
+    "nodeIds": [
+      "document:README.md",
+      "document:.claude/commands/opsx/apply.md",
+      "document:.claude/commands/opsx/archive.md",
+      "document:.claude/commands/opsx/explore.md",
+      "document:.claude/commands/opsx/propose.md",
+      "document:.claude/commands/opsx/sync.md",
+      "document:.claude/commands/opsx/update.md",
+      "document:.claude/skills/openspec-apply-change/SKILL.md",
+      "document:.claude/skills/openspec-archive-change/SKILL.md",
+      "document:.claude/skills/openspec-explore/SKILL.md",
+      "document:.claude/skills/openspec-propose/SKILL.md",
+      "document:.claude/skills/openspec-sync-specs/SKILL.md",
+      "document:.claude/skills/openspec-update-change/SKILL.md",
+      "document:openclaw-skill/homeledger-bookkeeping/SKILL.md",
+      "document:packaging/fpk/README.md",
+      "config:openspec/config.yaml",
+      "file:openspec/changes/archive/.gitkeep",
+      "file:openspec/specs/.gitkeep"
+    ]
+  }
+]

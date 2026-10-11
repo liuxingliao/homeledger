@@ -1,0 +1,285 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/lib/formdata.js",
+      "type": "file",
+      "name": "formdata.js",
+      "filePath": "src/lib/formdata.js",
+      "summary": "表单与页面公共数据加载层，从 SQLite 查询分类树、扁平分类、账户、成员、标签等下拉数据，并聚合出「记一笔」页面所需的完整表单数据集，被多个路由模块共用。",
+      "tags": ["utility", "data-access", "form-data", "service", "查询聚合"],
+      "complexity": "moderate",
+      "languageNotes": "所有查询函数均以 ledgerId 作为多账本隔离的第一参数，分类查询通过 (ledger_id IS NULL OR ledger_id = ?) 实现全局分类与账本专属分类的合并。"
+    },
+    {
+      "id": "function:src/lib/formdata.js:categoryTree",
+      "type": "function",
+      "name": "categoryTree",
+      "filePath": "src/lib/formdata.js",
+      "lineRange": [5, 16],
+      "summary": "查询指定账本某类型（默认支出）下未归档的分类，并按 parent_id 组装成两级分类树，供前端下拉/级联选择使用。",
+      "tags": ["utility", "分类树", "data-access"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/formdata.js:flatCategories",
+      "type": "function",
+      "name": "flatCategories",
+      "filePath": "src/lib/formdata.js",
+      "lineRange": [18, 28],
+      "summary": "LEFT JOIN 父分类表查询扁平分类列表，拼接 parent_name/name 形成 path 字段，可按 kind 过滤，用于分类管理等页面。",
+      "tags": ["utility", "data-access", "分类"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/formdata.js:accounts",
+      "type": "function",
+      "name": "accounts",
+      "filePath": "src/lib/formdata.js",
+      "lineRange": [30, 32],
+      "summary": "查询账本下所有未归档账户，按 sort_order 与 id 排序，用于账户下拉选择。",
+      "tags": ["utility", "data-access", "账户"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/formdata.js:archivedAccounts",
+      "type": "function",
+      "name": "archivedAccounts",
+      "filePath": "src/lib/formdata.js",
+      "lineRange": [33, 35],
+      "summary": "查询账本下所有已归档账户，供归档账户查看与恢复操作使用。",
+      "tags": ["utility", "data-access", "账户"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/formdata.js:members",
+      "type": "function",
+      "name": "members",
+      "filePath": "src/lib/formdata.js",
+      "lineRange": [36, 43],
+      "summary": "JOIN users 表查询账本成员及其显示名、头像色等用户信息，按 owner/admin/member 角色优先级排序。",
+      "tags": ["utility", "data-access", "成员", "join-query"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/formdata.js:tags",
+      "type": "function",
+      "name": "tags",
+      "filePath": "src/lib/formdata.js",
+      "lineRange": [44, 50],
+      "summary": "通过子查询统计每个标签的使用次数，返回使用频次最高的前 100 个标签，用于标签下拉与热门标签展示。",
+      "tags": ["utility", "data-access", "标签", "aggregation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/formdata.js:txFormData",
+      "type": "function",
+      "name": "txFormData",
+      "filePath": "src/lib/formdata.js",
+      "lineRange": [53, 64],
+      "summary": "聚合「记一笔」页面所需的全部下拉数据：支出/收入扁平分类与分类树、账户、成员、标签，一次性返回供 EJS 模板渲染。",
+      "tags": ["aggregation", "form-data", "数据聚合", "entry-point"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/lib/formdata.js:kindOf",
+      "type": "function",
+      "name": "kindOf",
+      "filePath": "src/lib/formdata.js",
+      "lineRange": [67, 69],
+      "summary": "将交易类型归并为收支方向：income/interest/refund/reimburse 视为收入，其余视为支出，供统计分析使用。",
+      "tags": ["utility", "分类", "统计"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/routes/reports.js",
+      "type": "file",
+      "name": "reports.js",
+      "filePath": "src/routes/reports.js",
+      "summary": "报表与图表路由，提供 GET /reports 页面：解析时间范围（月/季/年/自定义/全部）后，调用 txn 库生成汇总、分类占比、趋势、成员分布、净值等十余项统计数据并渲染 reports 视图，含同期对比与星期分布分析。",
+      "tags": ["api-handler", "报表", "statistics", "ssr", "express-router"],
+      "complexity": "moderate",
+      "languageNotes": "parseRange 支持 month/year/quarter/custom/all 五种 preset，季度和年份边界由字符串拼接生成，end 统一用 -31 由 SQL BETWEEN 语义兜底。"
+    },
+    {
+      "id": "function:src/routes/reports.js:parseRange",
+      "type": "function",
+      "name": "parseRange",
+      "filePath": "src/routes/reports.js",
+      "lineRange": [12, 40],
+      "summary": "将查询参数解析为报表时间区间，支持月（默认）、年、季度、自定义起止日与全部时间五种预设，返回 start/end/label/key 供查询与页面展示。",
+      "tags": ["utility", "日期解析", "validation", "报表"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/routes/reports.js:GET /reports",
+      "type": "function",
+      "name": "GET /reports",
+      "filePath": "src/routes/reports.js",
+      "lineRange": [42, 97],
+      "summary": "报表主页面处理器：调用 txn 库生成收支汇总、分类/子分类占比、月度趋势、每日分布、成员分布、净值与账户总览，并计算同期对比（上月、去年同期）、星期消费分布、笔数均值与记账天数后渲染 reports 模板。",
+      "tags": ["api-handler", "报表", "statistics", "ssr", "event-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/routes/subscriptions.js",
+      "type": "file",
+      "name": "subscriptions.js",
+      "filePath": "src/routes/subscriptions.js",
+      "summary": "订阅扣费路由，覆盖订阅的完整生命周期：列表、编辑页、新建、更新、立即扣费一期、跳过本期、暂停/恢复、取消与删除，内置常用订阅服务（Netflix、Spotify 等）快选预设，所有写操作均带 requireLedgerWrite 鉴权与审计日志。",
+      "tags": ["api-handler", "express-router", "订阅管理", "ssr", "audit"],
+      "complexity": "moderate",
+      "languageNotes": "表单解析对每个字段做范围钳制（如 cycle_n 限 1-12、anchor_day 限 1-31、reminder_days 限 0-60）并统一截断长度，过期扣费日通过 while 循环按周期顺延（guard 上限 500 防死循环）。"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:readForm",
+      "type": "function",
+      "name": "readForm",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [33, 69],
+      "summary": "将表单体解析并校验为订阅字段：解析金额（分）、计费周期与锚点日、试用结束日与状态；未填下次扣费日时按试用结束日或今天兜底，且过期日期通过 subs.advance 按周期循环顺延。",
+      "tags": ["validation", "表单解析", "utility", "日期计算"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:GET /subscriptions",
+      "type": "function",
+      "name": "GET /subscriptions",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [73, 84],
+      "summary": "订阅列表页处理器：统计订阅总览（subs.overview），连同快选预设、表单下拉数据一起渲染 subscriptions 模板，edit 为 null 表示新建模式。",
+      "tags": ["api-handler", "ssr", "订阅管理"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:GET /subscriptions/:id/edit",
+      "type": "function",
+      "name": "GET /subscriptions/:id/edit",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [88, 100],
+      "summary": "订阅编辑页处理器：按账本隔离查询订阅记录，传入 decorate 后的编辑数据与该订阅的历史扣费记录，渲染同一 subscriptions 模板的编辑模式。",
+      "tags": ["api-handler", "ssr", "订阅管理"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:POST /subscriptions",
+      "type": "function",
+      "name": "POST /subscriptions",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [104, 121],
+      "summary": "新建订阅处理器：经 readForm 校验名称与金额后 INSERT 订阅记录，写入审计日志（subscription.create），并用 flash 提示下次扣费日及是否自动记账。",
+      "tags": ["api-handler", "订阅管理", "audit", "validation"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:POST /subscriptions/:id",
+      "type": "function",
+      "name": "POST /subscriptions/:id",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [125, 143],
+      "summary": "更新订阅处理器：确认订阅存在后用表单数据全量 UPDATE，写审计日志（subscription.update）并重定向回列表页。",
+      "tags": ["api-handler", "订阅管理", "audit"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:POST /subscriptions/:id/charge",
+      "type": "function",
+      "name": "POST /subscriptions/:id/charge",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [147, 157],
+      "summary": "立即扣费一期处理器：调用 subs.charge 生成一笔扣费流水，随后重算账本账户余额（recalcBalances），写审计日志并提示下次扣费日已顺延。",
+      "tags": ["api-handler", "订阅管理", "记账", "audit"],
+      "complexity": "simple",
+      "languageNotes": "此处通过 require('../db') 内联二次引入 db 模块以调用 recalcBalances，属于惰性依赖写法。"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:POST /subscriptions/:id/skip",
+      "type": "function",
+      "name": "POST /subscriptions/:id/skip",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [161, 169],
+      "summary": "跳过本期处理器：用 subs.advance 按订阅周期计算下一个扣费日并直接 UPDATE，不生成任何流水。",
+      "tags": ["api-handler", "订阅管理", "日期计算"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:POST /subscriptions/:id/toggle",
+      "type": "function",
+      "name": "POST /subscriptions/:id/toggle",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [173, 184],
+      "summary": "暂停/恢复订阅处理器：若当前为 paused 或 canceled 则恢复为 active 并清空 canceled_at，否则置为 paused 停止自动扣费。",
+      "tags": ["api-handler", "订阅管理", "状态机"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:POST /subscriptions/:id/cancel",
+      "type": "function",
+      "name": "POST /subscriptions/:id/cancel",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [188, 196],
+      "summary": "取消订阅处理器：将订阅状态置为 canceled 并记录 canceled_at 时间，保留历史扣费记录，写审计日志（subscription.cancel）。",
+      "tags": ["api-handler", "订阅管理", "audit"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/subscriptions.js:POST /subscriptions/:id/delete",
+      "type": "function",
+      "name": "POST /subscriptions/:id/delete",
+      "filePath": "src/routes/subscriptions.js",
+      "lineRange": [200, 208],
+      "summary": "删除订阅处理器：物理 DELETE 订阅记录（已生成的流水不受影响），写审计日志（subscription.delete）。",
+      "tags": ["api-handler", "订阅管理", "audit"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    { "source": "file:src/lib/formdata.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+
+    { "source": "file:src/routes/reports.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/reports.js", "target": "file:src/lib/auth.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/reports.js", "target": "file:src/lib/formdata.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/reports.js", "target": "file:src/lib/txn.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/reports.js", "target": "file:src/lib/util.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+
+    { "source": "file:src/routes/subscriptions.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/subscriptions.js", "target": "file:src/lib/auth.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/subscriptions.js", "target": "file:src/lib/formdata.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/subscriptions.js", "target": "file:src/lib/subscriptions.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/subscriptions.js", "target": "file:src/lib/util.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:categoryTree", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:flatCategories", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:accounts", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:archivedAccounts", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:members", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:tags", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:txFormData", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:kindOf", "type": "contains", "direction": "forward", "weight": 1.0 },
+
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:categoryTree", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:flatCategories", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:accounts", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:archivedAccounts", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:members", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:tags", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:txFormData", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:src/lib/formdata.js", "target": "function:src/lib/formdata.js:kindOf", "type": "exports", "direction": "forward", "weight": 0.8 },
+
+    { "source": "file:src/routes/reports.js", "target": "function:src/routes/reports.js:parseRange", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/reports.js", "target": "function:src/routes/reports.js:GET /reports", "type": "contains", "direction": "forward", "weight": 1.0 },
+
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:readForm", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:GET /subscriptions", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:GET /subscriptions/:id/edit", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:POST /subscriptions", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/charge", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/skip", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/toggle", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/cancel", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:src/routes/subscriptions.js", "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/delete", "type": "contains", "direction": "forward", "weight": 1.0 },
+
+    { "source": "function:src/routes/subscriptions.js:GET /subscriptions", "target": "function:src/lib/formdata.js:txFormData", "type": "calls", "direction": "forward", "weight": 0.8 },
+    { "source": "function:src/routes/subscriptions.js:GET /subscriptions/:id/edit", "target": "function:src/lib/formdata.js:txFormData", "type": "calls", "direction": "forward", "weight": 0.8 }
+  ]
+}

@@ -1,0 +1,465 @@
+{
+  "scriptCompleted": true,
+  "commonPrefix": "",
+  "directoryGroups": {
+    "src": [
+      "file:src/db.js",
+      "file:src/lib/ai.js",
+      "file:src/lib/importers.js",
+      "file:src/routes/admin.js",
+      "file:src/routes/ai.js",
+      "file:src/routes/openapi.js",
+      "file:src/lib/attachments.js",
+      "file:src/lib/txn.js",
+      "file:src/lib/util.js",
+      "file:src/routes/accounts.js",
+      "file:src/routes/transactions.js",
+      "file:src/lib/about.js",
+      "file:src/lib/charts.js",
+      "file:src/routes/about.js",
+      "file:src/routes/auth.js",
+      "file:src/lib/auth.js",
+      "file:src/lib/scheduler.js",
+      "file:src/lib/subscriptions.js",
+      "file:src/routes/dashboard.js",
+      "file:src/routes/planning.js",
+      "file:src/lib/formdata.js",
+      "file:src/routes/reports.js",
+      "file:src/routes/subscriptions.js",
+      "file:src/views/about.ejs",
+      "file:src/views/account-detail.ejs",
+      "file:src/views/accounts.ejs",
+      "file:src/views/ai.ejs",
+      "file:src/views/attachments.ejs",
+      "file:src/views/budgets.ejs",
+      "file:src/views/calendar.ejs",
+      "file:src/views/categories.ejs",
+      "file:src/views/dashboard.ejs",
+      "file:src/views/debts.ejs",
+      "file:src/views/error.ejs",
+      "file:src/views/export.ejs",
+      "file:src/views/goals.ejs",
+      "file:src/views/import.ejs",
+      "file:src/views/layout-blank.ejs",
+      "file:src/views/layout.ejs",
+      "file:src/views/ledgers.ejs",
+      "file:src/views/login.ejs",
+      "file:src/views/members.ejs",
+      "file:src/views/no-ledger.ejs",
+      "file:src/views/notifications.ejs",
+      "file:src/views/partials/txn-list.ejs",
+      "file:src/views/recurring.ejs",
+      "file:src/views/register.ejs",
+      "file:src/views/reports.ejs",
+      "file:src/views/search.ejs",
+      "file:src/views/settings.ejs",
+      "file:src/views/setup.ejs",
+      "file:src/views/subscriptions.ejs",
+      "file:src/views/tags.ejs",
+      "file:src/views/transactions.ejs",
+      "file:src/views/txn-form.ejs"
+    ],
+    "test": [
+      "file:test/verify-ai-image.js",
+      "file:test/verify-model-list.js",
+      "file:test/verify-about.js",
+      "file:test/verify-subscriptions.js",
+      "file:test/run-all.js",
+      "file:test/selfcheck-static.js",
+      "file:test/verify-ai-attachments.js",
+      "file:test/verify-ai-chat.js",
+      "file:test/verify-settings-admin.js"
+    ],
+    "scripts": [
+      "file:scripts/seed-demo.js",
+      "file:scripts/reset-password.js"
+    ],
+    "root": [
+      "file:server.js",
+      "service:Dockerfile",
+      "service:docker-compose.yml",
+      "service:docker-compose.yml:homeledger",
+      "document:README.md",
+      "config:docker-compose-bak.yml",
+      "config:package.json"
+    ],
+    ".claude": [
+      "document:.claude/commands/opsx/apply.md",
+      "document:.claude/commands/opsx/archive.md",
+      "document:.claude/commands/opsx/explore.md",
+      "document:.claude/commands/opsx/propose.md",
+      "document:.claude/commands/opsx/sync.md",
+      "document:.claude/commands/opsx/update.md",
+      "document:.claude/skills/openspec-apply-change/SKILL.md",
+      "document:.claude/skills/openspec-archive-change/SKILL.md",
+      "document:.claude/skills/openspec-explore/SKILL.md",
+      "document:.claude/skills/openspec-propose/SKILL.md",
+      "document:.claude/skills/openspec-sync-specs/SKILL.md",
+      "document:.claude/skills/openspec-update-change/SKILL.md"
+    ],
+    ".ua": [
+      "config:.ua/config.json"
+    ],
+    "openclaw-skill": [
+      "document:openclaw-skill/homeledger-bookkeeping/SKILL.md"
+    ],
+    "openspec": [
+      "file:openspec/changes/archive/.gitkeep",
+      "config:openspec/config.yaml",
+      "file:openspec/specs/.gitkeep"
+    ],
+    "packaging": [
+      "document:packaging/fpk/README.md",
+      "file:packaging/fpk/build-fpk.sh",
+      "file:packaging/fpk/cmd-main",
+      "file:packaging/fpk/make-fpk.py"
+    ],
+    "public": [
+      "file:public/css/app.css",
+      "file:public/js/app.js",
+      "file:public/js/assistant.js",
+      "file:public/manifest.webmanifest"
+    ]
+  },
+  "nodeTypeGroups": {
+    "file": [
+      "file:src/db.js",
+      "file:src/lib/ai.js",
+      "file:src/lib/importers.js",
+      "file:src/routes/admin.js",
+      "file:src/routes/ai.js",
+      "file:src/routes/openapi.js",
+      "file:test/verify-ai-image.js",
+      "file:test/verify-model-list.js",
+      "file:scripts/seed-demo.js",
+      "file:src/lib/attachments.js",
+      "file:src/lib/txn.js",
+      "file:src/lib/util.js",
+      "file:src/routes/accounts.js",
+      "file:src/routes/transactions.js",
+      "file:server.js",
+      "file:src/lib/about.js",
+      "file:src/lib/charts.js",
+      "file:src/routes/about.js",
+      "file:src/routes/auth.js",
+      "file:test/verify-about.js",
+      "file:src/lib/auth.js",
+      "file:src/lib/scheduler.js",
+      "file:src/lib/subscriptions.js",
+      "file:src/routes/dashboard.js",
+      "file:src/routes/planning.js",
+      "file:test/verify-subscriptions.js",
+      "file:src/lib/formdata.js",
+      "file:src/routes/reports.js",
+      "file:src/routes/subscriptions.js",
+      "file:openspec/changes/archive/.gitkeep",
+      "file:openspec/specs/.gitkeep",
+      "file:packaging/fpk/build-fpk.sh",
+      "file:packaging/fpk/cmd-main",
+      "file:packaging/fpk/make-fpk.py",
+      "file:public/css/app.css",
+      "file:public/js/app.js",
+      "file:public/js/assistant.js",
+      "file:public/manifest.webmanifest",
+      "file:scripts/reset-password.js",
+      "file:src/views/about.ejs",
+      "file:src/views/account-detail.ejs",
+      "file:src/views/accounts.ejs",
+      "file:src/views/ai.ejs",
+      "file:src/views/attachments.ejs",
+      "file:src/views/budgets.ejs",
+      "file:src/views/calendar.ejs",
+      "file:src/views/categories.ejs",
+      "file:src/views/dashboard.ejs",
+      "file:src/views/debts.ejs",
+      "file:src/views/error.ejs",
+      "file:src/views/export.ejs",
+      "file:src/views/goals.ejs",
+      "file:src/views/import.ejs",
+      "file:src/views/layout-blank.ejs",
+      "file:src/views/layout.ejs",
+      "file:src/views/ledgers.ejs",
+      "file:src/views/login.ejs",
+      "file:src/views/members.ejs",
+      "file:src/views/no-ledger.ejs",
+      "file:src/views/notifications.ejs",
+      "file:src/views/partials/txn-list.ejs",
+      "file:src/views/recurring.ejs",
+      "file:src/views/register.ejs",
+      "file:src/views/reports.ejs",
+      "file:src/views/search.ejs",
+      "file:src/views/settings.ejs",
+      "file:src/views/setup.ejs",
+      "file:src/views/subscriptions.ejs",
+      "file:src/views/tags.ejs",
+      "file:src/views/transactions.ejs",
+      "file:src/views/txn-form.ejs",
+      "file:test/run-all.js",
+      "file:test/selfcheck-static.js",
+      "file:test/verify-ai-attachments.js",
+      "file:test/verify-ai-chat.js",
+      "file:test/verify-settings-admin.js"
+    ],
+    "service": [
+      "service:Dockerfile",
+      "service:docker-compose.yml",
+      "service:docker-compose.yml:homeledger"
+    ],
+    "document": [
+      "document:.claude/commands/opsx/apply.md",
+      "document:.claude/commands/opsx/archive.md",
+      "document:.claude/commands/opsx/explore.md",
+      "document:.claude/commands/opsx/propose.md",
+      "document:.claude/commands/opsx/sync.md",
+      "document:.claude/commands/opsx/update.md",
+      "document:README.md",
+      "document:.claude/skills/openspec-apply-change/SKILL.md",
+      "document:.claude/skills/openspec-archive-change/SKILL.md",
+      "document:.claude/skills/openspec-explore/SKILL.md",
+      "document:.claude/skills/openspec-propose/SKILL.md",
+      "document:.claude/skills/openspec-sync-specs/SKILL.md",
+      "document:.claude/skills/openspec-update-change/SKILL.md",
+      "document:openclaw-skill/homeledger-bookkeeping/SKILL.md",
+      "document:packaging/fpk/README.md"
+    ],
+    "config": [
+      "config:docker-compose-bak.yml",
+      "config:package.json",
+      "config:.ua/config.json",
+      "config:openspec/config.yaml"
+    ]
+  },
+  "crossCategoryEdges": [
+    {
+      "fromType": "document",
+      "toType": "file",
+      "edgeType": "documents",
+      "count": 5
+    },
+    {
+      "fromType": "service",
+      "toType": "file",
+      "edgeType": "deploys",
+      "count": 2
+    },
+    {
+      "fromType": "config",
+      "toType": "file",
+      "edgeType": "configures",
+      "count": 2
+    },
+    {
+      "fromType": "config",
+      "toType": "service",
+      "edgeType": "depends_on",
+      "count": 1
+    },
+    {
+      "fromType": "file",
+      "toType": "config",
+      "edgeType": "imports",
+      "count": 1
+    }
+  ],
+  "interGroupImports": [
+    {
+      "from": "root",
+      "to": "src",
+      "count": 17
+    },
+    {
+      "from": "test",
+      "to": "src",
+      "count": 9
+    },
+    {
+      "from": "scripts",
+      "to": "src",
+      "count": 5
+    }
+  ],
+  "intraGroupDensity": {
+    "src": {
+      "internalEdges": 82,
+      "totalEdges": 113,
+      "density": 0.73
+    },
+    "root": {
+      "internalEdges": 1,
+      "totalEdges": 18,
+      "density": 0.06
+    },
+    "test": {
+      "internalEdges": 0,
+      "totalEdges": 9,
+      "density": 0
+    },
+    "scripts": {
+      "internalEdges": 0,
+      "totalEdges": 5,
+      "density": 0
+    }
+  },
+  "patternMatches": {
+    "test": "test",
+    "scripts": "entry",
+    "public": "assets"
+  },
+  "deploymentTopology": {
+    "hasDockerfile": true,
+    "hasCompose": true,
+    "hasK8s": false,
+    "hasTerraform": false,
+    "hasCI": false,
+    "infraFiles": [
+      "service:Dockerfile",
+      "service:docker-compose.yml",
+      "service:docker-compose.yml:homeledger",
+      "config:docker-compose-bak.yml"
+    ],
+    "ciFiles": []
+  },
+  "dataPipeline": {
+    "schemaFiles": [],
+    "migrationFiles": [],
+    "dataModelFiles": [],
+    "apiHandlerFiles": [
+      "file:src/routes/admin.js",
+      "file:src/routes/ai.js",
+      "file:src/routes/openapi.js",
+      "file:src/routes/accounts.js",
+      "file:src/routes/transactions.js",
+      "file:src/routes/about.js",
+      "file:src/routes/auth.js",
+      "file:src/routes/dashboard.js",
+      "file:src/routes/planning.js",
+      "file:src/routes/reports.js",
+      "file:src/routes/subscriptions.js"
+    ]
+  },
+  "docCoverage": {
+    "groupsWithDocs": 4,
+    "totalGroups": 10,
+    "coverageRatio": 0.4,
+    "undocumentedGroups": [
+      "src",
+      "test",
+      "scripts",
+      ".ua",
+      "openspec",
+      "public"
+    ],
+    "docFiles": [
+      "document:.claude/commands/opsx/apply.md",
+      "document:.claude/commands/opsx/archive.md",
+      "document:.claude/commands/opsx/explore.md",
+      "document:.claude/commands/opsx/propose.md",
+      "document:.claude/commands/opsx/sync.md",
+      "document:.claude/commands/opsx/update.md",
+      "document:README.md",
+      "document:.claude/skills/openspec-apply-change/SKILL.md",
+      "document:.claude/skills/openspec-archive-change/SKILL.md",
+      "document:.claude/skills/openspec-explore/SKILL.md",
+      "document:.claude/skills/openspec-propose/SKILL.md",
+      "document:.claude/skills/openspec-sync-specs/SKILL.md",
+      "document:.claude/skills/openspec-update-change/SKILL.md",
+      "document:openclaw-skill/homeledger-bookkeeping/SKILL.md",
+      "document:packaging/fpk/README.md"
+    ]
+  },
+  "dependencyDirection": [
+    {
+      "dependent": "root",
+      "dependsOn": "src",
+      "weight": 17,
+      "reverse": 0
+    },
+    {
+      "dependent": "test",
+      "dependsOn": "src",
+      "weight": 9,
+      "reverse": 0
+    },
+    {
+      "dependent": "scripts",
+      "dependsOn": "src",
+      "weight": 5,
+      "reverse": 0
+    }
+  ],
+  "fileStats": {
+    "totalFileNodes": 98,
+    "filesPerGroup": {
+      "src": 55,
+      "test": 9,
+      "scripts": 2,
+      "root": 7,
+      ".claude": 12,
+      ".ua": 1,
+      "openclaw-skill": 1,
+      "openspec": 3,
+      "packaging": 4,
+      "public": 4
+    },
+    "nodeTypeCounts": {
+      "file": 76,
+      "service": 3,
+      "document": 15,
+      "config": 4
+    }
+  },
+  "fileFanIn": {
+    "file:src/db.js": 24,
+    "file:src/lib/util.js": 17,
+    "file:src/lib/ai.js": 8,
+    "file:src/lib/auth.js": 16,
+    "file:src/lib/formdata.js": 9,
+    "file:src/lib/importers.js": 1,
+    "file:src/lib/scheduler.js": 5,
+    "file:src/lib/txn.js": 9,
+    "file:src/lib/attachments.js": 6,
+    "file:src/lib/charts.js": 1,
+    "file:src/routes/about.js": 1,
+    "file:src/routes/accounts.js": 1,
+    "file:src/routes/admin.js": 1,
+    "file:src/routes/ai.js": 1,
+    "file:src/routes/auth.js": 1,
+    "file:src/routes/dashboard.js": 1,
+    "file:src/routes/openapi.js": 1,
+    "file:src/routes/planning.js": 1,
+    "file:src/routes/reports.js": 1,
+    "file:src/routes/subscriptions.js": 1,
+    "file:src/routes/transactions.js": 1,
+    "file:src/lib/about.js": 2,
+    "file:src/lib/subscriptions.js": 4,
+    "config:package.json": 1
+  },
+  "fileFanOut": {
+    "file:src/lib/ai.js": 2,
+    "file:src/lib/importers.js": 3,
+    "file:src/routes/admin.js": 8,
+    "file:src/routes/ai.js": 6,
+    "file:src/routes/openapi.js": 6,
+    "file:test/verify-ai-image.js": 2,
+    "file:test/verify-model-list.js": 2,
+    "file:scripts/seed-demo.js": 5,
+    "file:src/lib/attachments.js": 2,
+    "file:src/lib/txn.js": 3,
+    "file:src/routes/accounts.js": 5,
+    "file:src/routes/transactions.js": 6,
+    "file:server.js": 18,
+    "file:src/lib/charts.js": 1,
+    "file:src/routes/about.js": 3,
+    "file:src/routes/auth.js": 3,
+    "file:test/verify-about.js": 1,
+    "file:src/lib/auth.js": 1,
+    "file:src/lib/scheduler.js": 4,
+    "file:src/lib/subscriptions.js": 3,
+    "file:src/routes/dashboard.js": 9,
+    "file:src/routes/planning.js": 6,
+    "file:test/verify-subscriptions.js": 4,
+    "file:src/lib/formdata.js": 1,
+    "file:src/routes/reports.js": 5,
+    "file:src/routes/subscriptions.js": 5
+  }
+}

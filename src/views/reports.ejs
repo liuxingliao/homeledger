@@ -146,6 +146,46 @@
   </div>
 </div>
 
+<div class="grid grid-2">
+  <div class="card">
+    <div class="card-head">
+      <h2>按标签分组</h2>
+      <span class="muted small"><%= range.label %> · 项目以标签统计</span>
+    </div>
+    <% var tagItems = tagStats.filter(function(x){ return x.total > 0; }).map(function(x){ return { name: x.name, value: x.total / 100, color: x.color }; });
+       var tagTotal = tagStats.reduce(function(s,x){ return s + x.total; }, 0); %>
+    <% if (!tagItems.length) { %>
+      <div class="empty"><span class="big">🏷️</span>该区间没有标签数据</div>
+    <% } else { %>
+      <div class="row" style="gap:16px;align-items:flex-start;flex-wrap:wrap">
+        <div style="flex:0 0 180px">
+          <%- charts.donutChart(tagItems, { size: 175, thickness: 24, centerValue: helpers.compactMoney(tagTotal), centerTitle: '标签合计' }) %>
+        </div>
+        <div style="flex:1;min-width:210px">
+          <%- charts.donutLegend(tagItems, tagTotal / 100) %>
+        </div>
+      </div>
+    <% } %>
+  </div>
+
+  <div class="card">
+    <div class="card-head"><h2>按参与成员分组</h2><span class="muted small">随手记式成员统计</span></div>
+    <% if (!peopleStats.length) { %>
+      <div class="empty"><span class="big">👥</span>没有数据</div>
+    <% } else { %>
+      <% peopleStats.forEach(function(m){ %>
+        <div class="mb12">
+          <div class="row between small">
+            <span><span class="avatar" style="background:<%= m.color %>;width:20px;height:20px;font-size:10px;display:inline-grid;vertical-align:-5px"><%= helpers.initials(m.name) %></span> <%= m.name %></span>
+            <span class="muted"><%= m.cnt %> 笔 · 支出 <b class="amount expense"><%= helpers.fmtAmount(m.expense) %></b> · 收入 <b class="amount income"><%= helpers.fmtAmount(m.income) %></b></span>
+          </div>
+          <div class="mt8"><%- charts.progressBar(m.expense, Math.max.apply(null, peopleStats.map(function(x){ return Number(x.expense); }).concat([1])), { color: m.color }) %></div>
+        </div>
+      <% }); %>
+    <% } %>
+  </div>
+</div>
+
 <div class="card">
   <div class="card-head"><h2>每日支出走势</h2>
     <% if (maxDay) { %><span class="muted small">支出最高的一天：<%= maxDay.date %>（<%= helpers.fmtAmount(maxDay.expense) %>）</span><% } %>

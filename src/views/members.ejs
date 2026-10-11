@@ -110,5 +110,33 @@
         <div><b class="chip">只读</b> 只能浏览与导出，不能修改</div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-head"><h2>参与成员（自由名单）</h2><span class="muted small">随手记式成员，记一笔时可选"谁参与了这笔交易"</span></div>
+      <% if (!people.length) { %>
+        <div class="empty" style="padding:16px">还没有参与成员，在下面添加，或导入随手记账本时自动创建</div>
+      <% } else { %>
+        <% people.forEach(function(p){ %>
+          <div style="border-bottom:1px dashed var(--border);padding:8px 0">
+            <div class="row between">
+              <div class="row" style="gap:8px">
+                <form method="post" action="/people/<%= p.id %>" style="display:flex;gap:6px;align-items:center" onsubmit="return true">
+                  <input type="text" name="name" value="<%= p.name %>" maxlength="20" style="width:110px">
+                  <button class="btn btn-sm btn-ghost" type="submit">改名</button>
+                </form>
+                <span class="muted tiny"><%= p.cnt %> 笔参与</span>
+              </div>
+              <form method="post" action="/people/<%= p.id %>/delete" onsubmit="return confirm('删除参与成员「<%= p.name %>」？其参与记录会一并移除，交易本身不受影响。')">
+                <button class="btn btn-sm btn-ghost" type="submit">✕ 删除</button>
+              </form>
+            </div>
+          </div>
+        <% }); %>
+      <% } %>
+      <form method="post" action="/people" class="row mt8" style="gap:8px">
+        <input type="text" name="name" maxlength="20" placeholder="新成员名字，如：宝宝" required style="flex:1">
+        <button class="btn btn-primary" type="submit">＋ 添加参与成员</button>
+      </form>
+    </div>
   </div>
 </div>

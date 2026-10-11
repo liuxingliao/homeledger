@@ -1,0 +1,128 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 2,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 2,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 2
+    }
+  },
+  "results": [
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 29,
+      "nonEmptyLines": 20,
+      "services": [
+        {
+          "name": "node",
+          "image": "node:22-slim",
+          "ports": [
+            5111
+          ],
+          "startLine": 1,
+          "endLine": 30
+        }
+      ],
+      "steps": [
+        {
+          "name": "FROM node:22-slim",
+          "startLine": 1,
+          "endLine": 1
+        },
+        {
+          "name": "ENV TZ=Asia/Shanghai \\",
+          "startLine": 4,
+          "endLine": 4
+        },
+        {
+          "name": "WORKDIR /app",
+          "startLine": 9,
+          "endLine": 9
+        },
+        {
+          "name": "COPY package.json ./",
+          "startLine": 12,
+          "endLine": 12
+        },
+        {
+          "name": "RUN npm install --omit=dev --no-audit --no-fund",
+          "startLine": 13,
+          "endLine": 13
+        },
+        {
+          "name": "COPY . .",
+          "startLine": 16,
+          "endLine": 16
+        },
+        {
+          "name": "RUN mkdir -p /data && chown -R node:node /data /app",
+          "startLine": 19,
+          "endLine": 19
+        },
+        {
+          "name": "VOLUME [\"/data\"]",
+          "startLine": 20,
+          "endLine": 20
+        },
+        {
+          "name": "USER node",
+          "startLine": 22,
+          "endLine": 22
+        },
+        {
+          "name": "EXPOSE 5111",
+          "startLine": 24,
+          "endLine": 24
+        },
+        {
+          "name": "HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \\",
+          "startLine": 26,
+          "endLine": 26
+        },
+        {
+          "name": "CMD [\"node\", \"--no-warnings\", \"server.js\"]",
+          "startLine": 29,
+          "endLine": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "serviceCount": 1,
+        "stepCount": 12
+      }
+    },
+    {
+      "path": "docker-compose.yml",
+      "language": "yaml",
+      "fileCategory": "infra",
+      "totalLines": 14,
+      "nonEmptyLines": 14,
+      "sections": [
+        {
+          "heading": "services",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    }
+  ]
+}

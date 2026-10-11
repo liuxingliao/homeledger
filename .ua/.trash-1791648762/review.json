@@ -1,0 +1,39 @@
+{
+  "issues": [],
+  "warnings": [
+    "Node 'document:.claude/skills/openspec-sync-specs/SKILL.md' has no edges (orphan)",
+    "Node 'config:.ua/config.json' has no edges (orphan)",
+    "Node 'file:openspec/changes/archive/.gitkeep' has no edges (orphan)",
+    "Node 'config:openspec/config.yaml' has no edges (orphan)",
+    "Node 'file:openspec/specs/.gitkeep' has no edges (orphan)",
+    "Node 'file:public/css/app.css' has no edges (orphan)",
+    "Node 'file:scripts/reset-password.js' has no edges (orphan)",
+    "Node 'file:test/selfcheck-static.js' has no edges (orphan)"
+  ],
+  "stats": {
+    "totalNodes": 323,
+    "totalEdges": 632,
+    "totalLayers": 9,
+    "tourSteps": 15,
+    "nodeTypes": {
+      "file": 76,
+      "function": 224,
+      "class": 1,
+      "service": 3,
+      "document": 15,
+      "config": 4
+    },
+    "edgeTypes": {
+      "imports": 114,
+      "contains": 226,
+      "exports": 152,
+      "calls": 57,
+      "deploys": 4,
+      "depends_on": 41,
+      "related": 15,
+      "documents": 5,
+      "configures": 2,
+      "tested_by": 16
+    }
+  }
+}

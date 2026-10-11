@@ -1,0 +1,80 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/routes/dashboard.js",
+      "type": "file",
+      "name": "dashboard.js",
+      "filePath": "src/routes/dashboard.js",
+      "summary": "Express 路由：首页仪表盘、记账日历、全局搜索与通知中心，聚合当月/上月收支、消费趋势、分类占比、预算进度、借贷与目标概览、待报销金额等数据后渲染 SSR 页面。",
+      "tags": ["api-handler", "路由", "ssr", "仪表盘"],
+      "complexity": "moderate",
+      "languageNotes": "一个 GET 处理器内并行聚合十余项统计查询，复用 txn.summary/categoryBreakdown 与 scheduler 的预算区间工具。"
+    },
+    {
+      "id": "file:src/routes/planning.js",
+      "type": "file",
+      "name": "planning.js",
+      "filePath": "src/routes/planning.js",
+      "summary": "Express 路由：预算、周期账单、借贷台账与储蓄目标四大规划功能的列表与增删改查，写操作经 requireLedgerWrite 权限中间件保护后渲染对应 SSR 页面。",
+      "tags": ["api-handler", "路由", "ssr", "规划"],
+      "complexity": "complex",
+      "languageNotes": "预算页计算已用比例、剩余额度与每日可用额度（dailyAllowance），复用 scheduler 的 budgetPeriodRange/budgetUsedInRange。"
+    },
+    {
+      "id": "file:test/verify-subscriptions.js",
+      "type": "file",
+      "name": "verify-subscriptions.js",
+      "filePath": "test/verify-subscriptions.js",
+      "summary": "订阅扣费回归测试脚本：A 段在独立数据目录上进程内验证周期推进、成本折算、到期自动扣费、试用转正与提醒去重；B 段对 8099 端口隔离实例做 HTTP 端到端验证（未启动则跳过）。",
+      "tags": ["test", "回归测试", "订阅", "端到端"],
+      "complexity": "complex",
+      "languageNotes": "自建隔离 DATA_DIR 并清理重建，HTTP 段通过 fetch 手动管理会话 Cookie 并从登录页正则提取 CSRF token。"
+    },
+    {
+      "id": "function:test/verify-subscriptions.js:addSub",
+      "type": "function",
+      "name": "addSub",
+      "filePath": "test/verify-subscriptions.js",
+      "lineRange": [87, 104],
+      "summary": "测试辅助：直接向数据库插入一条带默认值的订阅记录，供 A 段进程内用例构造数据。",
+      "tags": ["test", "测试夹具"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:test/verify-subscriptions.js:req",
+      "type": "function",
+      "name": "req",
+      "filePath": "test/verify-subscriptions.js",
+      "lineRange": [208, 221],
+      "summary": "测试辅助：向隔离实例发送 HTTP 请求，自动携带/捕获会话 Cookie，支持表单提交并以 UTF-8 解码响应文本。",
+      "tags": ["test", "http", "测试夹具"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/lib/ai.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/lib/attachments.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/lib/auth.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/lib/formdata.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/lib/scheduler.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/lib/subscriptions.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/lib/txn.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/dashboard.js", "target": "file:src/lib/util.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+
+    { "source": "file:src/routes/planning.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/planning.js", "target": "file:src/lib/auth.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/planning.js", "target": "file:src/lib/formdata.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/planning.js", "target": "file:src/lib/scheduler.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/planning.js", "target": "file:src/lib/txn.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:src/routes/planning.js", "target": "file:src/lib/util.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+
+    { "source": "file:test/verify-subscriptions.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:test/verify-subscriptions.js", "target": "file:src/lib/auth.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:test/verify-subscriptions.js", "target": "file:src/lib/scheduler.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+    { "source": "file:test/verify-subscriptions.js", "target": "file:src/lib/subscriptions.js", "type": "imports", "direction": "forward", "weight": 0.7 },
+
+    { "source": "file:test/verify-subscriptions.js", "target": "function:test/verify-subscriptions.js:addSub", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:test/verify-subscriptions.js", "target": "function:test/verify-subscriptions.js:req", "type": "contains", "direction": "forward", "weight": 1.0 }
+  ]
+}

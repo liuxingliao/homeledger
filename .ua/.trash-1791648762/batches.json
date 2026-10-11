@@ -1,0 +1,1765 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 97,
+  "totalBatches": 11,
+  "exportsByPath": {
+    "openspec/changes/archive/.gitkeep": [],
+    "openspec/specs/.gitkeep": [],
+    "packaging/fpk/cmd-main": [],
+    "packaging/fpk/make-fpk.py": [
+      "add_tree",
+      "build_app_tgz",
+      "write_text",
+      "build_fpk",
+      "main"
+    ],
+    "public/js/app.js": [],
+    "public/js/assistant.js": [],
+    "public/manifest.webmanifest": [],
+    "scripts/reset-password.js": [],
+    "scripts/seed-demo.js": [],
+    "server.js": [],
+    "src/db.js": [],
+    "src/lib/about.js": [],
+    "src/lib/ai.js": [],
+    "src/lib/attachments.js": [],
+    "src/lib/auth.js": [],
+    "src/lib/charts.js": [],
+    "src/lib/formdata.js": [],
+    "src/lib/importers.js": [],
+    "src/lib/scheduler.js": [],
+    "src/lib/subscriptions.js": [],
+    "src/lib/txn.js": [],
+    "src/lib/util.js": [],
+    "src/routes/about.js": [],
+    "src/routes/accounts.js": [],
+    "src/routes/admin.js": [],
+    "src/routes/ai.js": [],
+    "src/routes/auth.js": [],
+    "src/routes/dashboard.js": [],
+    "src/routes/openapi.js": [],
+    "src/routes/planning.js": [],
+    "src/routes/reports.js": [],
+    "src/routes/subscriptions.js": [],
+    "src/routes/transactions.js": [],
+    "src/views/about.ejs": [],
+    "src/views/account-detail.ejs": [],
+    "src/views/accounts.ejs": [],
+    "src/views/ai.ejs": [],
+    "src/views/attachments.ejs": [],
+    "src/views/budgets.ejs": [],
+    "src/views/calendar.ejs": [],
+    "src/views/categories.ejs": [],
+    "src/views/dashboard.ejs": [],
+    "src/views/debts.ejs": [],
+    "src/views/error.ejs": [],
+    "src/views/export.ejs": [],
+    "src/views/goals.ejs": [],
+    "src/views/import.ejs": [],
+    "src/views/layout-blank.ejs": [],
+    "src/views/layout.ejs": [],
+    "src/views/ledgers.ejs": [],
+    "src/views/login.ejs": [],
+    "src/views/members.ejs": [],
+    "src/views/no-ledger.ejs": [],
+    "src/views/notifications.ejs": [],
+    "src/views/partials/txn-list.ejs": [],
+    "src/views/recurring.ejs": [],
+    "src/views/register.ejs": [],
+    "src/views/reports.ejs": [],
+    "src/views/search.ejs": [],
+    "src/views/settings.ejs": [],
+    "src/views/setup.ejs": [],
+    "src/views/subscriptions.ejs": [],
+    "src/views/tags.ejs": [],
+    "src/views/transactions.ejs": [],
+    "src/views/txn-form.ejs": [],
+    "test/run-all.js": [],
+    "test/selfcheck-static.js": [],
+    "test/verify-about.js": [],
+    "test/verify-ai-attachments.js": [],
+    "test/verify-ai-chat.js": [],
+    "test/verify-ai-image.js": [],
+    "test/verify-model-list.js": [],
+    "test/verify-settings-admin.js": [],
+    "test/verify-subscriptions.js": []
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "src/db.js",
+          "language": "javascript",
+          "sizeLines": 706,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/ai.js",
+          "language": "javascript",
+          "sizeLines": 669,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/importers.js",
+          "language": "javascript",
+          "sizeLines": 291,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/admin.js",
+          "language": "javascript",
+          "sizeLines": 720,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/ai.js",
+          "language": "javascript",
+          "sizeLines": 257,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/openapi.js",
+          "language": "javascript",
+          "sizeLines": 301,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/verify-ai-image.js",
+          "language": "javascript",
+          "sizeLines": 102,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/verify-model-list.js",
+          "language": "javascript",
+          "sizeLines": 128,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/db.js": [],
+        "src/lib/ai.js": [
+          "src/db.js",
+          "src/lib/util.js"
+        ],
+        "src/lib/importers.js": [
+          "src/db.js",
+          "src/lib/ai.js",
+          "src/lib/util.js"
+        ],
+        "src/routes/admin.js": [
+          "src/db.js",
+          "src/lib/ai.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/importers.js",
+          "src/lib/scheduler.js",
+          "src/lib/txn.js",
+          "src/lib/util.js"
+        ],
+        "src/routes/ai.js": [
+          "src/db.js",
+          "src/lib/ai.js",
+          "src/lib/attachments.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/txn.js"
+        ],
+        "src/routes/openapi.js": [
+          "src/db.js",
+          "src/lib/ai.js",
+          "src/lib/attachments.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/txn.js"
+        ],
+        "test/verify-ai-image.js": [
+          "src/db.js",
+          "src/lib/ai.js"
+        ],
+        "test/verify-model-list.js": [
+          "src/db.js",
+          "src/lib/ai.js"
+        ]
+      },
+      "neighborMap": {
+        "src/db.js": [
+          {
+            "path": "scripts/seed-demo.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/attachments.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/formdata.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/scheduler.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/subscriptions.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/txn.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/about.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/accounts.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/auth.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/dashboard.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/planning.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/reports.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/subscriptions.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/transactions.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "test/verify-subscriptions.js",
+            "batchIndex": 4,
+            "symbols": []
+          }
+        ],
+        "src/lib/ai.js": [
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/dashboard.js",
+            "batchIndex": 4,
+            "symbols": []
+          }
+        ],
+        "src/lib/importers.js": [
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "src/routes/admin.js": [
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/formdata.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/scheduler.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/txn.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "src/routes/ai.js": [
+          {
+            "path": "src/lib/attachments.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/formdata.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/txn.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "src/routes/openapi.js": [
+          {
+            "path": "src/lib/attachments.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/formdata.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/txn.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "scripts/seed-demo.js",
+          "language": "javascript",
+          "sizeLines": 131,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/attachments.js",
+          "language": "javascript",
+          "sizeLines": 186,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/txn.js",
+          "language": "javascript",
+          "sizeLines": 515,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/util.js",
+          "language": "javascript",
+          "sizeLines": 284,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/accounts.js",
+          "language": "javascript",
+          "sizeLines": 296,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/transactions.js",
+          "language": "javascript",
+          "sizeLines": 227,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "scripts/seed-demo.js": [
+          "src/db.js",
+          "src/lib/attachments.js",
+          "src/lib/auth.js",
+          "src/lib/txn.js",
+          "src/lib/util.js"
+        ],
+        "src/lib/attachments.js": [
+          "src/db.js",
+          "src/lib/util.js"
+        ],
+        "src/lib/txn.js": [
+          "src/db.js",
+          "src/lib/attachments.js",
+          "src/lib/util.js"
+        ],
+        "src/lib/util.js": [],
+        "src/routes/accounts.js": [
+          "src/db.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/txn.js",
+          "src/lib/util.js"
+        ],
+        "src/routes/transactions.js": [
+          "src/db.js",
+          "src/lib/attachments.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/txn.js",
+          "src/lib/util.js"
+        ]
+      },
+      "neighborMap": {
+        "scripts/seed-demo.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          }
+        ],
+        "src/lib/attachments.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/ai.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/dashboard.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/openapi.js",
+            "batchIndex": 1,
+            "symbols": []
+          }
+        ],
+        "src/lib/txn.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/admin.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/ai.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/dashboard.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/openapi.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/planning.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/reports.js",
+            "batchIndex": 5,
+            "symbols": []
+          }
+        ],
+        "src/lib/util.js": [
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/ai.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/charts.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/importers.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/scheduler.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/subscriptions.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/admin.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/auth.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/dashboard.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/planning.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/reports.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/subscriptions.js",
+            "batchIndex": 5,
+            "symbols": []
+          }
+        ],
+        "src/routes/accounts.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/formdata.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "src/routes/transactions.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/formdata.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "server.js",
+          "language": "javascript",
+          "sizeLines": 227,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/about.js",
+          "language": "javascript",
+          "sizeLines": 78,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/charts.js",
+          "language": "javascript",
+          "sizeLines": 270,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/about.js",
+          "language": "javascript",
+          "sizeLines": 73,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/auth.js",
+          "language": "javascript",
+          "sizeLines": 191,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/verify-about.js",
+          "language": "javascript",
+          "sizeLines": 87,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "server.js": [
+          "package.json",
+          "src/db.js",
+          "src/lib/ai.js",
+          "src/lib/auth.js",
+          "src/lib/charts.js",
+          "src/lib/scheduler.js",
+          "src/lib/util.js",
+          "src/routes/about.js",
+          "src/routes/accounts.js",
+          "src/routes/admin.js",
+          "src/routes/ai.js",
+          "src/routes/auth.js",
+          "src/routes/dashboard.js",
+          "src/routes/openapi.js",
+          "src/routes/planning.js",
+          "src/routes/reports.js",
+          "src/routes/subscriptions.js",
+          "src/routes/transactions.js"
+        ],
+        "src/lib/about.js": [],
+        "src/lib/charts.js": [
+          "src/lib/util.js"
+        ],
+        "src/routes/about.js": [
+          "src/db.js",
+          "src/lib/about.js",
+          "src/lib/auth.js"
+        ],
+        "src/routes/auth.js": [
+          "src/db.js",
+          "src/lib/auth.js",
+          "src/lib/util.js"
+        ],
+        "test/verify-about.js": [
+          "src/lib/about.js"
+        ]
+      },
+      "neighborMap": {
+        "server.js": [
+          {
+            "path": "package.json",
+            "batchIndex": 8,
+            "symbols": []
+          },
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/ai.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/scheduler.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/accounts.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/admin.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/ai.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/dashboard.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/openapi.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/planning.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/reports.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/subscriptions.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/transactions.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "src/lib/charts.js": [
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "src/routes/about.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          }
+        ],
+        "src/routes/auth.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": "src/lib/auth.js",
+          "language": "javascript",
+          "sizeLines": 272,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/scheduler.js",
+          "language": "javascript",
+          "sizeLines": 279,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/lib/subscriptions.js",
+          "language": "javascript",
+          "sizeLines": 341,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/dashboard.js",
+          "language": "javascript",
+          "sizeLines": 176,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/planning.js",
+          "language": "javascript",
+          "sizeLines": 395,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/verify-subscriptions.js",
+          "language": "javascript",
+          "sizeLines": 349,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/lib/auth.js": [
+          "src/db.js"
+        ],
+        "src/lib/scheduler.js": [
+          "src/db.js",
+          "src/lib/auth.js",
+          "src/lib/subscriptions.js",
+          "src/lib/util.js"
+        ],
+        "src/lib/subscriptions.js": [
+          "src/db.js",
+          "src/lib/auth.js",
+          "src/lib/util.js"
+        ],
+        "src/routes/dashboard.js": [
+          "src/db.js",
+          "src/lib/ai.js",
+          "src/lib/attachments.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/scheduler.js",
+          "src/lib/subscriptions.js",
+          "src/lib/txn.js",
+          "src/lib/util.js"
+        ],
+        "src/routes/planning.js": [
+          "src/db.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/scheduler.js",
+          "src/lib/txn.js",
+          "src/lib/util.js"
+        ],
+        "test/verify-subscriptions.js": [
+          "src/db.js",
+          "src/lib/auth.js",
+          "src/lib/scheduler.js",
+          "src/lib/subscriptions.js"
+        ]
+      },
+      "neighborMap": {
+        "src/lib/auth.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "scripts/seed-demo.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/about.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/accounts.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/admin.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/ai.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/auth.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/openapi.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/reports.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/subscriptions.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/transactions.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "src/lib/scheduler.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/admin.js",
+            "batchIndex": 1,
+            "symbols": []
+          }
+        ],
+        "src/lib/subscriptions.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/subscriptions.js",
+            "batchIndex": 5,
+            "symbols": []
+          }
+        ],
+        "src/routes/dashboard.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/ai.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/attachments.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/formdata.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/txn.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "src/routes/planning.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/formdata.js",
+            "batchIndex": 5,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/txn.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "test/verify-subscriptions.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 5,
+      "files": [
+        {
+          "path": "src/lib/formdata.js",
+          "language": "javascript",
+          "sizeLines": 71,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/reports.js",
+          "language": "javascript",
+          "sizeLines": 99,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/routes/subscriptions.js",
+          "language": "javascript",
+          "sizeLines": 210,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/lib/formdata.js": [
+          "src/db.js"
+        ],
+        "src/routes/reports.js": [
+          "src/db.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/txn.js",
+          "src/lib/util.js"
+        ],
+        "src/routes/subscriptions.js": [
+          "src/db.js",
+          "src/lib/auth.js",
+          "src/lib/formdata.js",
+          "src/lib/subscriptions.js",
+          "src/lib/util.js"
+        ]
+      },
+      "neighborMap": {
+        "src/lib/formdata.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/accounts.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/admin.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/ai.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/dashboard.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/openapi.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/planning.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/routes/transactions.js",
+            "batchIndex": 2,
+            "symbols": []
+          }
+        ],
+        "src/routes/reports.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/txn.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ],
+        "src/routes/subscriptions.js": [
+          {
+            "path": "src/db.js",
+            "batchIndex": 1,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/auth.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/subscriptions.js",
+            "batchIndex": 4,
+            "symbols": []
+          },
+          {
+            "path": "src/lib/util.js",
+            "batchIndex": 2,
+            "symbols": []
+          },
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 6,
+      "files": [
+        {
+          "path": "Dockerfile",
+          "language": "dockerfile",
+          "sizeLines": 29,
+          "fileCategory": "infra"
+        },
+        {
+          "path": "docker-compose.yml",
+          "language": "yaml",
+          "sizeLines": 14,
+          "fileCategory": "infra"
+        }
+      ],
+      "batchImportData": {
+        "Dockerfile": [],
+        "docker-compose.yml": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 7,
+      "files": [
+        {
+          "path": ".claude/commands/opsx/apply.md",
+          "language": "markdown",
+          "sizeLines": 202,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/commands/opsx/archive.md",
+          "language": "markdown",
+          "sizeLines": 264,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/commands/opsx/explore.md",
+          "language": "markdown",
+          "sizeLines": 239,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/commands/opsx/propose.md",
+          "language": "markdown",
+          "sizeLines": 170,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/commands/opsx/sync.md",
+          "language": "markdown",
+          "sizeLines": 286,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/commands/opsx/update.md",
+          "language": "markdown",
+          "sizeLines": 105,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        ".claude/commands/opsx/apply.md": [],
+        ".claude/commands/opsx/archive.md": [],
+        ".claude/commands/opsx/explore.md": [],
+        ".claude/commands/opsx/propose.md": [],
+        ".claude/commands/opsx/sync.md": [],
+        ".claude/commands/opsx/update.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 8,
+      "files": [
+        {
+          "path": "README.md",
+          "language": "markdown",
+          "sizeLines": 373,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "docker-compose-bak.yml",
+          "language": "yaml",
+          "sizeLines": 34,
+          "fileCategory": "config"
+        },
+        {
+          "path": "package.json",
+          "language": "json",
+          "sizeLines": 19,
+          "fileCategory": "config"
+        }
+      ],
+      "batchImportData": {
+        "README.md": [],
+        "docker-compose-bak.yml": [],
+        "package.json": []
+      },
+      "neighborMap": {
+        "package.json": [
+          {
+            "path": "server.js",
+            "batchIndex": 3,
+            "symbols": []
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 9,
+      "files": [
+        {
+          "path": ".claude/skills/openspec-apply-change/SKILL.md",
+          "language": "markdown",
+          "sizeLines": 206,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/skills/openspec-archive-change/SKILL.md",
+          "language": "markdown",
+          "sizeLines": 221,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/skills/openspec-explore/SKILL.md",
+          "language": "markdown",
+          "sizeLines": 354,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/skills/openspec-propose/SKILL.md",
+          "language": "markdown",
+          "sizeLines": 174,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/skills/openspec-sync-specs/SKILL.md",
+          "language": "markdown",
+          "sizeLines": 290,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".claude/skills/openspec-update-change/SKILL.md",
+          "language": "markdown",
+          "sizeLines": 109,
+          "fileCategory": "docs"
+        },
+        {
+          "path": ".ua/config.json",
+          "language": "json",
+          "sizeLines": 3,
+          "fileCategory": "config"
+        },
+        {
+          "path": "openclaw-skill/homeledger-bookkeeping/SKILL.md",
+          "language": "markdown",
+          "sizeLines": 106,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "openspec/changes/archive/.gitkeep",
+          "language": "unknown",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        },
+        {
+          "path": "openspec/config.yaml",
+          "language": "yaml",
+          "sizeLines": 32,
+          "fileCategory": "config"
+        },
+        {
+          "path": "openspec/specs/.gitkeep",
+          "language": "unknown",
+          "sizeLines": 0,
+          "fileCategory": "code"
+        },
+        {
+          "path": "packaging/fpk/README.md",
+          "language": "markdown",
+          "sizeLines": 105,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "packaging/fpk/build-fpk.sh",
+          "language": "shell",
+          "sizeLines": 133,
+          "fileCategory": "script"
+        },
+        {
+          "path": "packaging/fpk/cmd-main",
+          "language": "unknown",
+          "sizeLines": 241,
+          "fileCategory": "code"
+        },
+        {
+          "path": "packaging/fpk/make-fpk.py",
+          "language": "python",
+          "sizeLines": 213,
+          "fileCategory": "code"
+        },
+        {
+          "path": "public/css/app.css",
+          "language": "css",
+          "sizeLines": 756,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "public/js/app.js",
+          "language": "javascript",
+          "sizeLines": 723,
+          "fileCategory": "code"
+        },
+        {
+          "path": "public/js/assistant.js",
+          "language": "javascript",
+          "sizeLines": 197,
+          "fileCategory": "code"
+        },
+        {
+          "path": "public/manifest.webmanifest",
+          "language": "webmanifest",
+          "sizeLines": 18,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scripts/reset-password.js",
+          "language": "javascript",
+          "sizeLines": 60,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/about.ejs",
+          "language": "ejs",
+          "sizeLines": 109,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/account-detail.ejs",
+          "language": "ejs",
+          "sizeLines": 58,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/accounts.ejs",
+          "language": "ejs",
+          "sizeLines": 183,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/ai.ejs",
+          "language": "ejs",
+          "sizeLines": 100,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/attachments.ejs",
+          "language": "ejs",
+          "sizeLines": 37,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        ".claude/skills/openspec-apply-change/SKILL.md": [],
+        ".claude/skills/openspec-archive-change/SKILL.md": [],
+        ".claude/skills/openspec-explore/SKILL.md": [],
+        ".claude/skills/openspec-propose/SKILL.md": [],
+        ".claude/skills/openspec-sync-specs/SKILL.md": [],
+        ".claude/skills/openspec-update-change/SKILL.md": [],
+        ".ua/config.json": [],
+        "openclaw-skill/homeledger-bookkeeping/SKILL.md": [],
+        "openspec/changes/archive/.gitkeep": [],
+        "openspec/config.yaml": [],
+        "openspec/specs/.gitkeep": [],
+        "packaging/fpk/README.md": [],
+        "packaging/fpk/build-fpk.sh": [],
+        "packaging/fpk/cmd-main": [],
+        "packaging/fpk/make-fpk.py": [],
+        "public/css/app.css": [],
+        "public/js/app.js": [],
+        "public/js/assistant.js": [],
+        "public/manifest.webmanifest": [],
+        "scripts/reset-password.js": [],
+        "src/views/about.ejs": [],
+        "src/views/account-detail.ejs": [],
+        "src/views/accounts.ejs": [],
+        "src/views/ai.ejs": [],
+        "src/views/attachments.ejs": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 10,
+      "files": [
+        {
+          "path": "src/views/budgets.ejs",
+          "language": "ejs",
+          "sizeLines": 201,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/calendar.ejs",
+          "language": "ejs",
+          "sizeLines": 88,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/categories.ejs",
+          "language": "ejs",
+          "sizeLines": 70,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/dashboard.ejs",
+          "language": "ejs",
+          "sizeLines": 229,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/debts.ejs",
+          "language": "ejs",
+          "sizeLines": 115,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/error.ejs",
+          "language": "ejs",
+          "sizeLines": 11,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/export.ejs",
+          "language": "ejs",
+          "sizeLines": 75,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/goals.ejs",
+          "language": "ejs",
+          "sizeLines": 77,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/import.ejs",
+          "language": "ejs",
+          "sizeLines": 51,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/layout-blank.ejs",
+          "language": "ejs",
+          "sizeLines": 31,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/layout.ejs",
+          "language": "ejs",
+          "sizeLines": 182,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/ledgers.ejs",
+          "language": "ejs",
+          "sizeLines": 112,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/login.ejs",
+          "language": "ejs",
+          "sizeLines": 24,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/members.ejs",
+          "language": "ejs",
+          "sizeLines": 114,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/no-ledger.ejs",
+          "language": "ejs",
+          "sizeLines": 10,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/notifications.ejs",
+          "language": "ejs",
+          "sizeLines": 40,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/partials/txn-list.ejs",
+          "language": "ejs",
+          "sizeLines": 70,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/recurring.ejs",
+          "language": "ejs",
+          "sizeLines": 124,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/register.ejs",
+          "language": "ejs",
+          "sizeLines": 31,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/reports.ejs",
+          "language": "ejs",
+          "sizeLines": 225,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/search.ejs",
+          "language": "ejs",
+          "sizeLines": 74,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/settings.ejs",
+          "language": "ejs",
+          "sizeLines": 417,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/setup.ejs",
+          "language": "ejs",
+          "sizeLines": 32,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/subscriptions.ejs",
+          "language": "ejs",
+          "sizeLines": 296,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/tags.ejs",
+          "language": "ejs",
+          "sizeLines": 32,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/views/budgets.ejs": [],
+        "src/views/calendar.ejs": [],
+        "src/views/categories.ejs": [],
+        "src/views/dashboard.ejs": [],
+        "src/views/debts.ejs": [],
+        "src/views/error.ejs": [],
+        "src/views/export.ejs": [],
+        "src/views/goals.ejs": [],
+        "src/views/import.ejs": [],
+        "src/views/layout-blank.ejs": [],
+        "src/views/layout.ejs": [],
+        "src/views/ledgers.ejs": [],
+        "src/views/login.ejs": [],
+        "src/views/members.ejs": [],
+        "src/views/no-ledger.ejs": [],
+        "src/views/notifications.ejs": [],
+        "src/views/partials/txn-list.ejs": [],
+        "src/views/recurring.ejs": [],
+        "src/views/register.ejs": [],
+        "src/views/reports.ejs": [],
+        "src/views/search.ejs": [],
+        "src/views/settings.ejs": [],
+        "src/views/setup.ejs": [],
+        "src/views/subscriptions.ejs": [],
+        "src/views/tags.ejs": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 11,
+      "files": [
+        {
+          "path": "src/views/transactions.ejs",
+          "language": "ejs",
+          "sizeLines": 138,
+          "fileCategory": "code"
+        },
+        {
+          "path": "src/views/txn-form.ejs",
+          "language": "ejs",
+          "sizeLines": 298,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/run-all.js",
+          "language": "javascript",
+          "sizeLines": 86,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/selfcheck-static.js",
+          "language": "javascript",
+          "sizeLines": 71,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/verify-ai-attachments.js",
+          "language": "javascript",
+          "sizeLines": 217,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/verify-ai-chat.js",
+          "language": "javascript",
+          "sizeLines": 118,
+          "fileCategory": "code"
+        },
+        {
+          "path": "test/verify-settings-admin.js",
+          "language": "javascript",
+          "sizeLines": 140,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "src/views/transactions.ejs": [],
+        "src/views/txn-form.ejs": [],
+        "test/run-all.js": [],
+        "test/selfcheck-static.js": [],
+        "test/verify-ai-attachments.js": [],
+        "test/verify-ai-chat.js": [],
+        "test/verify-settings-admin.js": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

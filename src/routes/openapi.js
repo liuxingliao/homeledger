@@ -67,9 +67,16 @@ router.get('/ping', (req, res) => {
 
 /* ------------------------------- 名称解析 -------------------------------- */
 
-/** 中文/英文别名 → 标准 type key */
+/** 中文/英文别名 → 标准 type key(随手记新叫法 + 旧叫法均兼容) */
 const TYPE_ALIASES = (() => {
-  const map = { 支出: 'expense', 收入: 'income', 转账: 'transfer', 借出: 'lend', 借入: 'borrow' };
+  const map = {
+    支出: 'expense', 收入: 'income', 转账: 'transfer',
+    代付: 'lend', 借出: 'lend',            // 旧叫法保留兼容
+    借入: 'borrow',
+    收债: 'repay_receive', 收回借款: 'repay_receive',
+    还款: 'repay_pay', 偿还借款: 'repay_pay',
+    负债变更: 'adjust', 余额调整: 'adjust',
+  };
   for (const t of TXN_TYPES) map[t.key] = t.key;
   return map;
 })();

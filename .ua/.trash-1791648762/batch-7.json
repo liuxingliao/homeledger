@@ -1,0 +1,105 @@
+{
+  "nodes": [
+    {
+      "id": "document:.claude/commands/opsx/apply.md",
+      "type": "document",
+      "name": "apply.md",
+      "filePath": ".claude/commands/opsx/apply.md",
+      "summary": "OpenSpec 工作流的 /opsx:apply 斜杠命令定义,指导 agent 按任务的 tasks.md 清单逐项实现 change。包含 store 选择(--store 粘性规则)、项目根检查(避免副作用式创建 openspec/)、任务状态勾选与实现完成/暂停的输出模板。",
+      "tags": ["documentation", "openspec", "工作流", "命令定义", "experimental"],
+      "complexity": "moderate",
+      "languageNotes": "采用 Claude Code 斜杠命令的 frontmatter 约定(name/description/allowed-tools/category/tags),allowed-tools 限定为 Bash(openspec:*) 以收窄可执行命令范围。"
+    },
+    {
+      "id": "document:.claude/commands/opsx/archive.md",
+      "type": "document",
+      "name": "archive.md",
+      "filePath": ".claude/commands/opsx/archive.md",
+      "summary": "OpenSpec 工作的 /opsx:archive 斜杠命令定义,在 change 实现完成后将其归档:同步 delta specs 到主 specs、把 change 目录移入 changes/archive 并输出归档结果模板。同样包含 store 选择与项目根检查等前置守卫。",
+      "tags": ["documentation", "openspec", "工作流", "归档", "命令定义"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:.claude/commands/opsx/explore.md",
+      "type": "document",
+      "name": "explore.md",
+      "filePath": ".claude/commands/opsx/explore.md",
+      "summary": "OpenSpec 工作流的 /opsx:explore 斜杠命令定义,进入以思考伙伴为核心的探索模式:只读调研、开放式提问,严禁写代码实现;可在确认范围内生成 change 规划工件,并以 /opsx:propose 作为进入实现的出口。",
+      "tags": ["documentation", "openspec", "工作流", "探索模式", "thinking"],
+      "complexity": "moderate",
+      "languageNotes": "全文强调 stance(立场)而非固定步骤,用 IMPORTANT/Guardrails 等大写强调块约束 agent 的读写边界,是典型的高层 agent 行为提示文档。"
+    },
+    {
+      "id": "document:.claude/commands/opsx/propose.md",
+      "type": "document",
+      "name": "propose.md",
+      "filePath": ".claude/commands/opsx/propose.md",
+      "summary": "OpenSpec 工作流的 /opsx:propose 斜杠命令定义,一步创建 change 并按 schema 生成全部规划工件(proposal.md、delta specs、design.md、tasks.md)。明确规划边界:只做规划不碰项目代码,实现须由用户显式启动 /opsx:apply。",
+      "tags": ["documentation", "openspec", "工作流", "规划", "命令定义"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:.claude/commands/opsx/sync.md",
+      "type": "document",
+      "name": "sync.md",
+      "filePath": ".claude/commands/opsx/sync.md",
+      "summary": "OpenSpec 工作流的 /opsx:sync 斜杠命令定义,由 agent 读取 change 的 delta specs 并直接编辑主 specs 完成智能合并(如仅追加单个场景而非整段复制),支持 ADDED/MODIFIED/REMOVED/RENAMED 四类变更,同步后不归档 change。",
+      "tags": ["documentation", "openspec", "工作流", "specs同步", "命令定义"],
+      "complexity": "complex",
+      "languageNotes": "文档内嵌了 delta spec 与主 spec 的 Markdown 格式示例(## ADDED Requirements 等章节约定),充当合并操作的格式规范。"
+    },
+    {
+      "id": "document:.claude/commands/opsx/update.md",
+      "type": "document",
+      "name": "update.md",
+      "filePath": ".claude/commands/opsx/update.md",
+      "summary": "OpenSpec 工作流的 /opsx:update 斜杠命令定义,用于修订既有 change 的规划工件并保持工件间一致;只修改已存在的工件、绝不创建缺失工件或编辑代码,缺失工件交由 status/instructions 指引补齐。",
+      "tags": ["documentation", "openspec", "工作流", "工件修订", "命令定义"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {
+      "source": "document:.claude/commands/opsx/explore.md",
+      "target": "document:.claude/commands/opsx/propose.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:.claude/commands/opsx/propose.md",
+      "target": "document:.claude/commands/opsx/apply.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:.claude/commands/opsx/propose.md",
+      "target": "document:.claude/commands/opsx/update.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:.claude/commands/opsx/update.md",
+      "target": "document:.claude/commands/opsx/apply.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:.claude/commands/opsx/apply.md",
+      "target": "document:.claude/commands/opsx/sync.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "document:.claude/commands/opsx/sync.md",
+      "target": "document:.claude/commands/opsx/archive.md",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

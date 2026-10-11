@@ -1,0 +1,2650 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 6,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 6,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "src/lib/auth.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 272,
+      "nonEmptyLines": 246,
+      "functions": [
+        {
+          "name": "hashPassword",
+          "startLine": 11,
+          "endLine": 15,
+          "params": [
+            "plain"
+          ]
+        },
+        {
+          "name": "verifyPassword",
+          "startLine": 17,
+          "endLine": 28,
+          "params": [
+            "plain",
+            "stored"
+          ]
+        },
+        {
+          "name": "audit",
+          "startLine": 81,
+          "endLine": 94,
+          "params": [
+            "req",
+            "action"
+          ]
+        },
+        {
+          "name": "loginKey",
+          "startLine": 100,
+          "endLine": 103,
+          "params": [
+            "req",
+            "username"
+          ]
+        },
+        {
+          "name": "tooManyAttempts",
+          "startLine": 104,
+          "endLine": 112,
+          "params": [
+            "req",
+            "username"
+          ]
+        },
+        {
+          "name": "recordFailure",
+          "startLine": 113,
+          "endLine": 120,
+          "params": [
+            "req",
+            "username"
+          ]
+        },
+        {
+          "name": "clearFailures",
+          "startLine": 121,
+          "endLine": 123,
+          "params": [
+            "req",
+            "username"
+          ]
+        },
+        {
+          "name": "context",
+          "startLine": 134,
+          "endLine": 174,
+          "params": [
+            "req",
+            "res",
+            "next"
+          ]
+        },
+        {
+          "name": "requireLogin",
+          "startLine": 176,
+          "endLine": 184,
+          "params": [
+            "req",
+            "res",
+            "next"
+          ]
+        },
+        {
+          "name": "requireAdmin",
+          "startLine": 186,
+          "endLine": 189,
+          "params": [
+            "req",
+            "res",
+            "next"
+          ]
+        },
+        {
+          "name": "membership",
+          "startLine": 192,
+          "endLine": 195,
+          "params": [
+            "userId",
+            "ledgerId"
+          ]
+        },
+        {
+          "name": "canWrite",
+          "startLine": 199,
+          "endLine": 199,
+          "params": [
+            "role"
+          ]
+        },
+        {
+          "name": "canManage",
+          "startLine": 200,
+          "endLine": 200,
+          "params": [
+            "role"
+          ]
+        },
+        {
+          "name": "requireLedgerWrite",
+          "startLine": 203,
+          "endLine": 208,
+          "params": [
+            "req",
+            "res",
+            "next"
+          ]
+        },
+        {
+          "name": "requireLedgerManage",
+          "startLine": 209,
+          "endLine": 213,
+          "params": [
+            "req",
+            "res",
+            "next"
+          ]
+        },
+        {
+          "name": "csrfToken",
+          "startLine": 217,
+          "endLine": 221,
+          "params": [
+            "req"
+          ]
+        },
+        {
+          "name": "csrfProtect",
+          "startLine": 223,
+          "endLine": 234,
+          "params": [
+            "req",
+            "res",
+            "next"
+          ]
+        },
+        {
+          "name": "notify",
+          "startLine": 238,
+          "endLine": 243,
+          "params": [
+            "userId"
+          ]
+        },
+        {
+          "name": "alreadyNotified",
+          "startLine": 250,
+          "endLine": 253,
+          "params": [
+            "dedupeKey"
+          ]
+        },
+        {
+          "name": "ledgerWriterIds",
+          "startLine": 256,
+          "endLine": 261,
+          "params": [
+            "ledgerId"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SqliteSessionStore",
+          "startLine": 32,
+          "endLine": 77,
+          "methods": [
+            "constructor",
+            "_expiry",
+            "get",
+            "set",
+            "touch",
+            "destroy",
+            "clear"
+          ],
+          "properties": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "hashPassword",
+          "callee": "crypto.randomBytes(16).toString",
+          "lineNumber": 12
+        },
+        {
+          "caller": "hashPassword",
+          "callee": "crypto.randomBytes",
+          "lineNumber": 12
+        },
+        {
+          "caller": "hashPassword",
+          "callee": "crypto.scryptSync(String(plain), salt, SCRYPT.keylen, { N: SCRYPT.N, r: SCRYPT.r, p: SCRYPT.p }).toString",
+          "lineNumber": 13
+        },
+        {
+          "caller": "hashPassword",
+          "callee": "crypto.scryptSync",
+          "lineNumber": 13
+        },
+        {
+          "caller": "hashPassword",
+          "callee": "String",
+          "lineNumber": 13
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "String(stored).split",
+          "lineNumber": 19
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "String",
+          "lineNumber": 19
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "crypto.scryptSync",
+          "lineNumber": 21
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "String",
+          "lineNumber": 21
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "Number",
+          "lineNumber": 21
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "Number",
+          "lineNumber": 21
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "Number",
+          "lineNumber": 21
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "Buffer.from",
+          "lineNumber": 22
+        },
+        {
+          "caller": "verifyPassword",
+          "callee": "crypto.timingSafeEqual",
+          "lineNumber": 24
+        },
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 34
+        },
+        {
+          "caller": "constructor",
+          "callee": "setInterval",
+          "lineNumber": 35
+        },
+        {
+          "caller": "constructor",
+          "callee": "run",
+          "lineNumber": 36
+        },
+        {
+          "caller": "constructor",
+          "callee": "Date.now",
+          "lineNumber": 36
+        },
+        {
+          "caller": "constructor",
+          "callee": "this.timer.unref",
+          "lineNumber": 38
+        },
+        {
+          "caller": "_expiry",
+          "callee": "Date.now",
+          "lineNumber": 42
+        },
+        {
+          "caller": "_expiry",
+          "callee": "Number",
+          "lineNumber": 42
+        },
+        {
+          "caller": "get",
+          "callee": "get",
+          "lineNumber": 46
+        },
+        {
+          "caller": "get",
+          "callee": "cb",
+          "lineNumber": 47
+        },
+        {
+          "caller": "get",
+          "callee": "Number",
+          "lineNumber": 48
+        },
+        {
+          "caller": "get",
+          "callee": "Date.now",
+          "lineNumber": 48
+        },
+        {
+          "caller": "get",
+          "callee": "run",
+          "lineNumber": 49
+        },
+        {
+          "caller": "get",
+          "callee": "cb",
+          "lineNumber": 50
+        },
+        {
+          "caller": "get",
+          "callee": "cb",
+          "lineNumber": 52
+        },
+        {
+          "caller": "get",
+          "callee": "JSON.parse",
+          "lineNumber": 52
+        },
+        {
+          "caller": "get",
+          "callee": "cb",
+          "lineNumber": 53
+        },
+        {
+          "caller": "set",
+          "callee": "run",
+          "lineNumber": 57
+        },
+        {
+          "caller": "set",
+          "callee": "this._expiry",
+          "lineNumber": 60
+        },
+        {
+          "caller": "set",
+          "callee": "JSON.stringify",
+          "lineNumber": 60
+        },
+        {
+          "caller": "set",
+          "callee": "cb",
+          "lineNumber": 62
+        },
+        {
+          "caller": "set",
+          "callee": "cb",
+          "lineNumber": 63
+        },
+        {
+          "caller": "touch",
+          "callee": "run",
+          "lineNumber": 67
+        },
+        {
+          "caller": "touch",
+          "callee": "this._expiry",
+          "lineNumber": 67
+        },
+        {
+          "caller": "touch",
+          "callee": "cb",
+          "lineNumber": 68
+        },
+        {
+          "caller": "touch",
+          "callee": "cb",
+          "lineNumber": 69
+        },
+        {
+          "caller": "destroy",
+          "callee": "run",
+          "lineNumber": 72
+        },
+        {
+          "caller": "destroy",
+          "callee": "cb",
+          "lineNumber": 72
+        },
+        {
+          "caller": "destroy",
+          "callee": "cb",
+          "lineNumber": 72
+        },
+        {
+          "caller": "clear",
+          "callee": "run",
+          "lineNumber": 75
+        },
+        {
+          "caller": "clear",
+          "callee": "cb",
+          "lineNumber": 75
+        },
+        {
+          "caller": "clear",
+          "callee": "cb",
+          "lineNumber": 75
+        },
+        {
+          "caller": "audit",
+          "callee": "run",
+          "lineNumber": 83
+        },
+        {
+          "caller": "audit",
+          "callee": "String(detail).slice",
+          "lineNumber": 88
+        },
+        {
+          "caller": "audit",
+          "callee": "String",
+          "lineNumber": 88
+        },
+        {
+          "caller": "audit",
+          "callee": "(req?.headers?.['user-agent'] || '').slice",
+          "lineNumber": 90
+        },
+        {
+          "caller": "audit",
+          "callee": "nowStr",
+          "lineNumber": 91
+        },
+        {
+          "caller": "loginKey",
+          "callee": "String(username || '').toLowerCase",
+          "lineNumber": 102
+        },
+        {
+          "caller": "loginKey",
+          "callee": "String",
+          "lineNumber": 102
+        },
+        {
+          "caller": "tooManyAttempts",
+          "callee": "loginKey",
+          "lineNumber": 105
+        },
+        {
+          "caller": "tooManyAttempts",
+          "callee": "attempts.get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "tooManyAttempts",
+          "callee": "Date.now",
+          "lineNumber": 108
+        },
+        {
+          "caller": "tooManyAttempts",
+          "callee": "Math.ceil",
+          "lineNumber": 109
+        },
+        {
+          "caller": "tooManyAttempts",
+          "callee": "Date.now",
+          "lineNumber": 109
+        },
+        {
+          "caller": "recordFailure",
+          "callee": "loginKey",
+          "lineNumber": 114
+        },
+        {
+          "caller": "recordFailure",
+          "callee": "attempts.get",
+          "lineNumber": 115
+        },
+        {
+          "caller": "recordFailure",
+          "callee": "Date.now",
+          "lineNumber": 115
+        },
+        {
+          "caller": "recordFailure",
+          "callee": "Date.now",
+          "lineNumber": 116
+        },
+        {
+          "caller": "recordFailure",
+          "callee": "Date.now",
+          "lineNumber": 116
+        },
+        {
+          "caller": "recordFailure",
+          "callee": "Date.now",
+          "lineNumber": 118
+        },
+        {
+          "caller": "recordFailure",
+          "callee": "attempts.set",
+          "lineNumber": 119
+        },
+        {
+          "caller": "clearFailures",
+          "callee": "attempts.delete",
+          "lineNumber": 122
+        },
+        {
+          "caller": "clearFailures",
+          "callee": "loginKey",
+          "lineNumber": 122
+        },
+        {
+          "caller": "context",
+          "callee": "csrfToken",
+          "lineNumber": 143
+        },
+        {
+          "caller": "context",
+          "callee": "get",
+          "lineNumber": 145
+        },
+        {
+          "caller": "context",
+          "callee": "all",
+          "lineNumber": 148
+        },
+        {
+          "caller": "context",
+          "callee": "all",
+          "lineNumber": 156
+        },
+        {
+          "caller": "context",
+          "callee": "Number",
+          "lineNumber": 161
+        },
+        {
+          "caller": "context",
+          "callee": "res.locals.ledgers.some",
+          "lineNumber": 162
+        },
+        {
+          "caller": "context",
+          "callee": "Number",
+          "lineNumber": 162
+        },
+        {
+          "caller": "context",
+          "callee": "Number",
+          "lineNumber": 163
+        },
+        {
+          "caller": "context",
+          "callee": "res.locals.ledgers.find",
+          "lineNumber": 166
+        },
+        {
+          "caller": "context",
+          "callee": "Number",
+          "lineNumber": 166
+        },
+        {
+          "caller": "context",
+          "callee": "Number",
+          "lineNumber": 167
+        },
+        {
+          "caller": "context",
+          "callee": "get",
+          "lineNumber": 167
+        },
+        {
+          "caller": "context",
+          "callee": "next",
+          "lineNumber": 173
+        },
+        {
+          "caller": "requireLogin",
+          "callee": "(req.headers.accept || '').includes",
+          "lineNumber": 178
+        },
+        {
+          "caller": "requireLogin",
+          "callee": "res.status(401).json",
+          "lineNumber": 179
+        },
+        {
+          "caller": "requireLogin",
+          "callee": "res.status",
+          "lineNumber": 179
+        },
+        {
+          "caller": "requireLogin",
+          "callee": "res.redirect",
+          "lineNumber": 181
+        },
+        {
+          "caller": "requireLogin",
+          "callee": "encodeURIComponent",
+          "lineNumber": 181
+        },
+        {
+          "caller": "requireLogin",
+          "callee": "next",
+          "lineNumber": 183
+        },
+        {
+          "caller": "requireAdmin",
+          "callee": "res.status(403).render",
+          "lineNumber": 187
+        },
+        {
+          "caller": "requireAdmin",
+          "callee": "res.status",
+          "lineNumber": 187
+        },
+        {
+          "caller": "requireAdmin",
+          "callee": "next",
+          "lineNumber": 188
+        },
+        {
+          "caller": "membership",
+          "callee": "get",
+          "lineNumber": 194
+        },
+        {
+          "caller": "membership",
+          "callee": "Number",
+          "lineNumber": 194
+        },
+        {
+          "caller": "membership",
+          "callee": "Number",
+          "lineNumber": 194
+        },
+        {
+          "caller": "requireLedgerWrite",
+          "callee": "res.status(400).render",
+          "lineNumber": 205
+        },
+        {
+          "caller": "requireLedgerWrite",
+          "callee": "res.status",
+          "lineNumber": 205
+        },
+        {
+          "caller": "requireLedgerWrite",
+          "callee": "canWrite",
+          "lineNumber": 206
+        },
+        {
+          "caller": "requireLedgerWrite",
+          "callee": "res.status(403).render",
+          "lineNumber": 206
+        },
+        {
+          "caller": "requireLedgerWrite",
+          "callee": "res.status",
+          "lineNumber": 206
+        },
+        {
+          "caller": "requireLedgerWrite",
+          "callee": "next",
+          "lineNumber": 207
+        },
+        {
+          "caller": "requireLedgerManage",
+          "callee": "canManage",
+          "lineNumber": 211
+        },
+        {
+          "caller": "requireLedgerManage",
+          "callee": "res.status(403).render",
+          "lineNumber": 211
+        },
+        {
+          "caller": "requireLedgerManage",
+          "callee": "res.status",
+          "lineNumber": 211
+        },
+        {
+          "caller": "requireLedgerManage",
+          "callee": "next",
+          "lineNumber": 212
+        },
+        {
+          "caller": "csrfToken",
+          "callee": "crypto.randomBytes(20).toString",
+          "lineNumber": 219
+        },
+        {
+          "caller": "csrfToken",
+          "callee": "crypto.randomBytes",
+          "lineNumber": 219
+        },
+        {
+          "caller": "csrfProtect",
+          "callee": "['GET', 'HEAD', 'OPTIONS'].includes",
+          "lineNumber": 224
+        },
+        {
+          "caller": "csrfProtect",
+          "callee": "next",
+          "lineNumber": 224
+        },
+        {
+          "caller": "csrfProtect",
+          "callee": "(req.headers.accept || '').includes",
+          "lineNumber": 228
+        },
+        {
+          "caller": "csrfProtect",
+          "callee": "res.status(403).json",
+          "lineNumber": 229
+        },
+        {
+          "caller": "csrfProtect",
+          "callee": "res.status",
+          "lineNumber": 229
+        },
+        {
+          "caller": "csrfProtect",
+          "callee": "res.status(403).render",
+          "lineNumber": 231
+        },
+        {
+          "caller": "csrfProtect",
+          "callee": "res.status",
+          "lineNumber": 231
+        },
+        {
+          "caller": "csrfProtect",
+          "callee": "next",
+          "lineNumber": 233
+        },
+        {
+          "caller": "notify",
+          "callee": "run",
+          "lineNumber": 239
+        },
+        {
+          "caller": "notify",
+          "callee": "nowStr",
+          "lineNumber": 241
+        },
+        {
+          "caller": "alreadyNotified",
+          "callee": "get",
+          "lineNumber": 252
+        },
+        {
+          "caller": "ledgerWriterIds",
+          "callee": "all(\n    \"SELECT user_id FROM ledger_members WHERE ledger_id = ? AND role IN ('owner','admin','member')\",\n    ledgerId\n  ).map",
+          "lineNumber": 257
+        },
+        {
+          "caller": "ledgerWriterIds",
+          "callee": "all",
+          "lineNumber": 257
+        },
+        {
+          "caller": "ledgerWriterIds",
+          "callee": "Number",
+          "lineNumber": 260
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 20,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/lib/scheduler.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 279,
+      "nonEmptyLines": 258,
+      "functions": [
+        {
+          "name": "advanceDate",
+          "startLine": 16,
+          "endLine": 39,
+          "params": [
+            "dateStr",
+            "rule"
+          ]
+        },
+        {
+          "name": "runDueRecurring",
+          "startLine": 41,
+          "endLine": 81,
+          "params": []
+        },
+        {
+          "name": "budgetUsed",
+          "startLine": 86,
+          "endLine": 104,
+          "params": [
+            "b",
+            "month"
+          ]
+        },
+        {
+          "name": "budgetPeriodRange",
+          "startLine": 106,
+          "endLine": 126,
+          "params": [
+            "b"
+          ]
+        },
+        {
+          "name": "budgetUsedInRange",
+          "startLine": 128,
+          "endLine": 142,
+          "params": [
+            "b",
+            "start",
+            "end"
+          ]
+        },
+        {
+          "name": "checkBudgets",
+          "startLine": 144,
+          "endLine": 171,
+          "params": []
+        },
+        {
+          "name": "checkDebts",
+          "startLine": 175,
+          "endLine": 199,
+          "params": []
+        },
+        {
+          "name": "checkGoals",
+          "startLine": 203,
+          "endLine": 222,
+          "params": []
+        },
+        {
+          "name": "runSubscriptions",
+          "startLine": 230,
+          "endLine": 235,
+          "params": []
+        },
+        {
+          "name": "cleanup",
+          "startLine": 239,
+          "endLine": 244,
+          "params": []
+        },
+        {
+          "name": "runDaily",
+          "startLine": 248,
+          "endLine": 257,
+          "params": []
+        },
+        {
+          "name": "initScheduler",
+          "startLine": 259,
+          "endLine": 277,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "advanceDate",
+          "callee": "Math.max",
+          "lineNumber": 18
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "Number",
+          "lineNumber": 18
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.setDate",
+          "lineNumber": 21
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getDate",
+          "lineNumber": 21
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.setDate",
+          "lineNumber": 24
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getDate",
+          "lineNumber": 24
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.setFullYear",
+          "lineNumber": 27
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getFullYear",
+          "lineNumber": 27
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "Number",
+          "lineNumber": 31
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getDate",
+          "lineNumber": 31
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.setMonth",
+          "lineNumber": 32
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getMonth",
+          "lineNumber": 32
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate",
+          "lineNumber": 33
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getFullYear",
+          "lineNumber": 33
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getMonth",
+          "lineNumber": 33
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.setDate",
+          "lineNumber": 34
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "Math.min",
+          "lineNumber": 34
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getFullYear",
+          "lineNumber": 38
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "pad",
+          "lineNumber": 38
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getMonth",
+          "lineNumber": 38
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "pad",
+          "lineNumber": 38
+        },
+        {
+          "caller": "advanceDate",
+          "callee": "d.getDate",
+          "lineNumber": 38
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "todayStr",
+          "lineNumber": 41
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "all",
+          "lineNumber": 42
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "JSON.parse",
+          "lineNumber": 46
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "Array.isArray",
+          "lineNumber": 47
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "tx",
+          "lineNumber": 48
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "Math.abs",
+          "lineNumber": 50
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "Number",
+          "lineNumber": 50
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "run",
+          "lineNumber": 52
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "nowStr",
+          "lineNumber": 60
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "nowStr",
+          "lineNumber": 60
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "run",
+          "lineNumber": 65
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "advanceDate",
+          "lineNumber": 65
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "ledgerWriterIds",
+          "lineNumber": 70
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "notify",
+          "lineNumber": 71
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "run",
+          "lineNumber": 78
+        },
+        {
+          "caller": "runDueRecurring",
+          "callee": "nowStr",
+          "lineNumber": 78
+        },
+        {
+          "caller": "budgetUsed",
+          "callee": "params.push",
+          "lineNumber": 96
+        },
+        {
+          "caller": "budgetUsed",
+          "callee": "params.push",
+          "lineNumber": 100
+        },
+        {
+          "caller": "budgetUsed",
+          "callee": "get",
+          "lineNumber": 102
+        },
+        {
+          "caller": "budgetUsed",
+          "callee": "Number",
+          "lineNumber": 103
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "ref.getFullYear",
+          "lineNumber": 107
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "pad",
+          "lineNumber": 107
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "ref.getMonth",
+          "lineNumber": 107
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "ref.getFullYear",
+          "lineNumber": 110
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "ref.getFullYear",
+          "lineNumber": 110
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "ref.getFullYear",
+          "lineNumber": 110
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "String",
+          "lineNumber": 110
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "ref.getFullYear",
+          "lineNumber": 110
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "d.getDay",
+          "lineNumber": 113
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "d.getTime",
+          "lineNumber": 114
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "s.getTime",
+          "lineNumber": 115
+        },
+        {
+          "caller": "f",
+          "callee": "x.getFullYear",
+          "lineNumber": 116
+        },
+        {
+          "caller": "f",
+          "callee": "pad",
+          "lineNumber": 116
+        },
+        {
+          "caller": "f",
+          "callee": "x.getMonth",
+          "lineNumber": 116
+        },
+        {
+          "caller": "f",
+          "callee": "pad",
+          "lineNumber": 116
+        },
+        {
+          "caller": "f",
+          "callee": "x.getDate",
+          "lineNumber": 116
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "f",
+          "lineNumber": 117
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "f",
+          "lineNumber": 118
+        },
+        {
+          "caller": "budgetPeriodRange",
+          "callee": "f",
+          "lineNumber": 118
+        },
+        {
+          "caller": "budgetUsedInRange",
+          "callee": "params.push",
+          "lineNumber": 135
+        },
+        {
+          "caller": "budgetUsedInRange",
+          "callee": "params.push",
+          "lineNumber": 139
+        },
+        {
+          "caller": "budgetUsedInRange",
+          "callee": "Number",
+          "lineNumber": 141
+        },
+        {
+          "caller": "budgetUsedInRange",
+          "callee": "get",
+          "lineNumber": 141
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "all",
+          "lineNumber": 145
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "budgetPeriodRange",
+          "lineNumber": 149
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "budgetUsedInRange",
+          "lineNumber": 150
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "Number",
+          "lineNumber": 151
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "Number",
+          "lineNumber": 154
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "alreadyNotified",
+          "lineNumber": 160
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "(used / 100).toFixed",
+          "lineNumber": 164
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "(amount / 100).toFixed",
+          "lineNumber": 164
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "ratio.toFixed",
+          "lineNumber": 164
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "ledgerWriterIds",
+          "lineNumber": 165
+        },
+        {
+          "caller": "checkBudgets",
+          "callee": "notify",
+          "lineNumber": 166
+        },
+        {
+          "caller": "checkDebts",
+          "callee": "todayStr",
+          "lineNumber": 176
+        },
+        {
+          "caller": "checkDebts",
+          "callee": "all",
+          "lineNumber": 177
+        },
+        {
+          "caller": "checkDebts",
+          "callee": "alreadyNotified",
+          "lineNumber": 184
+        },
+        {
+          "caller": "checkDebts",
+          "callee": "ledgerWriterIds",
+          "lineNumber": 187
+        },
+        {
+          "caller": "checkDebts",
+          "callee": "notify",
+          "lineNumber": 188
+        },
+        {
+          "caller": "checkDebts",
+          "callee": "(d.balance_cents / 100).toFixed",
+          "lineNumber": 192
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "todayStr",
+          "lineNumber": 204
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "all",
+          "lineNumber": 205
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "alreadyNotified",
+          "lineNumber": 209
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "Math.max",
+          "lineNumber": 210
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "Number",
+          "lineNumber": 210
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "Number",
+          "lineNumber": 210
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "ledgerWriterIds",
+          "lineNumber": 211
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "notify",
+          "lineNumber": 212
+        },
+        {
+          "caller": "checkGoals",
+          "callee": "(left / 100).toFixed",
+          "lineNumber": 215
+        },
+        {
+          "caller": "runSubscriptions",
+          "callee": "todayStr",
+          "lineNumber": 230
+        },
+        {
+          "caller": "runSubscriptions",
+          "callee": "require",
+          "lineNumber": 231
+        },
+        {
+          "caller": "runSubscriptions",
+          "callee": "subs.runDue",
+          "lineNumber": 232
+        },
+        {
+          "caller": "runSubscriptions",
+          "callee": "subs.checkReminders",
+          "lineNumber": 233
+        },
+        {
+          "caller": "cleanup",
+          "callee": "run",
+          "lineNumber": 241
+        },
+        {
+          "caller": "cleanup",
+          "callee": "Date.now",
+          "lineNumber": 241
+        },
+        {
+          "caller": "cleanup",
+          "callee": "run",
+          "lineNumber": 242
+        },
+        {
+          "caller": "cleanup",
+          "callee": "todayStr",
+          "lineNumber": 242
+        },
+        {
+          "caller": "runDaily",
+          "callee": "runDueRecurring",
+          "lineNumber": 250
+        },
+        {
+          "caller": "runDaily",
+          "callee": "console.error",
+          "lineNumber": 250
+        },
+        {
+          "caller": "runDaily",
+          "callee": "runSubscriptions",
+          "lineNumber": 251
+        },
+        {
+          "caller": "runDaily",
+          "callee": "console.error",
+          "lineNumber": 251
+        },
+        {
+          "caller": "runDaily",
+          "callee": "checkBudgets",
+          "lineNumber": 252
+        },
+        {
+          "caller": "runDaily",
+          "callee": "console.error",
+          "lineNumber": 252
+        },
+        {
+          "caller": "runDaily",
+          "callee": "checkDebts",
+          "lineNumber": 253
+        },
+        {
+          "caller": "runDaily",
+          "callee": "console.error",
+          "lineNumber": 253
+        },
+        {
+          "caller": "runDaily",
+          "callee": "checkGoals",
+          "lineNumber": 254
+        },
+        {
+          "caller": "runDaily",
+          "callee": "console.error",
+          "lineNumber": 254
+        },
+        {
+          "caller": "runDaily",
+          "callee": "cleanup",
+          "lineNumber": 255
+        },
+        {
+          "caller": "initScheduler",
+          "callee": "setTimeout(() => {\n    const r = runDaily();\n    const sub = r.subscriptions || {};\n    if (r.recurring || r.budgets || r.debts || r.goals || sub.charged || sub.notified) {\n      console.log(\n        `[scheduler] 启动检查完成：周期账单 ${r.recurring} 笔 / 订阅扣费 ${sub.charged} 笔（转正 ${sub.renewed}）/ ` +\n        `提醒 ${sub.notified} / 预算预警 ${r.budgets} / 借贷提醒 ${r.debts} / 目标提醒 ${r.goals}`\n      );\n    }\n  }, 3000).unref",
+          "lineNumber": 261
+        },
+        {
+          "caller": "initScheduler",
+          "callee": "setTimeout",
+          "lineNumber": 261
+        },
+        {
+          "caller": "initScheduler",
+          "callee": "runDaily",
+          "lineNumber": 262
+        },
+        {
+          "caller": "initScheduler",
+          "callee": "console.log",
+          "lineNumber": 265
+        },
+        {
+          "caller": "initScheduler",
+          "callee": "setInterval",
+          "lineNumber": 272
+        },
+        {
+          "caller": "initScheduler",
+          "callee": "runDaily",
+          "lineNumber": 273
+        },
+        {
+          "caller": "initScheduler",
+          "callee": "timer.unref",
+          "lineNumber": 275
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 12,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/subscriptions.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 341,
+      "nonEmptyLines": 314,
+      "functions": [
+        {
+          "name": "cycleOf",
+          "startLine": 34,
+          "endLine": 34,
+          "params": [
+            "v"
+          ]
+        },
+        {
+          "name": "cycleLabel",
+          "startLine": 35,
+          "endLine": 40,
+          "params": [
+            "cycle"
+          ]
+        },
+        {
+          "name": "statusLabel",
+          "startLine": 41,
+          "endLine": 41,
+          "params": [
+            "s"
+          ]
+        },
+        {
+          "name": "lastDayOf",
+          "startLine": 45,
+          "endLine": 47,
+          "params": [
+            "year",
+            "month"
+          ]
+        },
+        {
+          "name": "advance",
+          "startLine": 55,
+          "endLine": 73,
+          "params": [
+            "dateStr"
+          ]
+        },
+        {
+          "name": "firstChargeDate",
+          "startLine": 81,
+          "endLine": 102,
+          "params": []
+        },
+        {
+          "name": "daysUntil",
+          "startLine": 105,
+          "endLine": 110,
+          "params": [
+            "dateStr"
+          ]
+        },
+        {
+          "name": "annualCents",
+          "startLine": 115,
+          "endLine": 121,
+          "params": [
+            "sub"
+          ]
+        },
+        {
+          "name": "monthlyCents",
+          "startLine": 124,
+          "endLine": 126,
+          "params": [
+            "sub"
+          ]
+        },
+        {
+          "name": "decorate",
+          "startLine": 131,
+          "endLine": 149,
+          "params": [
+            "sub"
+          ]
+        },
+        {
+          "name": "overview",
+          "startLine": 152,
+          "endLine": 191,
+          "params": [
+            "ledgerId"
+          ]
+        },
+        {
+          "name": "chargesOf",
+          "startLine": 194,
+          "endLine": 201,
+          "params": [
+            "ledgerId",
+            "subId"
+          ]
+        },
+        {
+          "name": "charge",
+          "startLine": 209,
+          "endLine": 232,
+          "params": [
+            "sub",
+            "userId"
+          ]
+        },
+        {
+          "name": "runDue",
+          "startLine": 238,
+          "endLine": 290,
+          "params": []
+        },
+        {
+          "name": "checkReminders",
+          "startLine": 293,
+          "endLine": 332,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "cycleLabel",
+          "callee": "cycleOf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "cycleLabel",
+          "callee": "Math.max",
+          "lineNumber": 37
+        },
+        {
+          "caller": "cycleLabel",
+          "callee": "Number",
+          "lineNumber": 37
+        },
+        {
+          "caller": "lastDayOf",
+          "callee": "new Date(year, month, 0).getDate",
+          "lineNumber": 46
+        },
+        {
+          "caller": "advance",
+          "callee": "cycleOf",
+          "lineNumber": 56
+        },
+        {
+          "caller": "advance",
+          "callee": "Math.max",
+          "lineNumber": 57
+        },
+        {
+          "caller": "advance",
+          "callee": "Number",
+          "lineNumber": 57
+        },
+        {
+          "caller": "advance",
+          "callee": "String(dateStr).slice",
+          "lineNumber": 58
+        },
+        {
+          "caller": "advance",
+          "callee": "String",
+          "lineNumber": 58
+        },
+        {
+          "caller": "advance",
+          "callee": "Number.isNaN",
+          "lineNumber": 59
+        },
+        {
+          "caller": "advance",
+          "callee": "base.getTime",
+          "lineNumber": 59
+        },
+        {
+          "caller": "advance",
+          "callee": "String(dateStr).slice",
+          "lineNumber": 59
+        },
+        {
+          "caller": "advance",
+          "callee": "String",
+          "lineNumber": 59
+        },
+        {
+          "caller": "advance",
+          "callee": "base.setDate",
+          "lineNumber": 62
+        },
+        {
+          "caller": "advance",
+          "callee": "base.getDate",
+          "lineNumber": 62
+        },
+        {
+          "caller": "advance",
+          "callee": "base.getFullYear",
+          "lineNumber": 63
+        },
+        {
+          "caller": "advance",
+          "callee": "pad",
+          "lineNumber": 63
+        },
+        {
+          "caller": "advance",
+          "callee": "base.getMonth",
+          "lineNumber": 63
+        },
+        {
+          "caller": "advance",
+          "callee": "pad",
+          "lineNumber": 63
+        },
+        {
+          "caller": "advance",
+          "callee": "base.getDate",
+          "lineNumber": 63
+        },
+        {
+          "caller": "advance",
+          "callee": "Number",
+          "lineNumber": 66
+        },
+        {
+          "caller": "advance",
+          "callee": "base.getDate",
+          "lineNumber": 66
+        },
+        {
+          "caller": "advance",
+          "callee": "base.getFullYear",
+          "lineNumber": 67
+        },
+        {
+          "caller": "advance",
+          "callee": "base.getMonth",
+          "lineNumber": 68
+        },
+        {
+          "caller": "advance",
+          "callee": "Math.floor",
+          "lineNumber": 69
+        },
+        {
+          "caller": "advance",
+          "callee": "Math.min",
+          "lineNumber": 71
+        },
+        {
+          "caller": "advance",
+          "callee": "lastDayOf",
+          "lineNumber": 71
+        },
+        {
+          "caller": "advance",
+          "callee": "pad",
+          "lineNumber": 72
+        },
+        {
+          "caller": "advance",
+          "callee": "pad",
+          "lineNumber": 72
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "todayStr",
+          "lineNumber": 81
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "cycleOf",
+          "lineNumber": 82
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "String(startFrom).slice",
+          "lineNumber": 83
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "String",
+          "lineNumber": 83
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Number",
+          "lineNumber": 84
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "from.slice",
+          "lineNumber": 84
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Math.max",
+          "lineNumber": 85
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Math.min",
+          "lineNumber": 85
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Number",
+          "lineNumber": 85
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Math.max",
+          "lineNumber": 88
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Number",
+          "lineNumber": 88
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Number",
+          "lineNumber": 89
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "from.slice",
+          "lineNumber": 89
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Number",
+          "lineNumber": 90
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "from.slice",
+          "lineNumber": 90
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Number",
+          "lineNumber": 91
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Math.max",
+          "lineNumber": 91
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Math.min",
+          "lineNumber": 91
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Number",
+          "lineNumber": 91
+        },
+        {
+          "caller": "build",
+          "callee": "pad",
+          "lineNumber": 93
+        },
+        {
+          "caller": "build",
+          "callee": "pad",
+          "lineNumber": 93
+        },
+        {
+          "caller": "build",
+          "callee": "Math.min",
+          "lineNumber": 93
+        },
+        {
+          "caller": "build",
+          "callee": "lastDayOf",
+          "lineNumber": 93
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "build",
+          "lineNumber": 94
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "Math.floor",
+          "lineNumber": 97
+        },
+        {
+          "caller": "firstChargeDate",
+          "callee": "build",
+          "lineNumber": 99
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "todayStr",
+          "lineNumber": 106
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "String(dateStr).slice",
+          "lineNumber": 107
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "String",
+          "lineNumber": 107
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "Number.isNaN",
+          "lineNumber": 108
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "d.getTime",
+          "lineNumber": 108
+        },
+        {
+          "caller": "daysUntil",
+          "callee": "Math.round",
+          "lineNumber": 109
+        },
+        {
+          "caller": "annualCents",
+          "callee": "Math.abs",
+          "lineNumber": 116
+        },
+        {
+          "caller": "annualCents",
+          "callee": "Number",
+          "lineNumber": 116
+        },
+        {
+          "caller": "annualCents",
+          "callee": "cycleOf",
+          "lineNumber": 117
+        },
+        {
+          "caller": "annualCents",
+          "callee": "Math.max",
+          "lineNumber": 118
+        },
+        {
+          "caller": "annualCents",
+          "callee": "Number",
+          "lineNumber": 118
+        },
+        {
+          "caller": "annualCents",
+          "callee": "Math.round",
+          "lineNumber": 119
+        },
+        {
+          "caller": "annualCents",
+          "callee": "Math.round",
+          "lineNumber": 120
+        },
+        {
+          "caller": "monthlyCents",
+          "callee": "Math.round",
+          "lineNumber": 125
+        },
+        {
+          "caller": "monthlyCents",
+          "callee": "annualCents",
+          "lineNumber": 125
+        },
+        {
+          "caller": "decorate",
+          "callee": "daysUntil",
+          "lineNumber": 132
+        },
+        {
+          "caller": "decorate",
+          "callee": "monthlyCents",
+          "lineNumber": 133
+        },
+        {
+          "caller": "decorate",
+          "callee": "daysUntil",
+          "lineNumber": 134
+        },
+        {
+          "caller": "decorate",
+          "callee": "cycleLabel",
+          "lineNumber": 137
+        },
+        {
+          "caller": "decorate",
+          "callee": "statusLabel",
+          "lineNumber": 138
+        },
+        {
+          "caller": "decorate",
+          "callee": "annualCents",
+          "lineNumber": 141
+        },
+        {
+          "caller": "overview",
+          "callee": "all",
+          "lineNumber": 153
+        },
+        {
+          "caller": "overview",
+          "callee": "Number",
+          "lineNumber": 161
+        },
+        {
+          "caller": "overview",
+          "callee": "rows.map",
+          "lineNumber": 164
+        },
+        {
+          "caller": "overview",
+          "callee": "decorate",
+          "lineNumber": 164
+        },
+        {
+          "caller": "overview",
+          "callee": "Number",
+          "lineNumber": 164
+        },
+        {
+          "caller": "overview",
+          "callee": "items.filter",
+          "lineNumber": 166
+        },
+        {
+          "caller": "overview",
+          "callee": "todayStr().slice",
+          "lineNumber": 167
+        },
+        {
+          "caller": "overview",
+          "callee": "todayStr",
+          "lineNumber": 167
+        },
+        {
+          "caller": "overview",
+          "callee": "items\n    .filter((s) => String(s.last_charge_at || '').slice(0, 7) === month)\n    .reduce",
+          "lineNumber": 168
+        },
+        {
+          "caller": "overview",
+          "callee": "items\n    .filter",
+          "lineNumber": 168
+        },
+        {
+          "caller": "overview",
+          "callee": "String(s.last_charge_at || '').slice",
+          "lineNumber": 169
+        },
+        {
+          "caller": "overview",
+          "callee": "String",
+          "lineNumber": 169
+        },
+        {
+          "caller": "overview",
+          "callee": "Number",
+          "lineNumber": 170
+        },
+        {
+          "caller": "overview",
+          "callee": "live\n    .filter((s) => s.daysLeft !== null && s.daysLeft <= 7)\n    .sort",
+          "lineNumber": 172
+        },
+        {
+          "caller": "overview",
+          "callee": "live\n    .filter",
+          "lineNumber": 172
+        },
+        {
+          "caller": "overview",
+          "callee": "items.filter",
+          "lineNumber": 179
+        },
+        {
+          "caller": "overview",
+          "callee": "items.filter",
+          "lineNumber": 180
+        },
+        {
+          "caller": "overview",
+          "callee": "items.filter",
+          "lineNumber": 181
+        },
+        {
+          "caller": "overview",
+          "callee": "items.filter",
+          "lineNumber": 182
+        },
+        {
+          "caller": "overview",
+          "callee": "live.reduce",
+          "lineNumber": 183
+        },
+        {
+          "caller": "overview",
+          "callee": "Number",
+          "lineNumber": 183
+        },
+        {
+          "caller": "overview",
+          "callee": "live.reduce",
+          "lineNumber": 184
+        },
+        {
+          "caller": "overview",
+          "callee": "Number",
+          "lineNumber": 184
+        },
+        {
+          "caller": "overview",
+          "callee": "live.filter",
+          "lineNumber": 185
+        },
+        {
+          "caller": "overview",
+          "callee": "live.filter",
+          "lineNumber": 187
+        },
+        {
+          "caller": "overview",
+          "callee": "String(s.next_charge_at).slice",
+          "lineNumber": 187
+        },
+        {
+          "caller": "overview",
+          "callee": "String",
+          "lineNumber": 187
+        },
+        {
+          "caller": "chargesOf",
+          "callee": "all",
+          "lineNumber": 195
+        },
+        {
+          "caller": "chargesOf",
+          "callee": "Number",
+          "lineNumber": 199
+        },
+        {
+          "caller": "chargesOf",
+          "callee": "Number",
+          "lineNumber": 199
+        },
+        {
+          "caller": "chargesOf",
+          "callee": "Number",
+          "lineNumber": 199
+        },
+        {
+          "caller": "charge",
+          "callee": "todayStr",
+          "lineNumber": 209
+        },
+        {
+          "caller": "charge",
+          "callee": "Math.abs",
+          "lineNumber": 210
+        },
+        {
+          "caller": "charge",
+          "callee": "Number",
+          "lineNumber": 210
+        },
+        {
+          "caller": "charge",
+          "callee": "run",
+          "lineNumber": 213
+        },
+        {
+          "caller": "charge",
+          "callee": "Number",
+          "lineNumber": 218
+        },
+        {
+          "caller": "charge",
+          "callee": "Number",
+          "lineNumber": 220
+        },
+        {
+          "caller": "charge",
+          "callee": "Number",
+          "lineNumber": 220
+        },
+        {
+          "caller": "charge",
+          "callee": "Number",
+          "lineNumber": 222
+        },
+        {
+          "caller": "charge",
+          "callee": "nowStr",
+          "lineNumber": 222
+        },
+        {
+          "caller": "charge",
+          "callee": "nowStr",
+          "lineNumber": 222
+        },
+        {
+          "caller": "charge",
+          "callee": "run",
+          "lineNumber": 224
+        },
+        {
+          "caller": "charge",
+          "callee": "advance",
+          "lineNumber": 226
+        },
+        {
+          "caller": "charge",
+          "callee": "Number",
+          "lineNumber": 226
+        },
+        {
+          "caller": "charge",
+          "callee": "require('../db').recalcBalances",
+          "lineNumber": 229
+        },
+        {
+          "caller": "charge",
+          "callee": "require",
+          "lineNumber": 229
+        },
+        {
+          "caller": "charge",
+          "callee": "Number",
+          "lineNumber": 229
+        },
+        {
+          "caller": "charge",
+          "callee": "Number",
+          "lineNumber": 231
+        },
+        {
+          "caller": "runDue",
+          "callee": "todayStr",
+          "lineNumber": 238
+        },
+        {
+          "caller": "runDue",
+          "callee": "all",
+          "lineNumber": 239
+        },
+        {
+          "caller": "runDue",
+          "callee": "alreadyNotified",
+          "lineNumber": 250
+        },
+        {
+          "caller": "runDue",
+          "callee": "ledgerWriterIds",
+          "lineNumber": 251
+        },
+        {
+          "caller": "runDue",
+          "callee": "notify",
+          "lineNumber": 252
+        },
+        {
+          "caller": "runDue",
+          "callee": "(sub.amount_cents / 100).toFixed",
+          "lineNumber": 255
+        },
+        {
+          "caller": "runDue",
+          "callee": "charge",
+          "lineNumber": 268
+        },
+        {
+          "caller": "runDue",
+          "callee": "advance",
+          "lineNumber": 271
+        },
+        {
+          "caller": "runDue",
+          "callee": "advance",
+          "lineNumber": 276
+        },
+        {
+          "caller": "runDue",
+          "callee": "run",
+          "lineNumber": 285
+        },
+        {
+          "caller": "runDue",
+          "callee": "require('../db').recalcBalances",
+          "lineNumber": 286
+        },
+        {
+          "caller": "runDue",
+          "callee": "require",
+          "lineNumber": 286
+        },
+        {
+          "caller": "runDue",
+          "callee": "Number",
+          "lineNumber": 286
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "todayStr",
+          "lineNumber": 293
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "all",
+          "lineNumber": 294
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "daysUntil",
+          "lineNumber": 297
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "Math.max",
+          "lineNumber": 298
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "Number",
+          "lineNumber": 298
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "alreadyNotified",
+          "lineNumber": 301
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "ledgerWriterIds",
+          "lineNumber": 302
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "notify",
+          "lineNumber": 303
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "(sub.amount_cents / 100).toFixed",
+          "lineNumber": 306
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "daysUntil",
+          "lineNumber": 314
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "alreadyNotified",
+          "lineNumber": 317
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "ledgerWriterIds",
+          "lineNumber": 318
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "notify",
+          "lineNumber": 319
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "(sub.amount_cents / 100).toFixed",
+          "lineNumber": 322
+        },
+        {
+          "caller": "checkReminders",
+          "callee": "cycleLabel",
+          "lineNumber": 322
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 15,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/routes/dashboard.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 176,
+      "nonEmptyLines": 156,
+      "functions": [
+        {
+          "name": "monthOfToday",
+          "startLine": 90,
+          "endLine": 92,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "monthOfToday",
+          "callee": "todayStr().slice",
+          "lineNumber": 91
+        },
+        {
+          "caller": "monthOfToday",
+          "callee": "todayStr",
+          "lineNumber": 91
+        }
+      ],
+      "metrics": {
+        "importCount": 9,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/routes/planning.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 395,
+      "nonEmptyLines": 366,
+      "functions": [
+        {
+          "name": "remainingDays",
+          "startLine": 46,
+          "endLine": 53,
+          "params": [
+            "b",
+            "range"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "remainingDays",
+          "callee": "todayStr",
+          "lineNumber": 47
+        },
+        {
+          "caller": "remainingDays",
+          "callee": "Math.max",
+          "lineNumber": 52
+        },
+        {
+          "caller": "remainingDays",
+          "callee": "Math.round",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/verify-subscriptions.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 349,
+      "nonEmptyLines": 309,
+      "functions": [
+        {
+          "name": "check",
+          "startLine": 26,
+          "endLine": 29,
+          "params": [
+            "name",
+            "ok"
+          ]
+        },
+        {
+          "name": "shift",
+          "startLine": 31,
+          "endLine": 35,
+          "params": [
+            "days"
+          ]
+        },
+        {
+          "name": "addSub",
+          "startLine": 87,
+          "endLine": 104,
+          "params": [
+            "fields"
+          ]
+        },
+        {
+          "name": "req",
+          "startLine": 208,
+          "endLine": 221,
+          "params": [
+            "method",
+            "p"
+          ]
+        },
+        {
+          "name": "csrfOf",
+          "startLine": 222,
+          "endLine": 222,
+          "params": [
+            "html"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 27
+        },
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 28
+        },
+        {
+          "caller": "shift",
+          "callee": "d.setDate",
+          "lineNumber": 33
+        },
+        {
+          "caller": "shift",
+          "callee": "d.getDate",
+          "lineNumber": 33
+        },
+        {
+          "caller": "shift",
+          "callee": "d.getFullYear",
+          "lineNumber": 34
+        },
+        {
+          "caller": "shift",
+          "callee": "String(d.getMonth() + 1).padStart",
+          "lineNumber": 34
+        },
+        {
+          "caller": "shift",
+          "callee": "String",
+          "lineNumber": 34
+        },
+        {
+          "caller": "shift",
+          "callee": "d.getMonth",
+          "lineNumber": 34
+        },
+        {
+          "caller": "shift",
+          "callee": "String(d.getDate()).padStart",
+          "lineNumber": 34
+        },
+        {
+          "caller": "shift",
+          "callee": "String",
+          "lineNumber": 34
+        },
+        {
+          "caller": "shift",
+          "callee": "d.getDate",
+          "lineNumber": 34
+        },
+        {
+          "caller": "addSub",
+          "callee": "Number",
+          "lineNumber": 95
+        },
+        {
+          "caller": "addSub",
+          "callee": "db.run",
+          "lineNumber": 95
+        },
+        {
+          "caller": "addSub",
+          "callee": "db.nowStr",
+          "lineNumber": 102
+        },
+        {
+          "caller": "req",
+          "callee": "fetch",
+          "lineNumber": 212
+        },
+        {
+          "caller": "req",
+          "callee": "new URLSearchParams(form).toString",
+          "lineNumber": 214
+        },
+        {
+          "caller": "req",
+          "callee": "res.headers.getSetCookie",
+          "lineNumber": 217
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map((c) => c.split(';')[0]).join",
+          "lineNumber": 218
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map",
+          "lineNumber": 218
+        },
+        {
+          "caller": "req",
+          "callee": "c.split",
+          "lineNumber": 218
+        },
+        {
+          "caller": "req",
+          "callee": "Buffer.from",
+          "lineNumber": 219
+        },
+        {
+          "caller": "req",
+          "callee": "res.arrayBuffer",
+          "lineNumber": 219
+        },
+        {
+          "caller": "req",
+          "callee": "buf.toString",
+          "lineNumber": 220
+        },
+        {
+          "caller": "csrfOf",
+          "callee": "html.match",
+          "lineNumber": 222
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 5,
+        "classCount": 0
+      }
+    }
+  ]
+}

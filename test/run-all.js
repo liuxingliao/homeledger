@@ -18,6 +18,9 @@ const SUITES = [
   'verify-ai-attachments.js',
   'verify-model-list.js',
   'verify-subscriptions.js',
+  'verify-ssj-xlsx.js',
+  'verify-ssj-import.js',
+  'verify-people-participants.js',
 ];
 
 function healthz(timeoutMs) {

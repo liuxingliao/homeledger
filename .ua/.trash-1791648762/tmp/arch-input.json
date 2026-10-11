@@ -1,0 +1,5271 @@
+{
+ "fileNodes": [
+  {
+   "id": "file:src/db.js",
+   "type": "file",
+   "name": "db.js",
+   "filePath": "src/db.js",
+   "summary": "基于 node:sqlite 的数据持久层：定义 users/ledgers/transactions/categories 等全套建表 DDL，提供 all/get/run/tx 查询封装、轻量列迁移（ensureColumn）、系统分类与汇率种子数据，以及账户余额重算等核心领域函数，是整个应用唯一的数据库访问入口。",
+   "tags": [
+    "data-model",
+    "database",
+    "service",
+    "migration",
+    "entry-point"
+   ]
+  },
+  {
+   "id": "file:src/lib/ai.js",
+   "type": "file",
+   "name": "ai.js",
+   "filePath": "src/lib/ai.js",
+   "summary": "AI 记账引擎：从 settings 读取 OpenAI 兼容配置，将账单截图/文本通过 chat completions 接口识别为结构化交易，内置中文关键词分类、日期与金额提取的规则兜底解析，另提供连接测试和模型列表拉取。",
+   "tags": [
+    "service",
+    "ai",
+    "nlp",
+    "api-client",
+    "serialization"
+   ]
+  },
+  {
+   "id": "file:src/lib/importers.js",
+   "type": "file",
+   "name": "importers.js",
+   "filePath": "src/lib/importers.js",
+   "summary": "账单 CSV 导入/导出模块：自动识别支付宝、微信支付等账单格式与编码（UTF-8/GBK），解析表头并归一化为交易记录，导入时按 uid 去重、自动创建缺失账户，另提供标准 CSV 导出。",
+   "tags": [
+    "import",
+    "export",
+    "parsing",
+    "csv",
+    "serialization"
+   ]
+  },
+  {
+   "id": "file:src/routes/admin.js",
+   "type": "file",
+   "name": "admin.js",
+   "filePath": "src/routes/admin.js",
+   "summary": "Express 路由模块，集中承载设置页、账本与成员管理、分类/账户/预算/定期记账维护、支付宝/微信账单导入预览与执行、CSV 备份导出、数据清理及系统管理（用户、审计日志、头像上传）等大量页面与接口。",
+   "tags": [
+    "api-handler",
+    "router",
+    "admin",
+    "import-export",
+    "middleware"
+   ]
+  },
+  {
+   "id": "file:src/routes/ai.js",
+   "type": "file",
+   "name": "ai.js",
+   "filePath": "src/routes/ai.js",
+   "summary": "AI 截图/文本记账的页面与接口路由：渲染 AI 记账页、接收截图识别请求（保存附件留档并调用 analyzeBill）、草稿确认批量入库、AI 设置读写与连接测试、模型列表拉取等。",
+   "tags": [
+    "api-handler",
+    "router",
+    "ai",
+    "middleware"
+   ]
+  },
+  {
+   "id": "file:src/routes/openapi.js",
+   "type": "file",
+   "name": "openapi.js",
+   "filePath": "src/routes/openapi.js",
+   "summary": "开放 API（Bearer Token 鉴权）路由模块：提供 API 令牌的创建/吊销管理、/api/open/v1 下的记一笔、AI 截图/文本识别（草稿与确认模式）、查询最近交易等端点，供第三方与自动化脚本调用。",
+   "tags": [
+    "api-handler",
+    "router",
+    "open-api",
+    "authentication",
+    "ai"
+   ]
+  },
+  {
+   "id": "file:test/verify-ai-image.js",
+   "type": "file",
+   "name": "verify-ai-image.js",
+   "filePath": "test/verify-ai-image.js",
+   "summary": "AI 图片识别链路的验证脚本：通过拦截/模拟 fetch 记录发往模型的请求体，断言 analyzeBill 会将截图以 image_url 内容块正确传出，并验证识别结果结构。",
+   "tags": [
+    "test",
+    "verification",
+    "ai",
+    "diagnostics"
+   ]
+  },
+  {
+   "id": "file:test/verify-model-list.js",
+   "type": "file",
+   "name": "verify-model-list.js",
+   "filePath": "test/verify-model-list.js",
+   "summary": "模型列表功能的验证脚本：在本机启动一个 mock HTTP 服务伪装 /v1/models 接口，断言 listModels 能正确解析多种响应结构并推断模型的 vision 能力。",
+   "tags": [
+    "test",
+    "verification",
+    "ai",
+    "mock-server"
+   ]
+  },
+  {
+   "id": "file:scripts/seed-demo.js",
+   "type": "file",
+   "name": "seed-demo.js",
+   "filePath": "scripts/seed-demo.js",
+   "summary": "演示数据种子脚本：清空数据库后重建演示用户与账本，批量写入账户、分类、多类型交易及 AI 待识别图片附件，用于开发/演示环境快速填充示例数据。",
+   "tags": [
+    "script",
+    "seed-data",
+    "development",
+    "demo"
+   ]
+  },
+  {
+   "id": "file:src/lib/attachments.js",
+   "type": "file",
+   "name": "attachments.js",
+   "filePath": "src/lib/attachments.js",
+   "summary": "附件模块：把 data URL 图片落盘到 uploads 目录并在 SQLite 中登记，提供交易附件的关联、批量查询、计数与安全删除（含路径穿越校验），支撑 AI 截图记账流程。",
+   "tags": [
+    "service",
+    "attachments",
+    "file-storage",
+    "data-model"
+   ]
+  },
+  {
+   "id": "file:src/lib/txn.js",
+   "type": "file",
+   "name": "txn.js",
+   "filePath": "src/lib/txn.js",
+   "summary": "交易核心业务模块：覆盖交易 CRUD、分页筛选、标签、AA 分摊、报销、债务同步，以及汇总/分类/成员/每日/净资产趋势等统计查询，是全站记账逻辑的中枢，被多数路由与脚本依赖。",
+   "tags": [
+    "service",
+    "data-model",
+    "business-logic",
+    "statistics"
+   ]
+  },
+  {
+   "id": "file:src/lib/util.js",
+   "type": "file",
+   "name": "util.js",
+   "filePath": "src/lib/util.js",
+   "summary": "通用工具库：金额格式化与解析（以分为单位的整数存储）、中文日期/月份运算、HTML 转义、稳定取色、头像 URL 与审计日志中文化等纯函数，被全项目几乎所有模块复用。",
+   "tags": [
+    "utility",
+    "formatting",
+    "date",
+    "html-escape"
+   ]
+  },
+  {
+   "id": "file:src/routes/accounts.js",
+   "type": "file",
+   "name": "accounts.js",
+   "filePath": "src/routes/accounts.js",
+   "summary": "账户/分类/标签路由：基于 Express Router 提供 accounts、categories、tags 的列表页与增删改端点（含归档、删除、余额调整），全部经 auth.requireLogin / requireLedgerWrite 鉴权后以 SSR 页面或重定向响应。",
+   "tags": [
+    "api-handler",
+    "routes",
+    "ssr",
+    "crud"
+   ]
+  },
+  {
+   "id": "file:src/routes/transactions.js",
+   "type": "file",
+   "name": "transactions.js",
+   "filePath": "src/routes/transactions.js",
+   "summary": "交易路由：提供记一笔、编辑、删除、批量删除与报销等端点，先经 readForm 把表单解析为标准账目数据，再委托 txn 模块处理业务逻辑并支持附件关联，全部走 SSR 流程。",
+   "tags": [
+    "api-handler",
+    "routes",
+    "crud",
+    "formdata"
+   ]
+  },
+  {
+   "id": "file:server.js",
+   "type": "file",
+   "name": "server.js",
+   "filePath": "server.js",
+   "summary": "HomeLedger 服务端唯一入口：初始化 SQLite、自动创建首个管理员，配置 Express 会话/CSRF/静态资源，挂载全部业务路由，并实现零依赖的 EJS 布局机制与优雅停机。",
+   "tags": [
+    "entry-point",
+    "express",
+    "bootstrap",
+    "middleware",
+    "configuration"
+   ]
+  },
+  {
+   "id": "file:src/lib/about.js",
+   "type": "file",
+   "name": "about.js",
+   "filePath": "src/lib/about.js",
+   "summary": "「关于」页的静态数据源：产品介绍、功能亮点、版本更新日志与技术栈常量，并提供 repoUrl/issuesUrl 函数解析 GitHub 仓库反馈入口（支持环境变量覆盖与非法地址校验）。",
+   "tags": [
+    "utility",
+    "type-definition",
+    "configuration",
+    "static-data"
+   ]
+  },
+  {
+   "id": "file:src/lib/charts.js",
+   "type": "file",
+   "name": "charts.js",
+   "filePath": "src/lib/charts.js",
+   "summary": "服务端 SVG 图表渲染工具库：无需前端图表库，纯字符串拼接生成柱状图、折线图、环形图、排行条、日历热力图与进度条，供报表与仪表盘视图直接内嵌。",
+   "tags": [
+    "utility",
+    "visualization",
+    "svg",
+    "reporting",
+    "chart"
+   ]
+  },
+  {
+   "id": "file:src/routes/about.js",
+   "type": "file",
+   "name": "about.js",
+   "filePath": "src/routes/about.js",
+   "summary": "「关于」页路由（GET /about，需登录）：聚合静态产品数据与运行时统计（流水笔数、账本数、数据体积、运行天数、Node 环境），渲染 about 视图。",
+   "tags": [
+    "api-handler",
+    "route",
+    "page",
+    "statistics"
+   ]
+  },
+  {
+   "id": "file:src/routes/auth.js",
+   "type": "file",
+   "name": "auth.js",
+   "filePath": "src/routes/auth.js",
+   "summary": "认证相关路由：登录（含失败锁定与审计）、登出、开放注册（可由站点设置关闭）、首次初始化 /setup、账本切换与邀请码加入账本。",
+   "tags": [
+    "api-handler",
+    "route",
+    "authentication",
+    "security",
+    "session"
+   ]
+  },
+  {
+   "id": "file:test/verify-about.js",
+   "type": "file",
+   "name": "verify-about.js",
+   "filePath": "test/verify-about.js",
+   "summary": "关于页的端到端回归脚本：先对 issuesUrl 做三种状态的单元断言，再通过原生 fetch 对隔离实例（8099 端口）验证未登录跳转、登录流程与关于页各区块渲染。",
+   "tags": [
+    "test",
+    "e2e",
+    "regression",
+    "http"
+   ]
+  },
+  {
+   "id": "file:src/lib/auth.js",
+   "type": "file",
+   "name": "auth.js",
+   "filePath": "src/lib/auth.js",
+   "summary": "认证与授权核心库：scrypt 密码哈希与恒时校验、SQLite 会话存储、登录限流、审计日志、CSRF 防护、账本成员角色权限中间件，以及站内通知写入辅助。",
+   "tags": [
+    "认证",
+    "授权",
+    "middleware",
+    "安全",
+    "utility"
+   ]
+  },
+  {
+   "id": "file:src/lib/scheduler.js",
+   "type": "file",
+   "name": "scheduler.js",
+   "filePath": "src/lib/scheduler.js",
+   "summary": "定时任务调度器：每日执行周期账单自动入账、订阅扣费、预算使用率预警、借贷到期提醒、储蓄目标进度提醒与过期数据清理，由 server 启动时初始化。",
+   "tags": [
+    "调度器",
+    "定时任务",
+    "服务",
+    "通知"
+   ]
+  },
+  {
+   "id": "file:src/lib/subscriptions.js",
+   "type": "file",
+   "name": "subscriptions.js",
+   "filePath": "src/lib/subscriptions.js",
+   "summary": "订阅管理业务库：周期推进与首扣日计算、年化/月均成本折算、订阅总览统计、到期自动扣费生成交易、试用转正与续费提醒，被路由层与调度器共同使用。",
+   "tags": [
+    "service",
+    "订阅",
+    "数据模型",
+    "业务逻辑"
+   ]
+  },
+  {
+   "id": "file:src/routes/dashboard.js",
+   "type": "file",
+   "name": "dashboard.js",
+   "filePath": "src/routes/dashboard.js",
+   "summary": "Express 路由：首页仪表盘、记账日历、全局搜索与通知中心，聚合当月/上月收支、消费趋势、分类占比、预算进度、借贷与目标概览、待报销金额等数据后渲染 SSR 页面。",
+   "tags": [
+    "api-handler",
+    "路由",
+    "ssr",
+    "仪表盘"
+   ]
+  },
+  {
+   "id": "file:src/routes/planning.js",
+   "type": "file",
+   "name": "planning.js",
+   "filePath": "src/routes/planning.js",
+   "summary": "Express 路由：预算、周期账单、借贷台账与储蓄目标四大规划功能的列表与增删改查，写操作经 requireLedgerWrite 权限中间件保护后渲染对应 SSR 页面。",
+   "tags": [
+    "api-handler",
+    "路由",
+    "ssr",
+    "规划"
+   ]
+  },
+  {
+   "id": "file:test/verify-subscriptions.js",
+   "type": "file",
+   "name": "verify-subscriptions.js",
+   "filePath": "test/verify-subscriptions.js",
+   "summary": "订阅扣费回归测试脚本：A 段在独立数据目录上进程内验证周期推进、成本折算、到期自动扣费、试用转正与提醒去重；B 段对 8099 端口隔离实例做 HTTP 端到端验证（未启动则跳过）。",
+   "tags": [
+    "test",
+    "回归测试",
+    "订阅",
+    "端到端"
+   ]
+  },
+  {
+   "id": "file:src/lib/formdata.js",
+   "type": "file",
+   "name": "formdata.js",
+   "filePath": "src/lib/formdata.js",
+   "summary": "表单与页面公共数据加载层，从 SQLite 查询分类树、扁平分类、账户、成员、标签等下拉数据，并聚合出「记一笔」页面所需的完整表单数据集，被多个路由模块共用。",
+   "tags": [
+    "utility",
+    "data-access",
+    "form-data",
+    "service",
+    "查询聚合"
+   ]
+  },
+  {
+   "id": "file:src/routes/reports.js",
+   "type": "file",
+   "name": "reports.js",
+   "filePath": "src/routes/reports.js",
+   "summary": "报表与图表路由，提供 GET /reports 页面：解析时间范围（月/季/年/自定义/全部）后，调用 txn 库生成汇总、分类占比、趋势、成员分布、净值等十余项统计数据并渲染 reports 视图，含同期对比与星期分布分析。",
+   "tags": [
+    "api-handler",
+    "报表",
+    "statistics",
+    "ssr",
+    "express-router"
+   ]
+  },
+  {
+   "id": "file:src/routes/subscriptions.js",
+   "type": "file",
+   "name": "subscriptions.js",
+   "filePath": "src/routes/subscriptions.js",
+   "summary": "订阅扣费路由，覆盖订阅的完整生命周期：列表、编辑页、新建、更新、立即扣费一期、跳过本期、暂停/恢复、取消与删除，内置常用订阅服务（Netflix、Spotify 等）快选预设，所有写操作均带 requireLedgerWrite 鉴权与审计日志。",
+   "tags": [
+    "api-handler",
+    "express-router",
+    "订阅管理",
+    "ssr",
+    "audit"
+   ]
+  },
+  {
+   "id": "service:Dockerfile",
+   "type": "service",
+   "name": "Dockerfile",
+   "filePath": "Dockerfile",
+   "summary": "单阶段 Docker 构建文件：基于 node:22-slim 镜像安装生产依赖并拷贝源码，以非 root 的 node 用户运行 server.js（端口 5111），通过 HEALTHCHECK 探测 /healthz 接口。",
+   "tags": [
+    "容器化",
+    "部署",
+    "基础设施",
+    "entry-point",
+    "health-check"
+   ]
+  },
+  {
+   "id": "service:docker-compose.yml",
+   "type": "service",
+   "name": "docker-compose.yml",
+   "filePath": "docker-compose.yml",
+   "summary": "Docker Compose 编排文件，定义 homeledger 单服务：拉取 ghcr.io/sucraft-hub/homeledger:latest 预构建镜像，将宿主机 8899 端口映射到容器 5111，并以 ./data 目录持久化账本数据。",
+   "tags": [
+    "编排",
+    "基础设施",
+    "容器化",
+    "部署",
+    "configuration"
+   ]
+  },
+  {
+   "id": "service:docker-compose.yml:homeledger",
+   "type": "service",
+   "name": "homeledger",
+   "filePath": "docker-compose.yml",
+   "summary": "Compose 中唯一的 homeledger 服务实例：使用预构建的 ghcr.io 镜像运行应用，时区设为 Asia/Shanghai，宿主 8899 端口对外提供访问，数据卷挂载到容器内 /data。",
+   "tags": [
+    "容器化",
+    "服务实例",
+    "部署",
+    "数据持久化"
+   ]
+  },
+  {
+   "id": "document:.claude/commands/opsx/apply.md",
+   "type": "document",
+   "name": "apply.md",
+   "filePath": ".claude/commands/opsx/apply.md",
+   "summary": "OpenSpec 工作流的 /opsx:apply 斜杠命令定义,指导 agent 按任务的 tasks.md 清单逐项实现 change。包含 store 选择(--store 粘性规则)、项目根检查(避免副作用式创建 openspec/)、任务状态勾选与实现完成/暂停的输出模板。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "工作流",
+    "命令定义",
+    "experimental"
+   ]
+  },
+  {
+   "id": "document:.claude/commands/opsx/archive.md",
+   "type": "document",
+   "name": "archive.md",
+   "filePath": ".claude/commands/opsx/archive.md",
+   "summary": "OpenSpec 工作的 /opsx:archive 斜杠命令定义,在 change 实现完成后将其归档:同步 delta specs 到主 specs、把 change 目录移入 changes/archive 并输出归档结果模板。同样包含 store 选择与项目根检查等前置守卫。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "工作流",
+    "归档",
+    "命令定义"
+   ]
+  },
+  {
+   "id": "document:.claude/commands/opsx/explore.md",
+   "type": "document",
+   "name": "explore.md",
+   "filePath": ".claude/commands/opsx/explore.md",
+   "summary": "OpenSpec 工作流的 /opsx:explore 斜杠命令定义,进入以思考伙伴为核心的探索模式:只读调研、开放式提问,严禁写代码实现;可在确认范围内生成 change 规划工件,并以 /opsx:propose 作为进入实现的出口。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "工作流",
+    "探索模式",
+    "thinking"
+   ]
+  },
+  {
+   "id": "document:.claude/commands/opsx/propose.md",
+   "type": "document",
+   "name": "propose.md",
+   "filePath": ".claude/commands/opsx/propose.md",
+   "summary": "OpenSpec 工作流的 /opsx:propose 斜杠命令定义,一步创建 change 并按 schema 生成全部规划工件(proposal.md、delta specs、design.md、tasks.md)。明确规划边界:只做规划不碰项目代码,实现须由用户显式启动 /opsx:apply。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "工作流",
+    "规划",
+    "命令定义"
+   ]
+  },
+  {
+   "id": "document:.claude/commands/opsx/sync.md",
+   "type": "document",
+   "name": "sync.md",
+   "filePath": ".claude/commands/opsx/sync.md",
+   "summary": "OpenSpec 工作流的 /opsx:sync 斜杠命令定义,由 agent 读取 change 的 delta specs 并直接编辑主 specs 完成智能合并(如仅追加单个场景而非整段复制),支持 ADDED/MODIFIED/REMOVED/RENAMED 四类变更,同步后不归档 change。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "工作流",
+    "specs同步",
+    "命令定义"
+   ]
+  },
+  {
+   "id": "document:.claude/commands/opsx/update.md",
+   "type": "document",
+   "name": "update.md",
+   "filePath": ".claude/commands/opsx/update.md",
+   "summary": "OpenSpec 工作流的 /opsx:update 斜杠命令定义,用于修订既有 change 的规划工件并保持工件间一致;只修改已存在的工件、绝不创建缺失工件或编辑代码,缺失工件交由 status/instructions 指引补齐。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "工作流",
+    "工件修订",
+    "命令定义"
+   ]
+  },
+  {
+   "id": "document:README.md",
+   "type": "document",
+   "name": "README.md",
+   "filePath": "README.md",
+   "summary": "项目主文档（中文），覆盖 Docker Compose / 纯 Docker / 源码三种部署方式、功能一览（记账内核、AI 截图与文本自动记账、家庭多人共享、规划提醒、报表图表、开放 API）、AI 识别配置、飞牛 fnOS .fpk 应用包、备份迁移与安全说明，并给出目录结构与 7 套件回归测试的运行方法。",
+   "tags": [
+    "documentation",
+    "entry-point",
+    "deployment",
+    "ai-记账",
+    "备份恢复"
+   ]
+  },
+  {
+   "id": "config:docker-compose-bak.yml",
+   "type": "config",
+   "name": "docker-compose-bak.yml",
+   "filePath": "docker-compose-bak.yml",
+   "summary": "homeledger 服务的 Docker Compose 备份配置：本地构建镜像、映射 5111 端口、通过环境变量注入 SESSION_SECRET / 管理员账号 / Ollama 地址，并把 ./data 挂载为数据目录（SQLite 数据库与附件均落盘于此）。",
+   "tags": [
+    "configuration",
+    "containerization",
+    "deployment",
+    "docker-compose",
+    "备份"
+   ]
+  },
+  {
+   "id": "config:package.json",
+   "type": "config",
+   "name": "package.json",
+   "filePath": "package.json",
+   "summary": "npm 项目清单：入口为 server.js，提供 start / dev（--watch 热重载）脚本，要求 Node >= 22.5.0（依赖内置 node:sqlite），运行时依赖仅 express、express-session 与 ejs 三个包。",
+   "tags": [
+    "configuration",
+    "npm",
+    "entry-point",
+    "build-system",
+    "依赖管理"
+   ]
+  },
+  {
+   "id": "document:.claude/skills/openspec-apply-change/SKILL.md",
+   "type": "document",
+   "name": "SKILL.md",
+   "filePath": ".claude/skills/openspec-apply-change/SKILL.md",
+   "summary": "OpenSpec 工作流的「实施变更」技能文档：定义当用户要求开始或继续实施某个 change 时，代理如何按 tasks.md 逐项落地实现、验证并更新任务状态。作为工具化流程文档存在，不参与应用运行时。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "workflow",
+    "skill"
+   ]
+  },
+  {
+   "id": "document:.claude/skills/openspec-archive-change/SKILL.md",
+   "type": "document",
+   "name": "SKILL.md",
+   "filePath": ".claude/skills/openspec-archive-change/SKILL.md",
+   "summary": "OpenSpec 工作流的「归档变更」技能文档：定义实施完成后如何校验任务全部勾选、同步规格并归档 change 到 openspec/changes/archive 目录。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "workflow",
+    "skill"
+   ]
+  },
+  {
+   "id": "document:.claude/skills/openspec-explore/SKILL.md",
+   "type": "document",
+   "name": "SKILL.md",
+   "filePath": ".claude/skills/openspec-explore/SKILL.md",
+   "summary": "OpenSpec「探索模式」技能文档：作为思考伙伴引导用户梳理想法、调查问题与澄清需求，覆盖探索姿态、上下文检查、不同入口处理、结束探索与护栏等 11 个章节。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "brainstorming",
+    "skill"
+   ]
+  },
+  {
+   "id": "document:.claude/skills/openspec-propose/SKILL.md",
+   "type": "document",
+   "name": "SKILL.md",
+   "filePath": ".claude/skills/openspec-propose/SKILL.md",
+   "summary": "OpenSpec「提案变更」技能文档：一步生成完整 change 工件（proposal、design、specs delta、tasks），是整个 OpenSpec 流程的入口技能。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "workflow",
+    "skill"
+   ]
+  },
+  {
+   "id": "document:.claude/skills/openspec-sync-specs/SKILL.md",
+   "type": "document",
+   "name": "SKILL.md",
+   "filePath": ".claude/skills/openspec-sync-specs/SKILL.md",
+   "summary": "OpenSpec「同步规格」技能文档：把 change 中的 delta 规格合并回 openspec/specs 主规格目录，而不归档 change。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "specs",
+    "skill"
+   ]
+  },
+  {
+   "id": "document:.claude/skills/openspec-update-change/SKILL.md",
+   "type": "document",
+   "name": "SKILL.md",
+   "filePath": ".claude/skills/openspec-update-change/SKILL.md",
+   "summary": "OpenSpec「更新变更」技能文档：修订已有 change 的规划工件并保持各工件间一致，仅改文档不碰代码。",
+   "tags": [
+    "documentation",
+    "openspec",
+    "workflow",
+    "skill"
+   ]
+  },
+  {
+   "id": "config:.ua/config.json",
+   "type": "config",
+   "name": "config.json",
+   "filePath": ".ua/config.json",
+   "summary": "Understand-Anything 知识图谱分析工具自身的最小配置，仅设置 outputLanguage 为 zh（中文输出）。非应用代码。",
+   "tags": [
+    "configuration",
+    "tooling",
+    "analysis"
+   ]
+  },
+  {
+   "id": "document:openclaw-skill/homeledger-bookkeeping/SKILL.md",
+   "type": "document",
+   "name": "SKILL.md",
+   "filePath": "openclaw-skill/homeledger-bookkeeping/SKILL.md",
+   "summary": "面向 OpenClaw/AI 助手的家账簿自动记账技能：通过环境变量 HOMELEDGER_URL 与 HOMELEDGER_TOKEN 调用开放 API，把账单截图（转 dataURL）或口述消费自动记入账簿并按固定格式汇报结果。",
+   "tags": [
+    "documentation",
+    "skill",
+    "ai-agent",
+    "开放api",
+    "自动记账"
+   ]
+  },
+  {
+   "id": "file:openspec/changes/archive/.gitkeep",
+   "type": "file",
+   "name": ".gitkeep",
+   "filePath": "openspec/changes/archive/.gitkeep",
+   "summary": "OpenSpec 已归档变更目录的 Git 占位文件，保证空目录可被版本库跟踪，无实际内容。",
+   "tags": [
+    "placeholder",
+    "git",
+    "openspec"
+   ]
+  },
+  {
+   "id": "config:openspec/config.yaml",
+   "type": "config",
+   "name": "config.yaml",
+   "filePath": "openspec/config.yaml",
+   "summary": "OpenSpec 工作流配置：声明 spec-driven 模式，并留有项目上下文、per-artifact 规则与 apply/archive 操作指引的注释模板（当前均为示例注释，未启用具体约束）。",
+   "tags": [
+    "configuration",
+    "openspec",
+    "yaml",
+    "workflow"
+   ]
+  },
+  {
+   "id": "file:openspec/specs/.gitkeep",
+   "type": "file",
+   "name": ".gitkeep",
+   "filePath": "openspec/specs/.gitkeep",
+   "summary": "OpenSpec 主规格目录的 Git 占位文件，保证空目录可被版本库跟踪，无实际内容。",
+   "tags": [
+    "placeholder",
+    "git",
+    "openspec"
+   ]
+  },
+  {
+   "id": "document:packaging/fpk/README.md",
+   "type": "document",
+   "name": "README.md",
+   "filePath": "packaging/fpk/README.md",
+   "summary": "飞牛 fnOS 应用打包（.fpk）说明文档：覆盖前置条件、fnpack 与纯 Python 两条打包路径、安装方式、包内结构、数据持久化与升级、已知限制及桌面打开方式（url vs iframe）。",
+   "tags": [
+    "documentation",
+    "packaging",
+    "fnos",
+    "deployment"
+   ]
+  },
+  {
+   "id": "file:packaging/fpk/build-fpk.sh",
+   "type": "file",
+   "name": "build-fpk.sh",
+   "filePath": "packaging/fpk/build-fpk.sh",
+   "summary": "基于 fnpack 官方工具的 .fpk 打包主脚本：下载 Node 22 运行时、复制 server.js/src/public/node_modules、生成 manifest 与权限配置、拷贝 cmd-main，并修复 Windows 打包丢失的 tar 可执行位，最终产出 dist/homeledger-<版本>.fpk。",
+   "tags": [
+    "build-system",
+    "packaging",
+    "shell",
+    "fnos",
+    "deployment"
+   ]
+  },
+  {
+   "id": "file:packaging/fpk/cmd-main",
+   "type": "file",
+   "name": "cmd-main",
+   "filePath": "packaging/fpk/cmd-main",
+   "summary": "fnOS 安装包的应用生命周期控制脚本（start/stop/status）：多候选目录探测应用、app.tgz 自解压兜底、node 运行时权限自愈，以 5111 端口后台启动 server.js 并轮询 /healthz 健康检查。",
+   "tags": [
+    "service",
+    "shell",
+    "lifecycle",
+    "health-check",
+    "fnos"
+   ]
+  },
+  {
+   "id": "file:packaging/fpk/make-fpk.py",
+   "type": "file",
+   "name": "make-fpk.py",
+   "filePath": "packaging/fpk/make-fpk.py",
+   "summary": "不依赖 fnpack 的纯 Python 备用打包器：用 tarfile 模块直接构造 app.tgz 与外层 .fpk 结构，复制应用源码、生成 manifest、回调 stub 与配置，并统一设置 Unix 权限位。",
+   "tags": [
+    "build-system",
+    "packaging",
+    "python",
+    "fnos"
+   ]
+  },
+  {
+   "id": "file:public/css/app.css",
+   "type": "file",
+   "name": "app.css",
+   "filePath": "public/css/app.css",
+   "summary": "全站唯一样式表（756 行）：通过 CSS 变量定义主题色与明暗外观，涵盖卡片、网格、按钮、表单、侧边栏、Toast、灯箱、统计卡、画廊等全部 UI 组件样式。",
+   "tags": [
+    "styles",
+    "css",
+    "ui",
+    "主题"
+   ]
+  },
+  {
+   "id": "file:public/js/app.js",
+   "type": "file",
+   "name": "app.js",
+   "filePath": "public/js/app.js",
+   "summary": "浏览器端主脚本（IIFE 封装，无依赖原生 JS）：记账表单类型切换与拆分均摊、AI 截图识别页、账单导入预览、设置页 AI 连通性测试与备份恢复、批量操作、确认弹窗、灯箱、侧边栏、用户菜单与头像上传等全站交互。",
+   "tags": [
+    "frontend",
+    "vanilla-js",
+    "event-handler",
+    "交互",
+    "entry-point"
+   ]
+  },
+  {
+   "id": "file:public/js/assistant.js",
+   "type": "file",
+   "name": "assistant.js",
+   "filePath": "public/js/assistant.js",
+   "summary": "悬浮 AI 记账助手聊天面板脚本：管理 FAB 按钮开合、拖拽/粘贴图片缩略图、气泡消息与 typing 状态，把文字和截图发送到 AI 聊天接口并渲染入库结果或错误提示。",
+   "tags": [
+    "frontend",
+    "vanilla-js",
+    "ai",
+    "chat",
+    "event-handler"
+   ]
+  },
+  {
+   "id": "file:public/manifest.webmanifest",
+   "type": "file",
+   "name": "manifest.webmanifest",
+   "filePath": "public/manifest.webmanifest",
+   "summary": "PWA 清单文件：声明应用名「家账簿」、standalone 显示模式、主题色 #4f7cff 与内嵌 SVG 图标，使应用可安装到桌面/主屏幕。",
+   "tags": [
+    "pwa",
+    "configuration",
+    "manifest"
+   ]
+  },
+  {
+   "id": "file:scripts/reset-password.js",
+   "type": "file",
+   "name": "reset-password.js",
+   "filePath": "scripts/reset-password.js",
+   "summary": "命令行运维脚本：以与主程序一致的 scrypt 参数（salt/N/r/p/keylen）哈希新密码，直接更新 SQLite 中指定用户口令，用于忘记密码时的恢复。",
+   "tags": [
+    "utility",
+    "运维",
+    "security",
+    "cli"
+   ]
+  },
+  {
+   "id": "file:src/views/about.ejs",
+   "type": "file",
+   "name": "about.ejs",
+   "filePath": "src/views/about.ejs",
+   "summary": "「关于」页 EJS 模板：渲染品牌信息与版本徽章、记录数/账本数/陪伴天数/数据体积统计卡、功能亮点网格、GitHub 提需求与 Bug 反馈入口、版本时间线、技术栈芯片及 Node 运行环境明细。",
+   "tags": [
+    "component",
+    "ejs",
+    "template",
+    "视图"
+   ]
+  },
+  {
+   "id": "file:src/views/account-detail.ejs",
+   "type": "file",
+   "name": "account-detail.ejs",
+   "filePath": "src/views/account-detail.ejs",
+   "summary": "账户详情页 EJS 模板：展示当前余额、初始余额、信用卡额度或本月笔数统计卡，提供日期范围筛选表单，并复用 partials/txn-list 渲染该账户的流水列表。",
+   "tags": [
+    "component",
+    "ejs",
+    "template",
+    "视图"
+   ]
+  },
+  {
+   "id": "file:src/views/accounts.ejs",
+   "type": "file",
+   "name": "accounts.ejs",
+   "filePath": "src/views/accounts.ejs",
+   "summary": "账户总览页 EJS 模板：净资产/总资产/总负债统计，按账户类型分组展示账户卡（含内联编辑表单、余额调整表单、停用/删除操作），以及已停用账户恢复区和新建账户表单。",
+   "tags": [
+    "component",
+    "ejs",
+    "template",
+    "表单",
+    "视图"
+   ]
+  },
+  {
+   "id": "file:src/views/ai.ejs",
+   "type": "file",
+   "name": "ai.ejs",
+   "filePath": "src/views/ai.ejs",
+   "summary": "AI 记账页 EJS 模板：注入 window.__AI_FORM__（分类与账户数据）供前端脚本消费，包含截图拖拽上传区、识别结果容器、模型配置状态提示、文字快速记账输入与识别历史画廊。",
+   "tags": [
+    "component",
+    "ejs",
+    "template",
+    "ai",
+    "视图"
+   ]
+  },
+  {
+   "id": "file:src/views/attachments.ejs",
+   "type": "file",
+   "name": "attachments.ejs",
+   "filePath": "src/views/attachments.ejs",
+   "summary": "截图附件库 EJS 模板：分页画廊展示已上传的账单截图（金额/商家/大小/日期），支持跳转关联记账记录与删除附件，空态引导去 AI 记账页上传。",
+   "tags": [
+    "component",
+    "ejs",
+    "template",
+    "视图"
+   ]
+  },
+  {
+   "id": "file:src/views/budgets.ejs",
+   "type": "file",
+   "name": "budgets.ejs",
+   "filePath": "src/views/budgets.ejs",
+   "summary": "预算管理页：按分类展示各预算的使用进度条与剩余额度，提供新建、编辑、启停和删除预算的表单，无预算时给出引导空态。",
+   "tags": [
+    "视图模板",
+    "预算",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/calendar.ejs",
+   "type": "file",
+   "name": "calendar.ejs",
+   "filePath": "src/views/calendar.ejs",
+   "summary": "日历视图页：以月历形式展示每日收支，并呈现本月支出 TOP 排行与消费热力分布。",
+   "tags": [
+    "视图模板",
+    "日历",
+    "统计图表",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/categories.ejs",
+   "type": "file",
+   "name": "categories.ejs",
+   "filePath": "src/views/categories.ejs",
+   "summary": "分类管理页：列出收支分类并支持新建与删除，按收入/支出区分展示。",
+   "tags": [
+    "视图模板",
+    "分类管理",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/dashboard.ejs",
+   "type": "file",
+   "name": "dashboard.ejs",
+   "filePath": "src/views/dashboard.ejs",
+   "summary": "总览首页：聚合今日速览、收支趋势与支出构成图表、预算进度、账户余额、订阅扣费、借贷、储蓄目标、待报销、即将自动记账及最近记录等卡片，并通过 include 复用 txn-list 局部模板渲染最近交易。",
+   "tags": [
+    "视图模板",
+    "仪表盘",
+    "统计图表",
+    "聚合页",
+    "entry-point"
+   ]
+  },
+  {
+   "id": "file:src/views/debts.ejs",
+   "type": "file",
+   "name": "debts.ejs",
+   "filePath": "src/views/debts.ejs",
+   "summary": "借贷台账页：提供新增借贷表单与台账明细列表，支持对单笔借贷执行结算和删除操作。",
+   "tags": [
+    "视图模板",
+    "借贷台账",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/error.ejs",
+   "type": "file",
+   "name": "error.ejs",
+   "filePath": "src/views/error.ejs",
+   "summary": "通用错误页片段：渲染错误标题与提示信息，并提供返回上一页和回到总览的操作链接，被各路由以 4xx/5xx 状态复用。",
+   "tags": [
+    "视图模板",
+    "错误页",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/export.ejs",
+   "type": "file",
+   "name": "export.ejs",
+   "filePath": "src/views/export.ejs",
+   "summary": "数据导出页：提供 CSV 账单与完整 JSON 数据导出入口，并附数据库文件备份、从备份恢复及 NAS 部署备份建议等运维说明。",
+   "tags": [
+    "视图模板",
+    "数据导出",
+    "备份",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/goals.ejs",
+   "type": "file",
+   "name": "goals.ejs",
+   "filePath": "src/views/goals.ejs",
+   "summary": "储蓄目标页：展示各目标的存入进度，支持新建目标、向目标存入金额和删除目标。",
+   "tags": [
+    "视图模板",
+    "储蓄目标",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/import.ejs",
+   "type": "file",
+   "name": "import.ejs",
+   "filePath": "src/views/import.ejs",
+   "summary": "账单导入页：上传支付宝/微信账单进行导入，并展示导入历史记录。",
+   "tags": [
+    "视图模板",
+    "账单导入",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/layout-blank.ejs",
+   "type": "file",
+   "name": "layout-blank.ejs",
+   "filePath": "src/views/layout-blank.ejs",
+   "summary": "认证页独立布局：无侧边栏的极简外壳，渲染站点品牌、flash 提示与页面 body，专用于登录、注册和初始化页。",
+   "tags": [
+    "视图模板",
+    "布局",
+    "认证页",
+    "外壳"
+   ]
+  },
+  {
+   "id": "file:src/views/layout.ejs",
+   "type": "file",
+   "name": "layout.ejs",
+   "filePath": "src/views/layout.ejs",
+   "summary": "全站主布局：包含侧边栏导航、账本切换表单、主题（明暗）设置、CSRF meta 与页面 body 容器，所有主功能页均套用此外壳。",
+   "tags": [
+    "视图模板",
+    "布局",
+    "导航",
+    "外壳",
+    "entry-point"
+   ]
+  },
+  {
+   "id": "file:src/views/ledgers.ejs",
+   "type": "file",
+   "name": "ledgers.ejs",
+   "filePath": "src/views/ledgers.ejs",
+   "summary": "账本管理页：支持新建账本、编辑、归档与删除，并为家庭成员/个人等不同用途的账本提供切换入口。",
+   "tags": [
+    "视图模板",
+    "账本管理",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/login.ejs",
+   "type": "file",
+   "name": "login.ejs",
+   "filePath": "src/views/login.ejs",
+   "summary": "登录页：用户名密码登录表单，登录失败时回显错误并保留用户名，登录成功后跳转至 next 指定页面。",
+   "tags": [
+    "视图模板",
+    "登录",
+    "表单",
+    "认证页"
+   ]
+  },
+  {
+   "id": "file:src/views/members.ejs",
+   "type": "file",
+   "name": "members.ejs",
+   "filePath": "src/views/members.ejs",
+   "summary": "成员管理页：展示账本成员列表与角色权限说明，支持邀请新成员、修改成员角色和移除成员，并列出邀请记录。",
+   "tags": [
+    "视图模板",
+    "成员管理",
+    "权限",
+    "表单"
+   ]
+  },
+  {
+   "id": "file:src/views/no-ledger.ejs",
+   "type": "file",
+   "name": "no-ledger.ejs",
+   "filePath": "src/views/no-ledger.ejs",
+   "summary": "无账本引导页片段：提示用户尚无账本并引导前往创建账本页面。",
+   "tags": [
+    "视图模板",
+    "空态页",
+    "引导"
+   ]
+  },
+  {
+   "id": "file:src/views/notifications.ejs",
+   "type": "file",
+   "name": "notifications.ejs",
+   "filePath": "src/views/notifications.ejs",
+   "summary": "通知中心页：列出站内通知，支持单条标记已读与全部已读。",
+   "tags": [
+    "视图模板",
+    "通知",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/partials/txn-list.ejs",
+   "type": "file",
+   "name": "txn-list.ejs",
+   "filePath": "src/views/partials/txn-list.ejs",
+   "summary": "交易列表局部模板：按日期分组渲染收支明细（复用 helpers 的日期与金额格式化），空态给出记账引导，bulk 模式下为批量操作提供勾选框。",
+   "tags": [
+    "视图模板",
+    "局部模板",
+    "交易列表",
+    "复用组件"
+   ]
+  },
+  {
+   "id": "file:src/views/recurring.ejs",
+   "type": "file",
+   "name": "recurring.ejs",
+   "filePath": "src/views/recurring.ejs",
+   "summary": "周期账单页：管理房租等固定周期记账项，支持新建、启停、立即执行一次和删除。",
+   "tags": [
+    "视图模板",
+    "周期账单",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/register.ejs",
+   "type": "file",
+   "name": "register.ejs",
+   "filePath": "src/views/register.ejs",
+   "summary": "注册页：创建账号的表单（用户名、昵称、邮箱、密码），校验失败时回显错误与已填内容。",
+   "tags": [
+    "视图模板",
+    "注册",
+    "表单",
+    "认证页"
+   ]
+  },
+  {
+   "id": "file:src/views/reports.ejs",
+   "type": "file",
+   "name": "reports.ejs",
+   "filePath": "src/views/reports.ejs",
+   "summary": "报表页：提供净资产走势、近 12 个月收支趋势、每日支出走势、分类排行榜、成员消费对比、星期分布、同期对比与账户余额一览等多维统计图表。",
+   "tags": [
+    "视图模板",
+    "报表",
+    "统计图表",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/search.ejs",
+   "type": "file",
+   "name": "search.ejs",
+   "filePath": "src/views/search.ejs",
+   "summary": "搜索页：按关键字及筛选条件检索交易，搜索结果通过 include 复用 txn-list 局部模板渲染。",
+   "tags": [
+    "视图模板",
+    "搜索",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/settings.ejs",
+   "type": "file",
+   "name": "settings.ejs",
+   "filePath": "src/views/settings.ejs",
+   "summary": "设置中心页：聚合个人资料、修改密码、站点与安全设置、AI 截图记账配置、开放 API Token 管理、用户管理、后台任务手动触发、操作审计日志与运行信息等多个管理面板。",
+   "tags": [
+    "视图模板",
+    "设置中心",
+    "管理后台",
+    "表单"
+   ]
+  },
+  {
+   "id": "file:src/views/setup.ejs",
+   "type": "file",
+   "name": "setup.ejs",
+   "filePath": "src/views/setup.ejs",
+   "summary": "首次初始化页：引导创建管理员账号并设置站点名称，仅在系统未初始化时展示。",
+   "tags": [
+    "视图模板",
+    "初始化",
+    "表单",
+    "认证页"
+   ]
+  },
+  {
+   "id": "file:src/views/subscriptions.ejs",
+   "type": "file",
+   "name": "subscriptions.ejs",
+   "filePath": "src/views/subscriptions.ejs",
+   "summary": "订阅管理页：以卡片展示各订阅项并支持立即扣费、跳过、取消、启停和删除，含新建/编辑表单与历史扣费记录列表。",
+   "tags": [
+    "视图模板",
+    "订阅管理",
+    "表单",
+    "页面"
+   ]
+  },
+  {
+   "id": "file:src/views/tags.ejs",
+   "type": "file",
+   "name": "tags.ejs",
+   "filePath": "src/views/tags.ejs",
+   "summary": "标签管理页：列出全部标签，支持新建与删除标签。",
+   "tags": [
+    "视图模板",
+    "标签管理",
+    "表单"
+   ]
+  },
+  {
+   "id": "file:src/views/transactions.ejs",
+   "type": "file",
+   "name": "transactions.ejs",
+   "filePath": "src/views/transactions.ejs",
+   "summary": "交易明细列表视图：提供时间范围/类型/来源快捷筛选 chips、关键字与分类/账户/成员/排序组合筛选表单、收支结余汇总条、分页器以及批量操作栏（删除、改分类、加标签、标记待报销、报销入账）。",
+   "tags": [
+    "component",
+    "view-template",
+    "filtering",
+    "bulk-operations",
+    "pagination"
+   ]
+  },
+  {
+   "id": "file:src/views/txn-form.ejs",
+   "type": "file",
+   "name": "txn-form.ejs",
+   "filePath": "src/views/txn-form.ejs",
+   "summary": "交易新建/编辑表单视图：覆盖 7 种基础类型与 7 种扩展类型（报销、退款、投资买卖、余额调整等）的类型切换，内嵌分类九宫格选择器、AA 分账行、多币种/汇率折叠区，编辑模式下还展示关联账单截图画廊与审计信息。",
+   "tags": [
+    "component",
+    "view-template",
+    "form",
+    "multi-type",
+    "category-picker"
+   ]
+  },
+  {
+   "id": "file:test/run-all.js",
+   "type": "file",
+   "name": "run-all.js",
+   "filePath": "test/run-all.js",
+   "summary": "全量回归跑批脚本：为 7 个 verify-* 端到端套件逐一启动干净的独立服务实例（独立 DATA_DIR、端口 8099），轮询 /healthz 就绪后运行套件并汇总通过/失败结果，任一套件失败则退出码为 1。",
+   "tags": [
+    "test",
+    "test-runner",
+    "e2e",
+    "orchestration",
+    "entry-point"
+   ]
+  },
+  {
+   "id": "file:test/selfcheck-static.js",
+   "type": "file",
+   "name": "selfcheck-static.js",
+   "filePath": "test/selfcheck-static.js",
+   "summary": "项目静态自检脚本：编译全部 EJS 模板、对 src/public/test/server.js 做语法检查、校验 package.json 与 about.js CHANGELOG 的版本一致性、检测对已删除视图的悬空引用、确认关键视图与静态资源存在，并清理根目录遗留临时文件。",
+   "tags": [
+    "test",
+    "static-analysis",
+    "linting",
+    "sanity-check"
+   ]
+  },
+  {
+   "id": "file:test/verify-ai-attachments.js",
+   "type": "file",
+   "name": "verify-ai-attachments.js",
+   "filePath": "test/verify-ai-attachments.js",
+   "summary": "AI 账单截图端到端回归：内置 OpenAI 兼容桩网关，覆盖模型列表接口、开放 API 发图入库后图片落盘并关联交易、令牌取图鉴权、最近记录携带 images、草稿模式留档策略，以及网页端 /api/ai/scan → /api/ai/confirm 截图记账全链路。",
+   "tags": [
+    "test",
+    "e2e",
+    "ai",
+    "attachments",
+    "http"
+   ]
+  },
+  {
+   "id": "file:test/verify-ai-chat.js",
+   "type": "file",
+   "name": "verify-ai-chat.js",
+   "filePath": "test/verify-ai-chat.js",
+   "summary": "AI 记账助手端到端回归：覆盖未登录拒绝、空载荷 400、纯文字规则引擎自动记账（金额/相对日期解析）、文字+图片附件关联、仅图片零结果的友好降级返回，以及 FAB/面板/assistant.js/CSS 的页面挂载断言。",
+   "tags": [
+    "test",
+    "e2e",
+    "ai",
+    "chat",
+    "http"
+   ]
+  },
+  {
+   "id": "file:test/verify-settings-admin.js",
+   "type": "file",
+   "name": "verify-settings-admin.js",
+   "filePath": "test/verify-settings-admin.js",
+   "summary": "系统管理并入设置页的端到端回归：覆盖 /admin 旧链接重定向、设置页系统管理区块（用户管理/后台任务/审计日志/统计卡）渲染、侧栏入口移除、后台任务手动触发回跳、用户名修改校验以及头像上传/清除全流程。",
+   "tags": [
+    "test",
+    "e2e",
+    "settings",
+    "admin",
+    "http"
+   ]
+  }
+ ],
+ "importEdges": [
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/importers.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-ai-image.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-ai-image.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-model-list.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-model-list.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/charts.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/about.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/accounts.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/admin.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/dashboard.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/openapi.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/planning.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/reports.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/subscriptions.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/transactions.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "file:src/lib/about.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/auth.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/auth.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/auth.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-about.js",
+   "target": "file:src/lib/about.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:src/lib/subscriptions.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/subscriptions.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "file:src/lib/subscriptions.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/db.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/lib/subscriptions.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7
+  },
+  {
+   "source": "file:server.js",
+   "target": "config:package.json",
+   "type": "imports",
+   "direction": "forward",
+   "weight": 0.7,
+   "recoveredFromImportMap": true
+  }
+ ],
+ "allEdges": [
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/importers.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:tx",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:ensureColumn",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:getSetting",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:setSetting",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:allSettings",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:seedSystemCategories",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:seedExchangeRates",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:createDefaultAccounts",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:addLedgerMember",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:createDefaultLedger",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:txnEffects",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:recalcBalances",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:init",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:getAiConfig",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:isLocalUrl",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:isAiReady",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:isAiUsable",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:classifyByKeywords",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:guessAccountName",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:parseDateWords",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:extractAmount",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:parseTextByRules",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:cleanMerchant",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:extractJson",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:callModel",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:buildContext",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:buildUserPrompt",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:resolveCategoryId",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:resolveAccountId",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:normalizeItem",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:analyzeBill",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:testConnection",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:guessVision",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:listModels",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:decodeBuffer",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:parseCsvLine",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:parseCsv",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:detectSource",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:normalizeRow",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:normalizeDate",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:parseBill",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:ensureAccount",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:importRecords",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:toCsv",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:exportRows",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "function:src/routes/admin.js:parseAvatarDataUrl",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "function:src/routes/admin.js:dirSize",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:tx",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:ensureColumn",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:getSetting",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:setSetting",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:allSettings",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:createDefaultAccounts",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:addLedgerMember",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:createDefaultLedger",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:txnEffects",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:recalcBalances",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "function:src/db.js:init",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:getAiConfig",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:isLocalUrl",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:isAiReady",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:isAiUsable",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:classifyByKeywords",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:guessAccountName",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:parseTextByRules",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:resolveCategoryId",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:resolveAccountId",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:analyzeBill",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:testConnection",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:guessVision",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/lib/ai.js:listModels",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:parseCsv",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:detectSource",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:normalizeDate",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:parseBill",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:importRecords",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/importers.js:exportRows",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/db.js:getSetting",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "function:src/db.js:setSetting",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/db.js:recalcBalances",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/ai.js:classifyByKeywords",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/ai.js:resolveCategoryId",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/lib/importers.js",
+   "target": "function:src/lib/ai.js:guessAccountName",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "function:src/lib/ai.js:resolveCategoryId",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "function:src/lib/ai.js:classifyByKeywords",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "function:src/lib/importers.js:parseBill",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "function:src/lib/importers.js:importRecords",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "function:src/lib/importers.js:exportRows",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-ai-image.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-ai-image.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-model-list.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-model-list.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "function:src/routes/openapi.js:requireToken",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "function:src/routes/openapi.js:resolveCategory",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "function:src/routes/openapi.js:resolveAccount",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "function:src/lib/ai.js:analyzeBill",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "function:src/lib/ai.js:getAiConfig",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "function:src/lib/ai.js:analyzeBill",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/openapi.js",
+   "target": "function:src/lib/ai.js:getAiConfig",
+   "type": "calls"
+  },
+  {
+   "source": "file:test/verify-ai-image.js",
+   "target": "function:src/lib/ai.js:analyzeBill",
+   "type": "calls"
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:scripts/seed-demo.js",
+   "target": "function:scripts/seed-demo.js:main",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:parseDataUrl",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:saveDataUrlImage",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:linkImagesToTxns",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:listByTxnIds",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:listByTxn",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:countByTxnIds",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:attachCounts",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:getById",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:resolveFile",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:removeById",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:buildWhere",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:decorate",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:listTransactions",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:groupByDate",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:getTransaction",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:createTransaction",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:updateTransaction",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:softDelete",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:bulkDelete",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:markReimbursed",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:applyTags",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:saveSplits",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:splitsOf",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:syncDebts",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:rangeOf",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:summary",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:categoryBreakdown",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:subcategoryBreakdown",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:monthlyTrend",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:memberBreakdown",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:dailyBreakdown",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:accountOverview",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:netWorthTrend",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:parseDataUrl",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:saveDataUrlImage",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:linkImagesToTxns",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:listByTxnIds",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:listByTxn",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:countByTxnIds",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:attachCounts",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:getById",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:resolveFile",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/attachments.js",
+   "target": "function:src/lib/attachments.js:removeById",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:decorate",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:listTransactions",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:groupByDate",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:getTransaction",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:createTransaction",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:updateTransaction",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:softDelete",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:bulkDelete",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:markReimbursed",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:applyTags",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:saveSplits",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:splitsOf",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:syncDebts",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:rangeOf",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:summary",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:categoryBreakdown",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:subcategoryBreakdown",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:monthlyTrend",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:memberBreakdown",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:dailyBreakdown",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:accountOverview",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/txn.js",
+   "target": "function:src/lib/txn.js:netWorthTrend",
+   "type": "exports"
+  },
+  {
+   "source": "function:scripts/seed-demo.js:main",
+   "target": "function:src/lib/txn.js:createTransaction",
+   "type": "calls"
+  },
+  {
+   "source": "function:scripts/seed-demo.js:main",
+   "target": "function:src/lib/attachments.js:saveDataUrlImage",
+   "type": "calls"
+  },
+  {
+   "source": "function:scripts/seed-demo.js:main",
+   "target": "function:src/lib/attachments.js:linkImagesToTxns",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:groupByDate",
+   "target": "function:src/lib/attachments.js:attachCounts",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:createTransaction",
+   "target": "function:src/lib/txn.js:applyTags",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:createTransaction",
+   "target": "function:src/lib/txn.js:saveSplits",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:createTransaction",
+   "target": "function:src/lib/txn.js:syncDebts",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:updateTransaction",
+   "target": "function:src/lib/txn.js:applyTags",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:updateTransaction",
+   "target": "function:src/lib/txn.js:saveSplits",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:updateTransaction",
+   "target": "function:src/lib/txn.js:syncDebts",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:softDelete",
+   "target": "function:src/lib/txn.js:syncDebts",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:bulkDelete",
+   "target": "function:src/lib/txn.js:softDelete",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/txn.js:markReimbursed",
+   "target": "function:src/lib/txn.js:createTransaction",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:fmtAmount",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:money",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:signedMoney",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:compactMoney",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:parseAmountToCents",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:relDate",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:addDays",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:addMonths",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:monthEnd",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:daysInMonth",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:monthLabel",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:lastMonths",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:monthDays",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:esc",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:truncate",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:colorFor",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:initials",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:uid",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:toBase",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:auditTarget",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:auditDetail",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/routes/transactions.js:readForm",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:fmtAmount",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:money",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:signedMoney",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:compactMoney",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:parseAmountToCents",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:relDate",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:addDays",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:addMonths",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:monthEnd",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:daysInMonth",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:monthLabel",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:lastMonths",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:monthDays",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:esc",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:truncate",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:colorFor",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:initials",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:uid",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:toBase",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:auditTarget",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/util.js",
+   "target": "function:src/lib/util.js:auditDetail",
+   "type": "exports"
+  },
+  {
+   "source": "function:src/routes/transactions.js:readForm",
+   "target": "function:src/lib/util.js:parseAmountToCents",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:createTransaction",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:updateTransaction",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:getTransaction",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:listTransactions",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:groupByDate",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:softDelete",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:bulkDelete",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:markReimbursed",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:applyTags",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/txn.js:splitsOf",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/attachments.js:listByTxn",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "function:src/lib/attachments.js:linkImagesToTxns",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "function:src/lib/txn.js:accountOverview",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "function:src/lib/txn.js:createTransaction",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "function:src/lib/txn.js:listTransactions",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/accounts.js",
+   "target": "function:src/lib/txn.js:groupByDate",
+   "type": "calls"
+  },
+  {
+   "source": "file:server.js",
+   "target": "function:server.js:bootstrapAdmin",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/about.js",
+   "target": "function:src/lib/about.js:repoUrl",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/about.js",
+   "target": "function:src/lib/about.js:issuesUrl",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/about.js",
+   "target": "function:src/lib/about.js:repoUrl",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/about.js",
+   "target": "function:src/lib/about.js:issuesUrl",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:niceMax",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:barChart",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:lineChart",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:donutChart",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:donutLegend",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:rankBars",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:calendarHeatmap",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:progressBar",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:niceMax",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:barChart",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:lineChart",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:donutChart",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:donutLegend",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:rankBars",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:calendarHeatmap",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "function:src/lib/charts.js:progressBar",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "function:src/routes/about.js:dirSize",
+   "type": "contains"
+  },
+  {
+   "source": "file:test/verify-about.js",
+   "target": "function:test/verify-about.js:req",
+   "type": "contains"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/charts.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/about.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/accounts.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/admin.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/dashboard.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/openapi.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/planning.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/reports.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/subscriptions.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:server.js",
+   "target": "file:src/routes/transactions.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/charts.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "file:src/lib/about.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/auth.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/auth.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/auth.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-about.js",
+   "target": "file:src/lib/about.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "function:src/lib/about.js:issuesUrl",
+   "type": "calls"
+  },
+  {
+   "source": "file:test/verify-about.js",
+   "target": "function:src/lib/about.js:issuesUrl",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:hashPassword",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:verifyPassword",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "class:src/lib/auth.js:SqliteSessionStore",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:audit",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:tooManyAttempts",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:recordFailure",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:clearFailures",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:context",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:requireLogin",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:requireAdmin",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:membership",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:canWrite",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:canManage",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:requireLedgerWrite",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:requireLedgerManage",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:csrfToken",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:csrfProtect",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:notify",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:alreadyNotified",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:ledgerWriterIds",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:hashPassword",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:verifyPassword",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "class:src/lib/auth.js:SqliteSessionStore",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:audit",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:tooManyAttempts",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:recordFailure",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:clearFailures",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:context",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:requireLogin",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:requireAdmin",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:membership",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:canWrite",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:canManage",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:requireLedgerWrite",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:requireLedgerManage",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:csrfToken",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:csrfProtect",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:notify",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:alreadyNotified",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "function:src/lib/auth.js:ledgerWriterIds",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:src/lib/subscriptions.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:advanceDate",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:runDueRecurring",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:budgetUsed",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:budgetPeriodRange",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:budgetUsedInRange",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:checkBudgets",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:checkDebts",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:checkGoals",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:runSubscriptions",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:cleanup",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:runDaily",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:initScheduler",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:advanceDate",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:runDueRecurring",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:budgetUsed",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:budgetPeriodRange",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:budgetUsedInRange",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:checkBudgets",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:checkDebts",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:checkGoals",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:runSubscriptions",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:runDaily",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "function:src/lib/scheduler.js:initScheduler",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:cycleOf",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:cycleLabel",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:statusLabel",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:lastDayOf",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:advance",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:firstChargeDate",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:daysUntil",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:annualCents",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:monthlyCents",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:decorate",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:overview",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:chargesOf",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:charge",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:runDue",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:checkReminders",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:cycleOf",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:cycleLabel",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:statusLabel",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:lastDayOf",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:advance",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:firstChargeDate",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:daysUntil",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:annualCents",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:monthlyCents",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:decorate",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:overview",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:chargesOf",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:charge",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:runDue",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "function:src/lib/subscriptions.js:checkReminders",
+   "type": "exports"
+  },
+  {
+   "source": "function:src/lib/scheduler.js:runDueRecurring",
+   "target": "function:src/lib/auth.js:notify",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/scheduler.js:runSubscriptions",
+   "target": "function:src/lib/subscriptions.js:runDue",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/scheduler.js:checkBudgets",
+   "target": "function:src/lib/auth.js:notify",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/scheduler.js:checkDebts",
+   "target": "function:src/lib/auth.js:notify",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/scheduler.js:checkGoals",
+   "target": "function:src/lib/auth.js:notify",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/subscriptions.js:runDue",
+   "target": "function:src/lib/auth.js:notify",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/lib/subscriptions.js:checkReminders",
+   "target": "function:src/lib/auth.js:notify",
+   "type": "calls"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/ai.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/attachments.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/subscriptions.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/planning.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "file:src/lib/scheduler.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "file:src/lib/subscriptions.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "function:test/verify-subscriptions.js:addSub",
+   "type": "contains"
+  },
+  {
+   "source": "file:test/verify-subscriptions.js",
+   "target": "function:test/verify-subscriptions.js:req",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/lib/txn.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/db.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/lib/auth.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/lib/formdata.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/lib/subscriptions.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "file:src/lib/util.js",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:categoryTree",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:flatCategories",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:accounts",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:archivedAccounts",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:members",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:tags",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:txFormData",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:kindOf",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:categoryTree",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:flatCategories",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:accounts",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:archivedAccounts",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:members",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:tags",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:txFormData",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/lib/formdata.js",
+   "target": "function:src/lib/formdata.js:kindOf",
+   "type": "exports"
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "function:src/routes/reports.js:parseRange",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/reports.js",
+   "target": "function:src/routes/reports.js:GET /reports",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:readForm",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:GET /subscriptions",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:GET /subscriptions/:id/edit",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:POST /subscriptions",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/charge",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/skip",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/toggle",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/cancel",
+   "type": "contains"
+  },
+  {
+   "source": "file:src/routes/subscriptions.js",
+   "target": "function:src/routes/subscriptions.js:POST /subscriptions/:id/delete",
+   "type": "contains"
+  },
+  {
+   "source": "function:src/routes/subscriptions.js:GET /subscriptions",
+   "target": "function:src/lib/formdata.js:txFormData",
+   "type": "calls"
+  },
+  {
+   "source": "function:src/routes/subscriptions.js:GET /subscriptions/:id/edit",
+   "target": "function:src/lib/formdata.js:txFormData",
+   "type": "calls"
+  },
+  {
+   "source": "service:Dockerfile",
+   "target": "file:server.js",
+   "type": "deploys"
+  },
+  {
+   "source": "service:docker-compose.yml",
+   "target": "service:docker-compose.yml:homeledger",
+   "type": "contains"
+  },
+  {
+   "source": "service:docker-compose.yml:homeledger",
+   "target": "file:server.js",
+   "type": "deploys"
+  },
+  {
+   "source": "service:docker-compose.yml",
+   "target": "service:Dockerfile",
+   "type": "depends_on"
+  },
+  {
+   "source": "document:.claude/commands/opsx/explore.md",
+   "target": "document:.claude/commands/opsx/propose.md",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/commands/opsx/propose.md",
+   "target": "document:.claude/commands/opsx/apply.md",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/commands/opsx/propose.md",
+   "target": "document:.claude/commands/opsx/update.md",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/commands/opsx/update.md",
+   "target": "document:.claude/commands/opsx/apply.md",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/commands/opsx/apply.md",
+   "target": "document:.claude/commands/opsx/sync.md",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/commands/opsx/sync.md",
+   "target": "document:.claude/commands/opsx/archive.md",
+   "type": "related"
+  },
+  {
+   "source": "document:README.md",
+   "target": "file:server.js",
+   "type": "documents"
+  },
+  {
+   "source": "document:README.md",
+   "target": "file:test/run-all.js",
+   "type": "documents"
+  },
+  {
+   "source": "config:package.json",
+   "target": "file:server.js",
+   "type": "configures"
+  },
+  {
+   "source": "config:docker-compose-bak.yml",
+   "target": "file:server.js",
+   "type": "configures"
+  },
+  {
+   "source": "config:docker-compose-bak.yml",
+   "target": "service:Dockerfile",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:add_tree",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:build_app_tgz",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:write_text",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:build_fpk",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:main",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:add_tree",
+   "type": "exports"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:build_app_tgz",
+   "type": "exports"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:write_text",
+   "type": "exports"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:build_fpk",
+   "type": "exports"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "function:packaging/fpk/make-fpk.py:main",
+   "type": "exports"
+  },
+  {
+   "source": "file:packaging/fpk/cmd-main",
+   "target": "function:packaging/fpk/cmd-main:detect_base",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/cmd-main",
+   "target": "function:packaging/fpk/cmd-main:try_self_extract",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/cmd-main",
+   "target": "function:packaging/fpk/cmd-main:ensure_node",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/cmd-main",
+   "target": "function:packaging/fpk/cmd-main:log_env_diagnostics",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/cmd-main",
+   "target": "function:packaging/fpk/cmd-main:start_process",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/cmd-main",
+   "target": "function:packaging/fpk/cmd-main:stop_process",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/cmd-main",
+   "target": "function:packaging/fpk/cmd-main:status",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:toast",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:postJson",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initTxnForm",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initAiPage",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:renderThumbs",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:renderDrafts",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initImportPage",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:handle",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:renderPreview",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initSettings",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initBulk",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initLightbox",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initListActions",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initSidebar",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initUserMenu",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:bindAvatarPicker",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "function:public/js/app.js:initAvatarUpload",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/assistant.js",
+   "target": "function:public/js/assistant.js:renderThumbs",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/assistant.js",
+   "target": "function:public/js/assistant.js:resultHtml",
+   "type": "contains"
+  },
+  {
+   "source": "file:public/js/assistant.js",
+   "target": "function:public/js/assistant.js:send",
+   "type": "contains"
+  },
+  {
+   "source": "file:packaging/fpk/build-fpk.sh",
+   "target": "file:server.js",
+   "type": "deploys"
+  },
+  {
+   "source": "file:packaging/fpk/build-fpk.sh",
+   "target": "file:packaging/fpk/cmd-main",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "file:server.js",
+   "type": "deploys"
+  },
+  {
+   "source": "file:packaging/fpk/cmd-main",
+   "target": "file:server.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:packaging/fpk/make-fpk.py",
+   "target": "file:packaging/fpk/build-fpk.sh",
+   "type": "related"
+  },
+  {
+   "source": "document:packaging/fpk/README.md",
+   "target": "file:packaging/fpk/build-fpk.sh",
+   "type": "documents"
+  },
+  {
+   "source": "document:packaging/fpk/README.md",
+   "target": "file:packaging/fpk/make-fpk.py",
+   "type": "documents"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "file:src/routes/ai.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "file:src/routes/transactions.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:public/js/app.js",
+   "target": "file:src/routes/admin.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:public/js/assistant.js",
+   "target": "file:src/routes/ai.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/ai.ejs",
+   "target": "file:public/js/app.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/attachments.ejs",
+   "target": "file:public/js/app.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/accounts.ejs",
+   "target": "file:public/js/app.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/account-detail.ejs",
+   "target": "file:src/views/partials/txn-list.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/about.ejs",
+   "target": "file:src/lib/about.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "document:openclaw-skill/homeledger-bookkeeping/SKILL.md",
+   "target": "file:src/routes/openapi.js",
+   "type": "documents"
+  },
+  {
+   "source": "file:public/manifest.webmanifest",
+   "target": "file:src/views/layout.ejs",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/skills/openspec-explore/SKILL.md",
+   "target": "document:.claude/skills/openspec-propose/SKILL.md",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/skills/openspec-propose/SKILL.md",
+   "target": "document:.claude/skills/openspec-apply-change/SKILL.md",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/skills/openspec-update-change/SKILL.md",
+   "target": "document:.claude/skills/openspec-apply-change/SKILL.md",
+   "type": "related"
+  },
+  {
+   "source": "document:.claude/skills/openspec-apply-change/SKILL.md",
+   "target": "document:.claude/skills/openspec-archive-change/SKILL.md",
+   "type": "related"
+  },
+  {
+   "source": "file:src/views/budgets.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/calendar.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/categories.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/dashboard.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/debts.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/error.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/export.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/goals.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/import.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/ledgers.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/members.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/no-ledger.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/notifications.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/recurring.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/reports.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/search.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/settings.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/subscriptions.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/tags.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/login.ejs",
+   "target": "file:src/views/layout-blank.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/register.ejs",
+   "target": "file:src/views/layout-blank.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/setup.ejs",
+   "target": "file:src/views/layout-blank.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/dashboard.ejs",
+   "target": "file:src/views/partials/txn-list.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/search.ejs",
+   "target": "file:src/views/partials/txn-list.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/layout-blank.ejs",
+   "target": "file:src/views/layout.ejs",
+   "type": "related"
+  },
+  {
+   "source": "file:test/run-all.js",
+   "target": "function:test/run-all.js:healthz",
+   "type": "contains"
+  },
+  {
+   "source": "file:test/verify-ai-attachments.js",
+   "target": "function:test/verify-ai-attachments.js:req",
+   "type": "contains"
+  },
+  {
+   "source": "file:test/verify-ai-attachments.js",
+   "target": "function:test/verify-ai-attachments.js:uploadFiles",
+   "type": "contains"
+  },
+  {
+   "source": "file:test/verify-ai-chat.js",
+   "target": "function:test/verify-ai-chat.js:req",
+   "type": "contains"
+  },
+  {
+   "source": "file:test/verify-settings-admin.js",
+   "target": "function:test/verify-settings-admin.js:req",
+   "type": "contains"
+  },
+  {
+   "source": "file:test/run-all.js",
+   "target": "file:test/verify-settings-admin.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:test/run-all.js",
+   "target": "file:test/verify-ai-chat.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:test/run-all.js",
+   "target": "file:test/verify-ai-attachments.js",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/transactions.ejs",
+   "target": "file:src/views/partials/txn-list.ejs",
+   "type": "depends_on"
+  },
+  {
+   "source": "file:src/views/transactions.ejs",
+   "target": "file:src/routes/transactions.js",
+   "type": "related"
+  },
+  {
+   "source": "file:src/views/txn-form.ejs",
+   "target": "file:src/routes/transactions.js",
+   "type": "related"
+  },
+  {
+   "source": "file:server.js",
+   "target": "config:package.json",
+   "type": "imports"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "file:test/verify-ai-image.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "file:test/verify-ai-image.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/db.js",
+   "target": "file:test/verify-model-list.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/lib/ai.js",
+   "target": "file:test/verify-model-list.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:test/verify-ai-chat.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/routes/ai.js",
+   "target": "file:test/verify-ai-attachments.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/routes/dashboard.js",
+   "target": "file:test/verify-ai-chat.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:test/verify-ai-attachments.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/routes/transactions.js",
+   "target": "file:test/verify-ai-chat.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/routes/admin.js",
+   "target": "file:test/verify-settings-admin.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/views/txn-form.ejs",
+   "target": "file:test/verify-ai-attachments.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/lib/about.js",
+   "target": "file:test/verify-about.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/routes/about.js",
+   "target": "file:test/verify-about.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/lib/auth.js",
+   "target": "file:test/verify-subscriptions.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/lib/scheduler.js",
+   "target": "file:test/verify-subscriptions.js",
+   "type": "tested_by"
+  },
+  {
+   "source": "file:src/lib/subscriptions.js",
+   "target": "file:test/verify-subscriptions.js",
+   "type": "tested_by"
+  }
+ ]
+}

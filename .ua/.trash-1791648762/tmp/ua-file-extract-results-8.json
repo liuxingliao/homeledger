@@ -1,0 +1,227 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 3,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 3
+    }
+  },
+  "results": [
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 373,
+      "nonEmptyLines": 274,
+      "sections": [
+        {
+          "heading": "📒 家账簿 HomeLedger",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "一、快速开始：Docker / Compose 部署（推荐）",
+          "level": 2,
+          "line": 16
+        },
+        {
+          "heading": "方式 A：Docker Compose（复制粘贴即可安装）",
+          "level": 3,
+          "line": 18
+        },
+        {
+          "heading": "方式 B：纯 Docker（不想用 Compose）",
+          "level": 3,
+          "line": 56
+        },
+        {
+          "heading": "方式 C：从源码构建（不想用预构建镜像）",
+          "level": 3,
+          "line": 64
+        },
+        {
+          "heading": "首次启动",
+          "level": 3,
+          "line": 71
+        },
+        {
+          "heading": "其他部署方式",
+          "level": 3,
+          "line": 88
+        },
+        {
+          "heading": "二、功能一览",
+          "level": 2,
+          "line": 100
+        },
+        {
+          "heading": "记账内核",
+          "level": 3,
+          "line": 102
+        },
+        {
+          "heading": "AI 记账",
+          "level": 3,
+          "line": 113
+        },
+        {
+          "heading": "家庭多人共享",
+          "level": 3,
+          "line": 125
+        },
+        {
+          "heading": "规划与提醒",
+          "level": 3,
+          "line": 131
+        },
+        {
+          "heading": "报表与图表",
+          "level": 3,
+          "line": 146
+        },
+        {
+          "heading": "数据进出",
+          "level": 3,
+          "line": 153
+        },
+        {
+          "heading": "其他",
+          "level": 3,
+          "line": 162
+        },
+        {
+          "heading": "三、配置 AI 识别",
+          "level": 2,
+          "line": 179
+        },
+        {
+          "heading": "四、开放 API：小龙虾（OpenClaw）自动记账",
+          "level": 2,
+          "line": 220
+        },
+        {
+          "heading": "五、飞牛 fnOS 应用包（.fpk）",
+          "level": 2,
+          "line": 258
+        },
+        {
+          "heading": "六、备份与迁移",
+          "level": 2,
+          "line": 271
+        },
+        {
+          "heading": "七、安全说明",
+          "level": 2,
+          "line": 288
+        },
+        {
+          "heading": "八、目录结构",
+          "level": 2,
+          "line": 299
+        },
+        {
+          "heading": "回归测试",
+          "level": 3,
+          "line": 329
+        },
+        {
+          "heading": "九、常见问题",
+          "level": 2,
+          "line": 342
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 23
+      }
+    },
+    {
+      "path": "docker-compose-bak.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 34,
+      "nonEmptyLines": 33,
+      "sections": [
+        {
+          "heading": "services",
+          "level": 1,
+          "line": 1
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 19,
+      "nonEmptyLines": 19,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "version",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "private",
+          "level": 1,
+          "line": 4
+        },
+        {
+          "heading": "description",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "main",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "scripts",
+          "level": 1,
+          "line": 7
+        },
+        {
+          "heading": "engines",
+          "level": 1,
+          "line": 11
+        },
+        {
+          "heading": "dependencies",
+          "level": 1,
+          "line": 14
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    }
+  ]
+}

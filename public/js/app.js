@@ -383,6 +383,20 @@
         '<div class="stat"><div class="label">时间范围</div><div class="value tiny" style="font-size:13px">' + esc(res.stat.minDate || '—') + '<br>' + esc(res.stat.maxDate || '—') + '</div></div>' +
       '</div>';
       if (res.skipped) html += '<div class="notice mb12">已自动跳过 ' + res.skipped + ' 条（交易关闭 / 已退款 / 失败）不参与导入的记录。</div>';
+      if (res.source === 'suishouji' && res.sheetStats) {
+        const sheetChips = Object.entries(res.sheetStats).map(([name, s]) =>
+          '<span class="chip">' + esc(name) + ' ' + s.imported + (s.failed ? '<b class="amount expense">（失败 ' + s.failed + '）</b>' : '') + '</span>').join(' ');
+        html += '<div class="row wrap mb12" style="gap:6px">' + sheetChips + '</div>';
+      }
+      if (res.failedRows && res.failedRows.length) {
+        html += '<div class="notice mb12"><b>有 ' + res.failedRows.length + ' 行解析失败，不会导入：</b><div class="tiny mt8">' +
+          res.failedRows.slice(0, 30).map((f) => esc('[' + f.sheet + ' 第' + f.row_no + '行] ' + f.reason)).join('<br>') +
+          (res.failedRows.length > 30 ? '<br>…其余 ' + (res.failedRows.length - 30) + ' 行见导入历史' : '') + '</div></div>';
+      }
+      if (res.source === 'suishouji') {
+        html += '<div class="notice info mb12"><b>随手记账本导入提示：</b>随手记导出文件不含账户<b>期初余额</b>，导入后账户余额由流水推算，' +
+          '可能与随手记 App 显示不一致。可在「账户」页对账户做一次「负债变更」把余额校准到实际值；负债账户会由「负债变更」记录自动汇总。</div>';
+      }
       html += '<div class="row mb12"><label class="check"><input type="checkbox" id="imp-auto-acc" checked> 自动创建缺失的支付账户</label>' +
         '<span class="spacer"></span>' +
         '<button class="btn btn-primary" id="imp-commit">确认导入 ' + res.count + ' 条</button></div>';
@@ -441,8 +455,9 @@
           include_neutral: !!($('#imp-include-neutral') && $('#imp-include-neutral').checked),
         });
         if (r.ok) {
-          toast('成功导入 ' + r.imported + ' 条，跳过重复 ' + r.skipped + ' 条', 'success');
-          setTimeout(() => { window.location.href = '/transactions'; }, 900);
+          const failNote = (r.failedRows && r.failedRows.length) ? '，失败 ' + r.failedRows.length + ' 条' : '';
+          toast('成功导入 ' + r.imported + ' 条，跳过重复 ' + r.skipped + ' 条' + failNote, r.failedRows && r.failedRows.length ? 'warn' : 'success');
+          setTimeout(() => { window.location.href = '/transactions'; }, 1200);
         } else {
           toast('导入失败：' + r.error, 'error');
           btn.disabled = false; btn.textContent = '重试导入';

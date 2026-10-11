@@ -1,0 +1,19 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {"path": "src/lib/auth.js", "language": "javascript", "sizeLines": 272, "fileCategory": "code"},
+    {"path": "src/lib/scheduler.js", "language": "javascript", "sizeLines": 279, "fileCategory": "code"},
+    {"path": "src/lib/subscriptions.js", "language": "javascript", "sizeLines": 341, "fileCategory": "code"},
+    {"path": "src/routes/dashboard.js", "language": "javascript", "sizeLines": 176, "fileCategory": "code"},
+    {"path": "src/routes/planning.js", "language": "javascript", "sizeLines": 395, "fileCategory": "code"},
+    {"path": "test/verify-subscriptions.js", "language": "javascript", "sizeLines": 349, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "src/lib/auth.js": ["src/db.js"],
+    "src/lib/scheduler.js": ["src/db.js", "src/lib/auth.js", "src/lib/subscriptions.js", "src/lib/util.js"],
+    "src/lib/subscriptions.js": ["src/db.js", "src/lib/auth.js", "src/lib/util.js"],
+    "src/routes/dashboard.js": ["src/db.js", "src/lib/ai.js", "src/lib/attachments.js", "src/lib/auth.js", "src/lib/formdata.js", "src/lib/scheduler.js", "src/lib/subscriptions.js", "src/lib/txn.js", "src/lib/util.js"],
+    "src/routes/planning.js": ["src/db.js", "src/lib/auth.js", "src/lib/formdata.js", "src/lib/scheduler.js", "src/lib/txn.js", "src/lib/util.js"],
+    "test/verify-subscriptions.js": ["src/db.js", "src/lib/auth.js", "src/lib/scheduler.js", "src/lib/subscriptions.js"]
+  }
+}

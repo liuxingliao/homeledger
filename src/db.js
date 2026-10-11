@@ -206,6 +206,26 @@ CREATE TABLE IF NOT EXISTS transaction_tags (
   PRIMARY KEY (transaction_id, tag_id)
 );
 
+-- 自由成员名单（随手记式“成员”，无用户账号，按账本隔离）
+CREATE TABLE IF NOT EXISTS ledger_people (
+  id         INTEGER PRIMARY KEY AUTOINCREMENT,
+  ledger_id  INTEGER NOT NULL,
+  name       TEXT NOT NULL,
+  color      TEXT NOT NULL DEFAULT '#4f7cff',
+  sort_order INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL,
+  UNIQUE(ledger_id, name)
+);
+CREATE INDEX IF NOT EXISTS idx_lp_ledger ON ledger_people(ledger_id);
+
+-- 交易的参与成员（多对多）
+CREATE TABLE IF NOT EXISTS transaction_participants (
+  transaction_id INTEGER NOT NULL,
+  person_id      INTEGER NOT NULL,
+  PRIMARY KEY (transaction_id, person_id)
+);
+CREATE INDEX IF NOT EXISTS idx_tp_person ON transaction_participants(person_id);
+
 CREATE TABLE IF NOT EXISTS splits (
   id           INTEGER PRIMARY KEY AUTOINCREMENT,
   group_id     TEXT NOT NULL,
@@ -441,17 +461,17 @@ const TXN_TYPES = [
   { key: 'expense', label: '支出', icon: '💸', color: '#f5222d', flow: 'out', group: '日常' },
   { key: 'income', label: '收入', icon: '💰', color: '#52c41a', flow: 'in', group: '日常' },
   { key: 'transfer', label: '转账', icon: '🔄', color: '#1677ff', flow: 'move', group: '日常' },
-  { key: 'lend', label: '借出', icon: '📤', color: '#fa8c16', flow: 'out', group: '借贷' },
+  { key: 'lend', label: '代付', icon: '📤', color: '#fa8c16', flow: 'out', group: '借贷' },
   { key: 'borrow', label: '借入', icon: '📥', color: '#fa8c16', flow: 'in', group: '借贷' },
-  { key: 'repay_receive', label: '收回借款', icon: '↩️', color: '#13c2c2', flow: 'in', group: '借贷' },
-  { key: 'repay_pay', label: '偿还借款', icon: '↪️', color: '#13c2c2', flow: 'out', group: '借贷' },
+  { key: 'repay_receive', label: '收债', icon: '↩️', color: '#13c2c2', flow: 'in', group: '借贷' },
+  { key: 'repay_pay', label: '还款', icon: '↪️', color: '#13c2c2', flow: 'out', group: '借贷' },
   { key: 'reimburse', label: '报销入账', icon: '🧾', color: '#722ed1', flow: 'in', group: '报销' },
   { key: 'refund', label: '退款', icon: '↩️', color: '#52c41a', flow: 'in', group: '日常' },
   { key: 'fee', label: '手续费', icon: '🏷️', color: '#8c8c8c', flow: 'out', group: '金融' },
   { key: 'interest', label: '利息收入', icon: '🏦', color: '#52c41a', flow: 'in', group: '金融' },
   { key: 'invest_buy', label: '投资买入', icon: '📉', color: '#1677ff', flow: 'move', group: '投资' },
   { key: 'invest_sell', label: '投资卖出', icon: '📈', color: '#fa541c', flow: 'move', group: '投资' },
-  { key: 'adjust', label: '余额调整', icon: '⚖️', color: '#8c8c8c', flow: 'adjust', group: '其他' },
+  { key: 'adjust', label: '负债变更', icon: '⚖️', color: '#8c8c8c', flow: 'adjust', group: '其他' },
 ];
 const TXN_TYPE_MAP = Object.fromEntries(TXN_TYPES.map((t) => [t.key, t]));
 /** 记一笔时最常见的四项，其余收在“更多类型”里 */

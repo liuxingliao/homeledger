@@ -1,0 +1,19 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {"path": "scripts/seed-demo.js", "language": "javascript", "sizeLines": 131, "fileCategory": "code"},
+    {"path": "src/lib/attachments.js", "language": "javascript", "sizeLines": 186, "fileCategory": "code"},
+    {"path": "src/lib/txn.js", "language": "javascript", "sizeLines": 515, "fileCategory": "code"},
+    {"path": "src/lib/util.js", "language": "javascript", "sizeLines": 284, "fileCategory": "code"},
+    {"path": "src/routes/accounts.js", "language": "javascript", "sizeLines": 296, "fileCategory": "code"},
+    {"path": "src/routes/transactions.js", "language": "javascript", "sizeLines": 227, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "scripts/seed-demo.js": ["src/db.js", "src/lib/attachments.js", "src/lib/auth.js", "src/lib/txn.js", "src/lib/util.js"],
+    "src/lib/attachments.js": ["src/db.js", "src/lib/util.js"],
+    "src/lib/txn.js": ["src/db.js", "src/lib/attachments.js", "src/lib/util.js"],
+    "src/lib/util.js": [],
+    "src/routes/accounts.js": ["src/db.js", "src/lib/auth.js", "src/lib/formdata.js", "src/lib/txn.js", "src/lib/util.js"],
+    "src/routes/transactions.js": ["src/db.js", "src/lib/attachments.js", "src/lib/auth.js", "src/lib/formdata.js", "src/lib/txn.js", "src/lib/util.js"]
+  }
+}

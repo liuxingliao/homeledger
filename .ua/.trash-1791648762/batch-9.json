@@ -1,0 +1,619 @@
+{
+  "nodes": [
+    {
+      "id": "document:.claude/skills/openspec-apply-change/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": ".claude/skills/openspec-apply-change/SKILL.md",
+      "summary": "OpenSpec 工作流的「实施变更」技能文档：定义当用户要求开始或继续实施某个 change 时，代理如何按 tasks.md 逐项落地实现、验证并更新任务状态。作为工具化流程文档存在，不参与应用运行时。",
+      "tags": ["documentation", "openspec", "workflow", "skill"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:.claude/skills/openspec-archive-change/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": ".claude/skills/openspec-archive-change/SKILL.md",
+      "summary": "OpenSpec 工作流的「归档变更」技能文档：定义实施完成后如何校验任务全部勾选、同步规格并归档 change 到 openspec/changes/archive 目录。",
+      "tags": ["documentation", "openspec", "workflow", "skill"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:.claude/skills/openspec-explore/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": ".claude/skills/openspec-explore/SKILL.md",
+      "summary": "OpenSpec「探索模式」技能文档：作为思考伙伴引导用户梳理想法、调查问题与澄清需求，覆盖探索姿态、上下文检查、不同入口处理、结束探索与护栏等 11 个章节。",
+      "tags": ["documentation", "openspec", "brainstorming", "skill"],
+      "complexity": "complex"
+    },
+    {
+      "id": "document:.claude/skills/openspec-propose/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": ".claude/skills/openspec-propose/SKILL.md",
+      "summary": "OpenSpec「提案变更」技能文档：一步生成完整 change 工件（proposal、design、specs delta、tasks），是整个 OpenSpec 流程的入口技能。",
+      "tags": ["documentation", "openspec", "workflow", "skill"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:.claude/skills/openspec-sync-specs/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": ".claude/skills/openspec-sync-specs/SKILL.md",
+      "summary": "OpenSpec「同步规格」技能文档：把 change 中的 delta 规格合并回 openspec/specs 主规格目录，而不归档 change。",
+      "tags": ["documentation", "openspec", "specs", "skill"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "document:.claude/skills/openspec-update-change/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": ".claude/skills/openspec-update-change/SKILL.md",
+      "summary": "OpenSpec「更新变更」技能文档：修订已有 change 的规划工件并保持各工件间一致，仅改文档不碰代码。",
+      "tags": ["documentation", "openspec", "workflow", "skill"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:.ua/config.json",
+      "type": "config",
+      "name": "config.json",
+      "filePath": ".ua/config.json",
+      "summary": "Understand-Anything 知识图谱分析工具自身的最小配置，仅设置 outputLanguage 为 zh（中文输出）。非应用代码。",
+      "tags": ["configuration", "tooling", "analysis"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:openclaw-skill/homeledger-bookkeeping/SKILL.md",
+      "type": "document",
+      "name": "SKILL.md",
+      "filePath": "openclaw-skill/homeledger-bookkeeping/SKILL.md",
+      "summary": "面向 OpenClaw/AI 助手的家账簿自动记账技能：通过环境变量 HOMELEDGER_URL 与 HOMELEDGER_TOKEN 调用开放 API，把账单截图（转 dataURL）或口述消费自动记入账簿并按固定格式汇报结果。",
+      "tags": ["documentation", "skill", "ai-agent", "开放api", "自动记账"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:openspec/changes/archive/.gitkeep",
+      "type": "file",
+      "name": ".gitkeep",
+      "filePath": "openspec/changes/archive/.gitkeep",
+      "summary": "OpenSpec 已归档变更目录的 Git 占位文件，保证空目录可被版本库跟踪，无实际内容。",
+      "tags": ["placeholder", "git", "openspec"],
+      "complexity": "simple"
+    },
+    {
+      "id": "config:openspec/config.yaml",
+      "type": "config",
+      "name": "config.yaml",
+      "filePath": "openspec/config.yaml",
+      "summary": "OpenSpec 工作流配置：声明 spec-driven 模式，并留有项目上下文、per-artifact 规则与 apply/archive 操作指引的注释模板（当前均为示例注释，未启用具体约束）。",
+      "tags": ["configuration", "openspec", "yaml", "workflow"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:openspec/specs/.gitkeep",
+      "type": "file",
+      "name": ".gitkeep",
+      "filePath": "openspec/specs/.gitkeep",
+      "summary": "OpenSpec 主规格目录的 Git 占位文件，保证空目录可被版本库跟踪，无实际内容。",
+      "tags": ["placeholder", "git", "openspec"],
+      "complexity": "simple"
+    },
+    {
+      "id": "document:packaging/fpk/README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "packaging/fpk/README.md",
+      "summary": "飞牛 fnOS 应用打包（.fpk）说明文档：覆盖前置条件、fnpack 与纯 Python 两条打包路径、安装方式、包内结构、数据持久化与升级、已知限制及桌面打开方式（url vs iframe）。",
+      "tags": ["documentation", "packaging", "fnos", "deployment"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:packaging/fpk/build-fpk.sh",
+      "type": "file",
+      "name": "build-fpk.sh",
+      "filePath": "packaging/fpk/build-fpk.sh",
+      "summary": "基于 fnpack 官方工具的 .fpk 打包主脚本：下载 Node 22 运行时、复制 server.js/src/public/node_modules、生成 manifest 与权限配置、拷贝 cmd-main，并修复 Windows 打包丢失的 tar 可执行位，最终产出 dist/homeledger-<版本>.fpk。",
+      "tags": ["build-system", "packaging", "shell", "fnos", "deployment"],
+      "complexity": "complex",
+      "languageNotes": "使用 set -euo pipefail 严格模式，并在打包后二次解包重设权限位，解决 Windows 上 fnpack 产物 mode=666 导致 node 无法执行的问题。"
+    },
+    {
+      "id": "file:packaging/fpk/cmd-main",
+      "type": "file",
+      "name": "cmd-main",
+      "filePath": "packaging/fpk/cmd-main",
+      "summary": "fnOS 安装包的应用生命周期控制脚本（start/stop/status）：多候选目录探测应用、app.tgz 自解压兜底、node 运行时权限自愈，以 5111 端口后台启动 server.js 并轮询 /healthz 健康检查。",
+      "tags": ["service", "shell", "lifecycle", "health-check", "fnos"],
+      "complexity": "complex",
+      "languageNotes": "按 fnOS cmd 接口约定实现 start/stop/status 三个子命令，进程管理基于 PID 文件 + kill -0 探测。"
+    },
+    {
+      "id": "file:packaging/fpk/make-fpk.py",
+      "type": "file",
+      "name": "make-fpk.py",
+      "filePath": "packaging/fpk/make-fpk.py",
+      "summary": "不依赖 fnpack 的纯 Python 备用打包器：用 tarfile 模块直接构造 app.tgz 与外层 .fpk 结构，复制应用源码、生成 manifest、回调 stub 与配置，并统一设置 Unix 权限位。",
+      "tags": ["build-system", "packaging", "python", "fnos"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:public/css/app.css",
+      "type": "file",
+      "name": "app.css",
+      "filePath": "public/css/app.css",
+      "summary": "全站唯一样式表（756 行）：通过 CSS 变量定义主题色与明暗外观，涵盖卡片、网格、按钮、表单、侧边栏、Toast、灯箱、统计卡、画廊等全部 UI 组件样式。",
+      "tags": ["styles", "css", "ui", "主题"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:public/js/app.js",
+      "type": "file",
+      "name": "app.js",
+      "filePath": "public/js/app.js",
+      "summary": "浏览器端主脚本（IIFE 封装，无依赖原生 JS）：记账表单类型切换与拆分均摊、AI 截图识别页、账单导入预览、设置页 AI 连通性测试与备份恢复、批量操作、确认弹窗、灯箱、侧边栏、用户菜单与头像上传等全站交互。",
+      "tags": ["frontend", "vanilla-js", "event-handler", "交互", "entry-point"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:public/js/assistant.js",
+      "type": "file",
+      "name": "assistant.js",
+      "filePath": "public/js/assistant.js",
+      "summary": "悬浮 AI 记账助手聊天面板脚本：管理 FAB 按钮开合、拖拽/粘贴图片缩略图、气泡消息与 typing 状态，把文字和截图发送到 AI 聊天接口并渲染入库结果或错误提示。",
+      "tags": ["frontend", "vanilla-js", "ai", "chat", "event-handler"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:public/manifest.webmanifest",
+      "type": "file",
+      "name": "manifest.webmanifest",
+      "filePath": "public/manifest.webmanifest",
+      "summary": "PWA 清单文件：声明应用名「家账簿」、standalone 显示模式、主题色 #4f7cff 与内嵌 SVG 图标，使应用可安装到桌面/主屏幕。",
+      "tags": ["pwa", "configuration", "manifest"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:scripts/reset-password.js",
+      "type": "file",
+      "name": "reset-password.js",
+      "filePath": "scripts/reset-password.js",
+      "summary": "命令行运维脚本：以与主程序一致的 scrypt 参数（salt/N/r/p/keylen）哈希新密码，直接更新 SQLite 中指定用户口令，用于忘记密码时的恢复。",
+      "tags": ["utility", "运维", "security", "cli"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/views/about.ejs",
+      "type": "file",
+      "name": "about.ejs",
+      "filePath": "src/views/about.ejs",
+      "summary": "「关于」页 EJS 模板：渲染品牌信息与版本徽章、记录数/账本数/陪伴天数/数据体积统计卡、功能亮点网格、GitHub 提需求与 Bug 反馈入口、版本时间线、技术栈芯片及 Node 运行环境明细。",
+      "tags": ["component", "ejs", "template", "视图"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/account-detail.ejs",
+      "type": "file",
+      "name": "account-detail.ejs",
+      "filePath": "src/views/account-detail.ejs",
+      "summary": "账户详情页 EJS 模板：展示当前余额、初始余额、信用卡额度或本月笔数统计卡，提供日期范围筛选表单，并复用 partials/txn-list 渲染该账户的流水列表。",
+      "tags": ["component", "ejs", "template", "视图"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/views/accounts.ejs",
+      "type": "file",
+      "name": "accounts.ejs",
+      "filePath": "src/views/accounts.ejs",
+      "summary": "账户总览页 EJS 模板：净资产/总资产/总负债统计，按账户类型分组展示账户卡（含内联编辑表单、余额调整表单、停用/删除操作），以及已停用账户恢复区和新建账户表单。",
+      "tags": ["component", "ejs", "template", "表单", "视图"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/views/ai.ejs",
+      "type": "file",
+      "name": "ai.ejs",
+      "filePath": "src/views/ai.ejs",
+      "summary": "AI 记账页 EJS 模板：注入 window.__AI_FORM__（分类与账户数据）供前端脚本消费，包含截图拖拽上传区、识别结果容器、模型配置状态提示、文字快速记账输入与识别历史画廊。",
+      "tags": ["component", "ejs", "template", "ai", "视图"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/attachments.ejs",
+      "type": "file",
+      "name": "attachments.ejs",
+      "filePath": "src/views/attachments.ejs",
+      "summary": "截图附件库 EJS 模板：分页画廊展示已上传的账单截图（金额/商家/大小/日期），支持跳转关联记账记录与删除附件，空态引导去 AI 记账页上传。",
+      "tags": ["component", "ejs", "template", "视图"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packaging/fpk/make-fpk.py:add_tree",
+      "type": "function",
+      "name": "add_tree",
+      "filePath": "packaging/fpk/make-fpk.py",
+      "lineRange": [20, 43],
+      "summary": "把目录树以固定 Unix 权限递归写入 tar 归档：规范化路径分隔符、跳过 .DS_Store/Thumbs.db 等杂项文件。",
+      "tags": ["utility", "tar", "packaging"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packaging/fpk/make-fpk.py:build_app_tgz",
+      "type": "function",
+      "name": "build_app_tgz",
+      "filePath": "packaging/fpk/make-fpk.py",
+      "lineRange": [46, 52],
+      "summary": "把组装好的应用目录打包为 app.tgz；目录缺失或不存在时直接报错退出。",
+      "tags": ["packaging", "tar"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packaging/fpk/make-fpk.py:write_text",
+      "type": "function",
+      "name": "write_text",
+      "filePath": "packaging/fpk/make-fpk.py",
+      "lineRange": [105, 109],
+      "summary": "小工具函数：按需创建父目录后以 UTF-8 写入文本文件。",
+      "tags": ["utility", "io"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packaging/fpk/make-fpk.py:build_fpk",
+      "type": "function",
+      "name": "build_fpk",
+      "filePath": "packaging/fpk/make-fpk.py",
+      "lineRange": [112, 134],
+      "summary": "用 tarfile 遍历外层包目录（app.tgz、cmd、config、manifest、wizard 等）并组装成最终 .fpk 归档文件。",
+      "tags": ["packaging", "tar"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packaging/fpk/make-fpk.py:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "packaging/fpk/make-fpk.py",
+      "lineRange": [137, 209],
+      "summary": "打包主流程：准备临时目录、复制 server.js/src/public/node_modules 与 cmd-main、读取 package.json 版本号、生成 manifest 与回调 stub 文件，再依次调用 build_app_tgz 与 build_fpk 输出 .fpk 并打印体积。",
+      "tags": ["entry-point", "packaging", "orchestration"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:packaging/fpk/cmd-main:detect_base",
+      "type": "function",
+      "name": "detect_base",
+      "filePath": "packaging/fpk/cmd-main",
+      "lineRange": [16, 27],
+      "summary": "在多个候选目录（APPDEST、/var/apps 等）中探测包含 homeledger/server.js 的应用根目录并返回首个命中路径。",
+      "tags": ["utility", "探测", "shell"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packaging/fpk/cmd-main:try_self_extract",
+      "type": "function",
+      "name": "try_self_extract",
+      "filePath": "packaging/fpk/cmd-main",
+      "lineRange": [31, 46],
+      "summary": "兜底逻辑：当 app.tgz 未被安装器解压或比解压成功标记文件更新时，自行清空并解压到 PKGVAR，成功后写入 marker 文件。",
+      "tags": ["shell", "self-healing", "tar"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packaging/fpk/cmd-main:ensure_node",
+      "type": "function",
+      "name": "ensure_node",
+      "filePath": "packaging/fpk/cmd-main",
+      "lineRange": [51, 77],
+      "summary": "保证包内 node 运行时可用：chmod 自愈失败且文件 owner 非当前用户时，拷贝到 PKGVAR 再赋权，最后回退使用旧副本。",
+      "tags": ["shell", "self-healing", "runtime"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:packaging/fpk/cmd-main:log_env_diagnostics",
+      "type": "function",
+      "name": "log_env_diagnostics",
+      "filePath": "packaging/fpk/cmd-main",
+      "lineRange": [80, 95],
+      "summary": "启动失败时把关键环境变量、CPU 架构与各候选目录的 ls 结果写入日志，便于远程排查安装问题。",
+      "tags": ["logging", "diagnostics", "shell"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:packaging/fpk/cmd-main:start_process",
+      "type": "function",
+      "name": "start_process",
+      "filePath": "packaging/fpk/cmd-main",
+      "lineRange": [106, 159],
+      "summary": "启动总控：探测应用目录（必要时自解压）、定位可用 node、以 PORT=5111/HOST=0.0.0.0/DATA_DIR=PKGVAR/data 环境变量后台启动 server.js，写入 PID 文件并轮询 /healthz 最多 15 秒确认就绪。",
+      "tags": ["service", "lifecycle", "health-check", "shell"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:packaging/fpk/cmd-main:stop_process",
+      "type": "function",
+      "name": "stop_process",
+      "filePath": "packaging/fpk/cmd-main",
+      "lineRange": [161, 196],
+      "summary": "按 PID 文件向进程发送 TERM 信号并等待最多 10 秒，仍未退出则升级为 KILL，最后清理 PID 文件。",
+      "tags": ["service", "lifecycle", "shell"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:packaging/fpk/cmd-main:status",
+      "type": "function",
+      "name": "status",
+      "filePath": "packaging/fpk/cmd-main",
+      "lineRange": [207, 219],
+      "summary": "检查 PID 文件对应进程是否存活；进程已不存在时清理失效的 PID 文件并返回未运行状态。",
+      "tags": ["service", "lifecycle", "shell"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:toast",
+      "type": "function",
+      "name": "toast",
+      "filePath": "public/js/app.js",
+      "lineRange": [15, 29],
+      "summary": "在页面右上角弹出自动消失的消息提示条，支持成功/错误等类型样式。",
+      "tags": ["utility", "ui", "event-handler"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:postJson",
+      "type": "function",
+      "name": "postJson",
+      "filePath": "public/js/app.js",
+      "lineRange": [42, 53],
+      "summary": "封装 fetch 的 JSON POST 工具：统一携带请求头与 JSON 序列化，非 2xx 时抛出带服务端错误信息的异常，是所有前端 API 调用的公共通道。",
+      "tags": ["utility", "api-client", "fetch"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:initTxnForm",
+      "type": "function",
+      "name": "initTxnForm",
+      "filePath": "public/js/app.js",
+      "lineRange": [55, 149],
+      "summary": "记账表单核心交互：支出/收入/转账类型切换（控制字段与分类显示）、两级分类选择、拆分行（多人分摊）的增删与金额均摊计算。",
+      "tags": ["event-handler", "表单", "frontend"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:public/js/app.js:initAiPage",
+      "type": "function",
+      "name": "initAiPage",
+      "filePath": "public/js/app.js",
+      "lineRange": [151, 350],
+      "summary": "AI 截图识别页主逻辑：拖拽/点击/Ctrl+V 粘贴上传图片、缩略图管理、调用识别接口、渲染可编辑草稿卡并批量入库，另含文字快速记账与单笔跳转预填。",
+      "tags": ["event-handler", "ai", "上传", "frontend"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:public/js/app.js:renderThumbs",
+      "type": "function",
+      "name": "renderThumbs",
+      "filePath": "public/js/app.js",
+      "lineRange": [160, 170],
+      "summary": "渲染 AI 页已选截图的缩略图列表，并绑定单张删除按钮后刷新识别按钮可用状态。",
+      "tags": ["ui", "rendering", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:renderDrafts",
+      "type": "function",
+      "name": "renderDrafts",
+      "filePath": "public/js/app.js",
+      "lineRange": [224, 351],
+      "summary": "把 AI 识别结果渲染成可编辑草稿卡片（类型/金额/日期/分类/账户下拉），处理类型联动、删除草稿与一键批量入库提交。",
+      "tags": ["rendering", "表单", "ai"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:public/js/app.js:initImportPage",
+      "type": "function",
+      "name": "initImportPage",
+      "filePath": "public/js/app.js",
+      "lineRange": [353, 459],
+      "summary": "账单文件导入页逻辑：拖拽/点击上传支付宝或微信账单文件、调用解析接口渲染预览、中性条目归属选择与最终提交入库。",
+      "tags": ["event-handler", "import", "frontend"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:public/js/app.js:handle",
+      "type": "function",
+      "name": "handle",
+      "filePath": "public/js/app.js",
+      "lineRange": [360, 373],
+      "summary": "导入文件处理：校验文件、读取为 dataURL 并调用解析接口，成功后渲染预览，失败时弹 Toast 提示。",
+      "tags": ["utility", "import", "上传"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:renderPreview",
+      "type": "function",
+      "name": "renderPreview",
+      "filePath": "public/js/app.js",
+      "lineRange": [375, 458],
+      "summary": "渲染账单导入预览：解析出的账户信息、中性（非收支）条目的归属下拉选择、样例明细表格与提交入库按钮。",
+      "tags": ["rendering", "import", "frontend"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:public/js/app.js:initSettings",
+      "type": "function",
+      "name": "initSettings",
+      "filePath": "public/js/app.js",
+      "lineRange": [461, 553],
+      "summary": "设置页逻辑：AI 接口连通性测试、拉取模型列表填充下拉框并记忆手动输入、以及备份文件恢复的确认与上传刷新。",
+      "tags": ["event-handler", "设置", "api-client"],
+      "complexity": "complex"
+    },
+    {
+      "id": "function:public/js/app.js:initBulk",
+      "type": "function",
+      "name": "initBulk",
+      "filePath": "public/js/app.js",
+      "lineRange": [555, 576],
+      "summary": "列表页批量选择：主复选框全选/反选联动各行，并实时更新批量操作栏的显示与已选计数。",
+      "tags": ["event-handler", "ui", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:initLightbox",
+      "type": "function",
+      "name": "initLightbox",
+      "filePath": "public/js/app.js",
+      "lineRange": [587, 601],
+      "summary": "为带 data-zoom 属性的图片绑定点击放大：动态创建灯箱遮罩层，点击任意处关闭。",
+      "tags": ["ui", "event-handler", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:initListActions",
+      "type": "function",
+      "name": "initListActions",
+      "filePath": "public/js/app.js",
+      "lineRange": [603, 617],
+      "summary": "列表页删除按钮逻辑：确认后调用删除接口，成功则从 DOM 移除对应行，失败弹 Toast 提示。",
+      "tags": ["event-handler", "crud", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:initSidebar",
+      "type": "function",
+      "name": "initSidebar",
+      "filePath": "public/js/app.js",
+      "lineRange": [629, 648],
+      "summary": "侧边栏交互：用 sessionStorage 记忆折叠状态，并把滚动高亮条定位到当前活动菜单项。",
+      "tags": ["ui", "event-handler", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:initUserMenu",
+      "type": "function",
+      "name": "initUserMenu",
+      "filePath": "public/js/app.js",
+      "lineRange": [650, 666],
+      "summary": "顶栏用户菜单开合控制：点击头像切换下拉菜单，点击外部区域自动关闭。",
+      "tags": ["ui", "event-handler", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:bindAvatarPicker",
+      "type": "function",
+      "name": "bindAvatarPicker",
+      "filePath": "public/js/app.js",
+      "lineRange": [668, 690],
+      "summary": "头像选择通用绑定：校验图片类型与大小、转为 dataURL 后上传接口，成功后刷新页面并弹 Toast 反馈。",
+      "tags": ["utility", "上传", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/app.js:initAvatarUpload",
+      "type": "function",
+      "name": "initAvatarUpload",
+      "filePath": "public/js/app.js",
+      "lineRange": [692, 712],
+      "summary": "用户资料页头像上传/清除逻辑：为页面上两组头像入口绑定 bindAvatarPicker，并处理移除头像的确认与提交。",
+      "tags": ["event-handler", "上传", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/assistant.js:renderThumbs",
+      "type": "function",
+      "name": "renderThumbs",
+      "filePath": "public/js/assistant.js",
+      "lineRange": [78, 96],
+      "summary": "渲染助手面板中待发送的截图缩略图列表，并为每张绑定删除按钮后重新渲染。",
+      "tags": ["ui", "rendering", "frontend"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:public/js/assistant.js:resultHtml",
+      "type": "function",
+      "name": "resultHtml",
+      "filePath": "public/js/assistant.js",
+      "lineRange": [125, 151],
+      "summary": "把 AI 记账接口返回的结果对象拼装为 HTML 气泡内容：逐条展示金额、分类路径、账户与日期，并附加错误与警告信息。",
+      "tags": ["rendering", "ai", "frontend"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:public/js/assistant.js:send",
+      "type": "function",
+      "name": "send",
+      "filePath": "public/js/assistant.js",
+      "lineRange": [154, 191],
+      "summary": "发送消息主流程：收集输入文本与待发截图、清空输入、显示 typing 状态、调用 AI 聊天接口，按返回结果渲染入库结果气泡或错误提示（未配置模型时给出引导）。",
+      "tags": ["event-handler", "ai", "api-client"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:add_tree", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:build_app_tgz", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:write_text", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:build_fpk", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:main", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:add_tree", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:build_app_tgz", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:write_text", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:build_fpk", "type": "exports", "direction": "forward", "weight": 0.8 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "function:packaging/fpk/make-fpk.py:main", "type": "exports", "direction": "forward", "weight": 0.8 },
+
+    { "source": "file:packaging/fpk/cmd-main", "target": "function:packaging/fpk/cmd-main:detect_base", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/cmd-main", "target": "function:packaging/fpk/cmd-main:try_self_extract", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/cmd-main", "target": "function:packaging/fpk/cmd-main:ensure_node", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/cmd-main", "target": "function:packaging/fpk/cmd-main:log_env_diagnostics", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/cmd-main", "target": "function:packaging/fpk/cmd-main:start_process", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/cmd-main", "target": "function:packaging/fpk/cmd-main:stop_process", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:packaging/fpk/cmd-main", "target": "function:packaging/fpk/cmd-main:status", "type": "contains", "direction": "forward", "weight": 1.0 },
+
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:toast", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:postJson", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initTxnForm", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initAiPage", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:renderThumbs", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:renderDrafts", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initImportPage", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:handle", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:renderPreview", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initSettings", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initBulk", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initLightbox", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initListActions", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initSidebar", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initUserMenu", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:bindAvatarPicker", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/app.js", "target": "function:public/js/app.js:initAvatarUpload", "type": "contains", "direction": "forward", "weight": 1.0 },
+
+    { "source": "file:public/js/assistant.js", "target": "function:public/js/assistant.js:renderThumbs", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/assistant.js", "target": "function:public/js/assistant.js:resultHtml", "type": "contains", "direction": "forward", "weight": 1.0 },
+    { "source": "file:public/js/assistant.js", "target": "function:public/js/assistant.js:send", "type": "contains", "direction": "forward", "weight": 1.0 },
+
+    { "source": "file:packaging/fpk/build-fpk.sh", "target": "file:server.js", "type": "deploys", "direction": "forward", "weight": 0.7 },
+    { "source": "file:packaging/fpk/build-fpk.sh", "target": "file:packaging/fpk/cmd-main", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "file:server.js", "type": "deploys", "direction": "forward", "weight": 0.7 },
+    { "source": "file:packaging/fpk/cmd-main", "target": "file:server.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:packaging/fpk/make-fpk.py", "target": "file:packaging/fpk/build-fpk.sh", "type": "related", "direction": "forward", "weight": 0.5 },
+    { "source": "document:packaging/fpk/README.md", "target": "file:packaging/fpk/build-fpk.sh", "type": "documents", "direction": "forward", "weight": 0.5 },
+    { "source": "document:packaging/fpk/README.md", "target": "file:packaging/fpk/make-fpk.py", "type": "documents", "direction": "forward", "weight": 0.5 },
+
+    { "source": "file:public/js/app.js", "target": "file:src/routes/ai.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:public/js/app.js", "target": "file:src/routes/transactions.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:public/js/app.js", "target": "file:src/routes/admin.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:public/js/assistant.js", "target": "file:src/routes/ai.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/ai.ejs", "target": "file:public/js/app.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/attachments.ejs", "target": "file:public/js/app.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/accounts.ejs", "target": "file:public/js/app.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/account-detail.ejs", "target": "file:src/views/partials/txn-list.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/about.ejs", "target": "file:src/lib/about.js", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+
+    { "source": "document:openclaw-skill/homeledger-bookkeeping/SKILL.md", "target": "file:src/routes/openapi.js", "type": "documents", "direction": "forward", "weight": 0.5 },
+    { "source": "file:public/manifest.webmanifest", "target": "file:src/views/layout.ejs", "type": "related", "direction": "forward", "weight": 0.5 },
+
+    { "source": "document:.claude/skills/openspec-explore/SKILL.md", "target": "document:.claude/skills/openspec-propose/SKILL.md", "type": "related", "direction": "forward", "weight": 0.5 },
+    { "source": "document:.claude/skills/openspec-propose/SKILL.md", "target": "document:.claude/skills/openspec-apply-change/SKILL.md", "type": "related", "direction": "forward", "weight": 0.5 },
+    { "source": "document:.claude/skills/openspec-update-change/SKILL.md", "target": "document:.claude/skills/openspec-apply-change/SKILL.md", "type": "related", "direction": "forward", "weight": 0.5 },
+    { "source": "document:.claude/skills/openspec-apply-change/SKILL.md", "target": "document:.claude/skills/openspec-archive-change/SKILL.md", "type": "related", "direction": "forward", "weight": 0.5 }
+  ]
+}

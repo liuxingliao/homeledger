@@ -41,6 +41,7 @@
                 <span><%= t.account_name || '未指定账户' %></span>
               <% } %>
               <% if (t.member_name) { %><span>·</span><span><%= t.member_name %></span><% } %>
+              <% if (t.participant_names) { %><span>·</span><span class="muted">参与:<%= t.participant_names %></span><% } %>
               <% if (t.tag_names) { %>
                 <% t.tag_names.split(' ').forEach(function(tag){ %><span class="tag-pill"><%= tag %></span><% }); %>
               <% } %>

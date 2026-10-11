@@ -1,0 +1,107 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/routes/ai.js",
+      "type": "file",
+      "name": "ai.js",
+      "filePath": "src/routes/ai.js",
+      "summary": "AI 截图/文本记账的页面与接口路由：渲染 AI 记账页、接收截图识别请求（保存附件留档并调用 analyzeBill）、草稿确认批量入库、AI 设置读写与连接测试、模型列表拉取等。",
+      "tags": ["api-handler", "router", "ai", "middleware"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/routes/openapi.js",
+      "type": "file",
+      "name": "openapi.js",
+      "filePath": "src/routes/openapi.js",
+      "summary": "开放 API（Bearer Token 鉴权）路由模块：提供 API 令牌的创建/吊销管理、/api/open/v1 下的记一笔、AI 截图/文本识别（草稿与确认模式）、查询最近交易等端点，供第三方与自动化脚本调用。",
+      "tags": ["api-handler", "router", "open-api", "authentication", "ai"],
+      "complexity": "complex",
+      "languageNotes": "令牌仅首次明文展示，库中只存 SHA-256 哈希与尾四位；requireToken 中间件每次调用更新 last_used_at 并校验吊销状态。"
+    },
+    {
+      "id": "function:src/routes/openapi.js:requireToken",
+      "type": "function",
+      "name": "requireToken",
+      "filePath": "src/routes/openapi.js",
+      "lineRange": [31, 51],
+      "summary": "开放 API 鉴权中间件：解析 Bearer Token 并做 SHA-256 比对，校验令牌未吊销后把 ledgerId/userId/tokenName 挂到 req.openAuth，并更新最近使用时间。",
+      "tags": ["middleware", "authentication", "security"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "function:src/routes/openapi.js:resolveCategory",
+      "type": "function",
+      "name": "resolveCategory",
+      "filePath": "src/routes/openapi.js",
+      "lineRange": [77, 88],
+      "summary": "按名称/路径在账本分类中模糊匹配分类（完整路径 → 名称 → 名称前缀），返回匹配的分类对象。",
+      "tags": ["matching", "domain-logic", "utility"],
+      "complexity": "simple"
+    },
+    {
+      "id": "function:src/routes/openapi.js:resolveAccount",
+      "type": "function",
+      "name": "resolveAccount",
+      "filePath": "src/routes/openapi.js",
+      "lineRange": [90, 102],
+      "summary": "按名称匹配账本账户，找不到时自动创建同名账户并记录到 created 列表返回给调用方。",
+      "tags": ["matching", "factory", "domain-logic"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:test/verify-ai-image.js",
+      "type": "file",
+      "name": "verify-ai-image.js",
+      "filePath": "test/verify-ai-image.js",
+      "summary": "AI 图片识别链路的验证脚本：通过拦截/模拟 fetch 记录发往模型的请求体，断言 analyzeBill 会将截图以 image_url 内容块正确传出，并验证识别结果结构。",
+      "tags": ["test", "verification", "ai", "diagnostics"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:test/verify-model-list.js",
+      "type": "file",
+      "name": "verify-model-list.js",
+      "filePath": "test/verify-model-list.js",
+      "summary": "模型列表功能的验证脚本：在本机启动一个 mock HTTP 服务伪装 /v1/models 接口，断言 listModels 能正确解析多种响应结构并推断模型的 vision 能力。",
+      "tags": ["test", "verification", "ai", "mock-server"],
+      "complexity": "moderate"
+    }
+  ],
+  "edges": [
+    {"source": "file:src/routes/ai.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/ai.js", "target": "file:src/lib/ai.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/ai.js", "target": "file:src/lib/attachments.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/ai.js", "target": "file:src/lib/auth.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/ai.js", "target": "file:src/lib/formdata.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/ai.js", "target": "file:src/lib/txn.js", "type": "imports", "direction": "forward", "weight": 0.7},
+
+    {"source": "file:src/routes/openapi.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/openapi.js", "target": "file:src/lib/ai.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/openapi.js", "target": "file:src/lib/attachments.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/openapi.js", "target": "file:src/lib/auth.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/openapi.js", "target": "file:src/lib/formdata.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:src/routes/openapi.js", "target": "file:src/lib/txn.js", "type": "imports", "direction": "forward", "weight": 0.7},
+
+    {"source": "file:test/verify-ai-image.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:test/verify-ai-image.js", "target": "file:src/lib/ai.js", "type": "imports", "direction": "forward", "weight": 0.7},
+
+    {"source": "file:test/verify-model-list.js", "target": "file:src/db.js", "type": "imports", "direction": "forward", "weight": 0.7},
+    {"source": "file:test/verify-model-list.js", "target": "file:src/lib/ai.js", "type": "imports", "direction": "forward", "weight": 0.7},
+
+    {"source": "file:src/routes/openapi.js", "target": "function:src/routes/openapi.js:requireToken", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/routes/openapi.js", "target": "function:src/routes/openapi.js:resolveCategory", "type": "contains", "direction": "forward", "weight": 1.0},
+    {"source": "file:src/routes/openapi.js", "target": "function:src/routes/openapi.js:resolveAccount", "type": "contains", "direction": "forward", "weight": 1.0},
+
+    {"source": "file:src/routes/ai.js", "target": "function:src/lib/ai.js:analyzeBill", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "file:src/routes/ai.js", "target": "function:src/lib/ai.js:getAiConfig", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "file:src/routes/openapi.js", "target": "function:src/lib/ai.js:analyzeBill", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "file:src/routes/openapi.js", "target": "function:src/lib/ai.js:getAiConfig", "type": "calls", "direction": "forward", "weight": 0.8},
+    {"source": "file:test/verify-ai-image.js", "target": "function:src/lib/ai.js:analyzeBill", "type": "calls", "direction": "forward", "weight": 0.8},
+
+    {"source": "file:src/db.js", "target": "file:test/verify-ai-image.js", "type": "tested_by", "direction": "forward", "weight": 0.5},
+    {"source": "file:src/lib/ai.js", "target": "file:test/verify-ai-image.js", "type": "tested_by", "direction": "forward", "weight": 0.5},
+    {"source": "file:src/db.js", "target": "file:test/verify-model-list.js", "type": "tested_by", "direction": "forward", "weight": 0.5},
+    {"source": "file:src/lib/ai.js", "target": "file:test/verify-model-list.js", "type": "tested_by", "direction": "forward", "weight": 0.5}
+  ]
+}

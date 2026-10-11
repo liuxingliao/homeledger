@@ -50,7 +50,7 @@
             <div class="row tiny mt8" style="gap:8px">
               <a href="/accounts/<%= a.id %>">明细</a>
               <a href="#" class="acc-edit" data-id="<%= a.id %>">编辑</a>
-              <a href="#" class="acc-adjust" data-id="<%= a.id %>" data-balance="<%= (a.balance_cents/100).toFixed(2) %>">余额调整</a>
+              <a href="#" class="acc-adjust" data-id="<%= a.id %>" data-balance="<%= (a.balance_cents/100).toFixed(2) %>">负债变更</a>
               <form method="post" action="/accounts/<%= a.id %>/archive" style="display:inline">
                 <input type="hidden" name="_csrf" value="<%= csrf %>">
                 <button class="btn btn-sm btn-ghost" style="padding:0;font-size:11px">停用</button>
@@ -86,7 +86,7 @@
             <div class="acc-adjust-form hidden mt12" data-id="<%= a.id %>" style="background:var(--card-2);padding:12px;border-radius:10px">
               <form method="post" action="/accounts/<%= a.id %>/adjust">
                 <input type="hidden" name="_csrf" value="<%= csrf %>">
-                <p class="small muted mb8">把这个账户的账面余额对齐到实际金额，差额会记为一笔「余额调整」，不影响收支统计。</p>
+                <p class="small muted mb8">把这个账户的账面余额对齐到实际金额，差额会记为一笔「负债变更」，不影响收支统计。</p>
                 <div class="row wrap" style="gap:10px">
                   <div class="field" style="flex:1;min-width:120px"><label>实际余额</label><input type="text" name="actual_balance" inputmode="decimal" value="<%= (a.balance_cents/100).toFixed(2) %>"></div>
                   <div class="field" style="flex:1;min-width:120px"><label>日期</label><input type="date" name="adjust_date" value="<%= today || '' %>"></div>

@@ -1,0 +1,63 @@
+{
+  "nodes": [
+    {
+      "id": "service:Dockerfile",
+      "type": "service",
+      "name": "Dockerfile",
+      "filePath": "Dockerfile",
+      "summary": "单阶段 Docker 构建文件：基于 node:22-slim 镜像安装生产依赖并拷贝源码，以非 root 的 node 用户运行 server.js（端口 5111），通过 HEALTHCHECK 探测 /healthz 接口。",
+      "tags": ["容器化", "部署", "基础设施", "entry-point", "health-check"],
+      "complexity": "simple",
+      "languageNotes": "先 COPY package.json 再 npm install 以利用镜像层缓存；数据卷 /data 独立于应用目录，备份只需拷走该目录；USER node 降权运行提升安全性。"
+    },
+    {
+      "id": "service:docker-compose.yml",
+      "type": "service",
+      "name": "docker-compose.yml",
+      "filePath": "docker-compose.yml",
+      "summary": "Docker Compose 编排文件，定义 homeledger 单服务：拉取 ghcr.io/sucraft-hub/homeledger:latest 预构建镜像，将宿主机 8899 端口映射到容器 5111，并以 ./data 目录持久化账本数据。",
+      "tags": ["编排", "基础设施", "容器化", "部署", "configuration"],
+      "complexity": "simple",
+      "languageNotes": "restart: unless-stopped 保证开机自启与崩溃恢复；SESSION_SECRET、ADMIN_USER 等敏感配置直接内联在 environment 中，生产环境建议改用 .env 或 secrets 管理。"
+    },
+    {
+      "id": "service:docker-compose.yml:homeledger",
+      "type": "service",
+      "name": "homeledger",
+      "filePath": "docker-compose.yml",
+      "summary": "Compose 中唯一的 homeledger 服务实例：使用预构建的 ghcr.io 镜像运行应用，时区设为 Asia/Shanghai，宿主 8899 端口对外提供访问，数据卷挂载到容器内 /data。",
+      "tags": ["容器化", "服务实例", "部署", "数据持久化"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    {
+      "source": "service:Dockerfile",
+      "target": "file:server.js",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:docker-compose.yml:homeledger",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "service:docker-compose.yml:homeledger",
+      "target": "file:server.js",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "service:docker-compose.yml",
+      "target": "service:Dockerfile",
+      "type": "depends_on",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {"path": "server.js", "language": "javascript", "sizeLines": 227, "fileCategory": "code"},
+    {"path": "src/lib/about.js", "language": "javascript", "sizeLines": 78, "fileCategory": "code"},
+    {"path": "src/lib/charts.js", "language": "javascript", "sizeLines": 270, "fileCategory": "code"},
+    {"path": "src/routes/about.js", "language": "javascript", "sizeLines": 73, "fileCategory": "code"},
+    {"path": "src/routes/auth.js", "language": "javascript", "sizeLines": 191, "fileCategory": "code"},
+    {"path": "test/verify-about.js", "language": "javascript", "sizeLines": 87, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "server.js": ["package.json", "src/db.js", "src/lib/ai.js", "src/lib/auth.js", "src/lib/charts.js", "src/lib/scheduler.js", "src/lib/util.js", "src/routes/about.js", "src/routes/accounts.js", "src/routes/admin.js", "src/routes/ai.js", "src/routes/auth.js", "src/routes/dashboard.js", "src/routes/openapi.js", "src/routes/planning.js", "src/routes/reports.js", "src/routes/subscriptions.js", "src/routes/transactions.js"],
+    "src/lib/about.js": [],
+    "src/lib/charts.js": ["src/lib/util.js"],
+    "src/routes/about.js": ["src/db.js", "src/lib/about.js", "src/lib/auth.js"],
+    "src/routes/auth.js": ["src/db.js", "src/lib/auth.js", "src/lib/util.js"],
+    "test/verify-about.js": ["src/lib/about.js"]
+  }
+}

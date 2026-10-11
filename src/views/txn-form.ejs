@@ -1,22 +1,9 @@
 <%
-  var typeList = [
-    { key:'expense', label:'支出', icon:'💸' },
-    { key:'income',  label:'收入', icon:'💰' },
-    { key:'transfer',label:'转账', icon:'🔄' },
-    { key:'lend',    label:'借出', icon:'📤' },
-    { key:'borrow',  label:'借入', icon:'📥' },
-    { key:'repay_receive', label:'收回借款', icon:'↩️' },
-    { key:'repay_pay', label:'偿还借款', icon:'↪️' }
-  ];
-  var moreTypes = [
-    { key:'reimburse', label:'报销入账', icon:'🧾' },
-    { key:'refund', label:'退款', icon:'↩️' },
-    { key:'fee', label:'手续费', icon:'🏷️' },
-    { key:'interest', label:'利息收入', icon:'🏦' },
-    { key:'invest_buy', label:'投资买入', icon:'📉' },
-    { key:'invest_sell', label:'投资卖出', icon:'📈' },
-    { key:'adjust', label:'余额调整', icon:'⚖️' }
-  ];
+  // 类型按钮从 TXN_TYPES 常量派生(按 group 分两组),标签改名时自动跟随
+  var typeList = TXN_TYPES.filter(function(x){ return ['日常','借贷'].indexOf(x.group) >= 0; })
+    .map(function(x){ return { key: x.key, label: x.label, icon: x.icon }; });
+  var moreTypes = TXN_TYPES.filter(function(x){ return ['日常','借贷'].indexOf(x.group) < 0; })
+    .map(function(x){ return { key: x.key, label: x.label, icon: x.icon }; });
   var cur = t.type || 'expense';
   var isExtra = moreTypes.some(function(x){ return x.key === cur; });
   var multiAccount = ['transfer','invest_buy','invest_sell'].includes(cur);
@@ -68,11 +55,24 @@
             <input type="date" name="txn_date" value="<%= (t.txn_date || '').slice(0,10) %>" required>
           </div>
           <div class="field" style="flex:1;min-width:150px">
-            <label>成员</label>
-            <select name="member_id" disabled style="opacity:.6">
-              <option><%= t.member_name || user.display_name %>（当前记录人）</option>
-            </select>
+            <label>记录人</label>
+            <input type="text" value="<%= t.member_name || user.display_name %>" disabled style="opacity:.6">
           </div>
+        </div>
+
+        <div class="field">
+          <label>参与成员 <span class="muted tiny">（谁参与了这笔交易，可多选；点名单快速加入）</span></label>
+          <input type="text" name="people" id="f-people" value="<%= t.participant_names || '' %>" list="people-datalist" placeholder="多个成员用空格分隔，可直接输入新名字" autocomplete="off">
+          <datalist id="people-datalist">
+            <% (form.people || []).forEach(function(p){ %><option value="<%= p.name %>"></option><% }); %>
+          </datalist>
+          <% if ((form.people || []).length) { %>
+          <div class="row wrap" style="gap:6px;margin-top:6px" id="people-chips">
+            <% (form.people || []).forEach(function(p){ %>
+              <button type="button" class="btn btn-sm btn-ghost person-chip" data-name="<%= p.name %>"><%= p.name %></button>
+            <% }); %>
+          </div>
+          <% } %>
         </div>
 
         <div class="row wrap" style="gap:12px">
@@ -264,7 +264,7 @@
       accLabel.textContent = type === 'expense' ? '支付账户'
         : type === 'income' ? '收款账户'
         : type === 'transfer' ? '从账户'
-        : type === 'lend' ? '从哪个账户借出'
+        : type === 'lend' ? '从哪个账户代付'
         : type === 'borrow' ? '收到哪个账户'
         : type === 'repay_receive' ? '收款账户'
         : type === 'repay_pay' ? '付款账户'
@@ -292,6 +292,17 @@
         var head = g.querySelector('.small.bold');
         if (head && head.textContent.indexOf(name) >= 0) g.scrollIntoView({ behavior:'smooth', block:'start' });
       });
+    });
+  });
+  // 参与成员名单点选快速加入
+  document.querySelectorAll('.person-chip').forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var input = document.getElementById('f-people');
+      if (!input) return;
+      var name = chip.dataset.name;
+      var cur = input.value.split(/[,，、\s]+/).filter(Boolean);
+      if (cur.indexOf(name) < 0) cur.push(name);
+      input.value = cur.join(' ');
     });
   });
 })();

@@ -1,0 +1,658 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 5,
+  "filesSkipped": [
+    "src/views/transactions.ejs",
+    "src/views/txn-form.ejs"
+  ],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 5,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 5,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "test/run-all.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 86,
+      "nonEmptyLines": 81,
+      "functions": [
+        {
+          "name": "healthz",
+          "startLine": 23,
+          "endLine": 38,
+          "params": [
+            "timeoutMs"
+          ]
+        },
+        {
+          "name": "run",
+          "startLine": 40,
+          "endLine": 48,
+          "params": [
+            "cmd",
+            "args",
+            "opts"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "healthz",
+          "callee": "Date.now",
+          "lineNumber": 24
+        },
+        {
+          "caller": "healthz",
+          "callee": "(function probe() {\n      const req = http.get(`http://127.0.0.1:${PORT}/healthz`, (res) => {\n        res.resume();\n        res.statusCode === 200 ? resolve() : retry();\n      });\n      req.on('error', retry);\n      function retry() {\n        if (Date.now() > deadline) return reject(new Error('healthz 超时'));\n        setTimeout(probe, 300);\n      }\n    })",
+          "lineNumber": 26
+        },
+        {
+          "caller": "healthz",
+          "callee": "http.get",
+          "lineNumber": 27
+        },
+        {
+          "caller": "healthz",
+          "callee": "res.resume",
+          "lineNumber": 28
+        },
+        {
+          "caller": "healthz",
+          "callee": "resolve",
+          "lineNumber": 29
+        },
+        {
+          "caller": "healthz",
+          "callee": "retry",
+          "lineNumber": 29
+        },
+        {
+          "caller": "healthz",
+          "callee": "req.on",
+          "lineNumber": 31
+        },
+        {
+          "caller": "retry",
+          "callee": "Date.now",
+          "lineNumber": 33
+        },
+        {
+          "caller": "retry",
+          "callee": "reject",
+          "lineNumber": 33
+        },
+        {
+          "caller": "retry",
+          "callee": "setTimeout",
+          "lineNumber": 34
+        },
+        {
+          "caller": "run",
+          "callee": "spawn",
+          "lineNumber": 42
+        },
+        {
+          "caller": "run",
+          "callee": "p.stdout.on",
+          "lineNumber": 44
+        },
+        {
+          "caller": "run",
+          "callee": "p.stderr.on",
+          "lineNumber": 45
+        },
+        {
+          "caller": "run",
+          "callee": "p.on",
+          "lineNumber": 46
+        },
+        {
+          "caller": "run",
+          "callee": "resolve",
+          "lineNumber": 46
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/selfcheck-static.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 62,
+      "functions": [
+        {
+          "name": "ok",
+          "startLine": 8,
+          "endLine": 8,
+          "params": [
+            "name",
+            "cond",
+            "detail"
+          ]
+        },
+        {
+          "name": "walk",
+          "startLine": 26,
+          "endLine": 34,
+          "params": [
+            "dir",
+            "depth"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ok",
+          "callee": "out.push",
+          "lineNumber": 8
+        },
+        {
+          "caller": "walk",
+          "callee": "fs.readdirSync",
+          "lineNumber": 28
+        },
+        {
+          "caller": "walk",
+          "callee": "f.name.startsWith",
+          "lineNumber": 29
+        },
+        {
+          "caller": "walk",
+          "callee": "path.join",
+          "lineNumber": 30
+        },
+        {
+          "caller": "walk",
+          "callee": "f.isDirectory",
+          "lineNumber": 31
+        },
+        {
+          "caller": "walk",
+          "callee": "walk",
+          "lineNumber": 31
+        },
+        {
+          "caller": "walk",
+          "callee": "f.name.endsWith",
+          "lineNumber": 32
+        },
+        {
+          "caller": "walk",
+          "callee": "jsFiles.push",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/verify-ai-attachments.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 217,
+      "nonEmptyLines": 198,
+      "functions": [
+        {
+          "name": "check",
+          "startLine": 29,
+          "endLine": 32,
+          "params": [
+            "name",
+            "ok"
+          ]
+        },
+        {
+          "name": "req",
+          "startLine": 57,
+          "endLine": 73,
+          "params": [
+            "method",
+            "p"
+          ]
+        },
+        {
+          "name": "csrfOf",
+          "startLine": 74,
+          "endLine": 74,
+          "params": [
+            "html"
+          ]
+        },
+        {
+          "name": "uploadFiles",
+          "startLine": 77,
+          "endLine": 86,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 30
+        },
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 31
+        },
+        {
+          "caller": "json",
+          "callee": "res.writeHead",
+          "lineNumber": 37
+        },
+        {
+          "caller": "json",
+          "callee": "res.end",
+          "lineNumber": 38
+        },
+        {
+          "caller": "json",
+          "callee": "JSON.stringify",
+          "lineNumber": 38
+        },
+        {
+          "caller": "req",
+          "callee": "fetch",
+          "lineNumber": 62
+        },
+        {
+          "caller": "req",
+          "callee": "new URLSearchParams(form).toString",
+          "lineNumber": 65
+        },
+        {
+          "caller": "req",
+          "callee": "JSON.stringify",
+          "lineNumber": 65
+        },
+        {
+          "caller": "req",
+          "callee": "res.headers.getSetCookie",
+          "lineNumber": 68
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map((c) => c.split(';')[0]).join",
+          "lineNumber": 69
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map",
+          "lineNumber": 69
+        },
+        {
+          "caller": "req",
+          "callee": "c.split",
+          "lineNumber": 69
+        },
+        {
+          "caller": "req",
+          "callee": "Buffer.from",
+          "lineNumber": 71
+        },
+        {
+          "caller": "req",
+          "callee": "res.arrayBuffer",
+          "lineNumber": 71
+        },
+        {
+          "caller": "req",
+          "callee": "buf.toString",
+          "lineNumber": 72
+        },
+        {
+          "caller": "csrfOf",
+          "callee": "html.match",
+          "lineNumber": 74
+        },
+        {
+          "caller": "uploadFiles",
+          "callee": "path.join",
+          "lineNumber": 77
+        },
+        {
+          "caller": "uploadFiles",
+          "callee": "fs.existsSync",
+          "lineNumber": 79
+        },
+        {
+          "caller": "uploadFiles",
+          "callee": "fs.readdirSync",
+          "lineNumber": 80
+        },
+        {
+          "caller": "uploadFiles",
+          "callee": "path.join",
+          "lineNumber": 81
+        },
+        {
+          "caller": "uploadFiles",
+          "callee": "e.isDirectory",
+          "lineNumber": 82
+        },
+        {
+          "caller": "uploadFiles",
+          "callee": "out.push",
+          "lineNumber": 82
+        },
+        {
+          "caller": "uploadFiles",
+          "callee": "uploadFiles",
+          "lineNumber": 82
+        },
+        {
+          "caller": "uploadFiles",
+          "callee": "out.push",
+          "lineNumber": 83
+        },
+        {
+          "caller": "post",
+          "callee": "fetch",
+          "lineNumber": 182
+        },
+        {
+          "caller": "post",
+          "callee": "JSON.stringify",
+          "lineNumber": 185
+        },
+        {
+          "caller": "post",
+          "callee": "JSON.parse",
+          "lineNumber": 187
+        },
+        {
+          "caller": "post",
+          "callee": "x.text",
+          "lineNumber": 187
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 4,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/verify-ai-chat.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 118,
+      "nonEmptyLines": 104,
+      "functions": [
+        {
+          "name": "check",
+          "startLine": 15,
+          "endLine": 18,
+          "params": [
+            "name",
+            "ok"
+          ]
+        },
+        {
+          "name": "req",
+          "startLine": 22,
+          "endLine": 39,
+          "params": [
+            "method",
+            "p"
+          ]
+        },
+        {
+          "name": "csrfOf",
+          "startLine": 41,
+          "endLine": 41,
+          "params": [
+            "html"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 16
+        },
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 17
+        },
+        {
+          "caller": "req",
+          "callee": "fetch",
+          "lineNumber": 30
+        },
+        {
+          "caller": "req",
+          "callee": "new URLSearchParams(form).toString",
+          "lineNumber": 32
+        },
+        {
+          "caller": "req",
+          "callee": "JSON.stringify",
+          "lineNumber": 32
+        },
+        {
+          "caller": "req",
+          "callee": "res.headers.getSetCookie",
+          "lineNumber": 35
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map((c) => c.split(';')[0]).join",
+          "lineNumber": 36
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map",
+          "lineNumber": 36
+        },
+        {
+          "caller": "req",
+          "callee": "c.split",
+          "lineNumber": 36
+        },
+        {
+          "caller": "req",
+          "callee": "Buffer.from",
+          "lineNumber": 37
+        },
+        {
+          "caller": "req",
+          "callee": "res.arrayBuffer",
+          "lineNumber": 37
+        },
+        {
+          "caller": "req",
+          "callee": "buf.toString",
+          "lineNumber": 38
+        },
+        {
+          "caller": "req",
+          "callee": "(() => { try { return JSON.parse(buf.toString('utf8')); } catch { return null; } })",
+          "lineNumber": 38
+        },
+        {
+          "caller": "req",
+          "callee": "JSON.parse",
+          "lineNumber": 38
+        },
+        {
+          "caller": "req",
+          "callee": "buf.toString",
+          "lineNumber": 38
+        },
+        {
+          "caller": "csrfOf",
+          "callee": "html.match",
+          "lineNumber": 41
+        },
+        {
+          "caller": "localToday",
+          "callee": "new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice",
+          "lineNumber": 86
+        },
+        {
+          "caller": "localToday",
+          "callee": "new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString",
+          "lineNumber": 86
+        },
+        {
+          "caller": "localToday",
+          "callee": "Date.now",
+          "lineNumber": 86
+        },
+        {
+          "caller": "localToday",
+          "callee": "new Date().getTimezoneOffset",
+          "lineNumber": 86
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/verify-settings-admin.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 140,
+      "nonEmptyLines": 127,
+      "functions": [
+        {
+          "name": "check",
+          "startLine": 15,
+          "endLine": 18,
+          "params": [
+            "name",
+            "ok"
+          ]
+        },
+        {
+          "name": "req",
+          "startLine": 21,
+          "endLine": 35,
+          "params": [
+            "method",
+            "p"
+          ]
+        },
+        {
+          "name": "csrfOf",
+          "startLine": 37,
+          "endLine": 37,
+          "params": [
+            "html"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 16
+        },
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 17
+        },
+        {
+          "caller": "req",
+          "callee": "new URLSearchParams(form).toString",
+          "lineNumber": 25
+        },
+        {
+          "caller": "req",
+          "callee": "JSON.stringify",
+          "lineNumber": 26
+        },
+        {
+          "caller": "req",
+          "callee": "fetch",
+          "lineNumber": 27
+        },
+        {
+          "caller": "req",
+          "callee": "res.headers.getSetCookie",
+          "lineNumber": 31
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map((c) => c.split(';')[0]).join",
+          "lineNumber": 32
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map",
+          "lineNumber": 32
+        },
+        {
+          "caller": "req",
+          "callee": "c.split",
+          "lineNumber": 32
+        },
+        {
+          "caller": "req",
+          "callee": "Buffer.from",
+          "lineNumber": 33
+        },
+        {
+          "caller": "req",
+          "callee": "res.arrayBuffer",
+          "lineNumber": 33
+        },
+        {
+          "caller": "req",
+          "callee": "buf.toString",
+          "lineNumber": 34
+        },
+        {
+          "caller": "req",
+          "callee": "res.headers.get",
+          "lineNumber": 34
+        },
+        {
+          "caller": "csrfOf",
+          "callee": "html.match",
+          "lineNumber": 37
+        },
+        {
+          "caller": "postJson",
+          "callee": "req",
+          "lineNumber": 107
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    }
+  ]
+}

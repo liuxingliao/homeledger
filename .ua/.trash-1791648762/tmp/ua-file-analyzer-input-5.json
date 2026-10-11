@@ -1,0 +1,13 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {"path": "src/lib/formdata.js", "language": "javascript", "sizeLines": 71, "fileCategory": "code"},
+    {"path": "src/routes/reports.js", "language": "javascript", "sizeLines": 99, "fileCategory": "code"},
+    {"path": "src/routes/subscriptions.js", "language": "javascript", "sizeLines": 210, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "src/lib/formdata.js": ["src/db.js"],
+    "src/routes/reports.js": ["src/db.js", "src/lib/auth.js", "src/lib/formdata.js", "src/lib/txn.js", "src/lib/util.js"],
+    "src/routes/subscriptions.js": ["src/db.js", "src/lib/auth.js", "src/lib/formdata.js", "src/lib/subscriptions.js", "src/lib/util.js"]
+  }
+}

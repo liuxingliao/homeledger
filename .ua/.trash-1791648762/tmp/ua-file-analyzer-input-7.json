@@ -1,0 +1,19 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {"path": ".claude/commands/opsx/apply.md", "language": "markdown", "sizeLines": 202, "fileCategory": "docs"},
+    {"path": ".claude/commands/opsx/archive.md", "language": "markdown", "sizeLines": 264, "fileCategory": "docs"},
+    {"path": ".claude/commands/opsx/explore.md", "language": "markdown", "sizeLines": 239, "fileCategory": "docs"},
+    {"path": ".claude/commands/opsx/propose.md", "language": "markdown", "sizeLines": 170, "fileCategory": "docs"},
+    {"path": ".claude/commands/opsx/sync.md", "language": "markdown", "sizeLines": 286, "fileCategory": "docs"},
+    {"path": ".claude/commands/opsx/update.md", "language": "markdown", "sizeLines": 105, "fileCategory": "docs"}
+  ],
+  "batchImportData": {
+    ".claude/commands/opsx/apply.md": [],
+    ".claude/commands/opsx/archive.md": [],
+    ".claude/commands/opsx/explore.md": [],
+    ".claude/commands/opsx/propose.md": [],
+    ".claude/commands/opsx/sync.md": [],
+    ".claude/commands/opsx/update.md": []
+  }
+}

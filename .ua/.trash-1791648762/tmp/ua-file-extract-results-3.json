@@ -1,0 +1,1218 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 6,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 6,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "server.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 227,
+      "nonEmptyLines": 198,
+      "functions": [
+        {
+          "name": "assetStamp",
+          "startLine": 22,
+          "endLine": 28,
+          "params": [
+            "rel"
+          ]
+        },
+        {
+          "name": "bootstrapAdmin",
+          "startLine": 36,
+          "endLine": 53,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "assetStamp",
+          "callee": "Math.floor(require('node:fs').statSync(path.join(ROOT, 'public', rel)).mtimeMs / 1000).toString",
+          "lineNumber": 24
+        },
+        {
+          "caller": "assetStamp",
+          "callee": "Math.floor",
+          "lineNumber": 24
+        },
+        {
+          "caller": "assetStamp",
+          "callee": "require('node:fs').statSync",
+          "lineNumber": 24
+        },
+        {
+          "caller": "assetStamp",
+          "callee": "require",
+          "lineNumber": 24
+        },
+        {
+          "caller": "assetStamp",
+          "callee": "path.join",
+          "lineNumber": 24
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "db.get",
+          "lineNumber": 37
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "Number",
+          "lineNumber": 38
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "(process.env.ADMIN_USER || 'admin').trim",
+          "lineNumber": 39
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "db.run",
+          "lineNumber": 41
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "auth.hashPassword",
+          "lineNumber": 43
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "util.colorFor",
+          "lineNumber": 43
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "db.nowStr",
+          "lineNumber": 43
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "db.createDefaultLedger",
+          "lineNumber": 45
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "db.setSetting",
+          "lineNumber": 46
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "console.log",
+          "lineNumber": 47
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "console.log",
+          "lineNumber": 48
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "console.log",
+          "lineNumber": 49
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "console.log",
+          "lineNumber": 50
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "console.log",
+          "lineNumber": 51
+        },
+        {
+          "caller": "bootstrapAdmin",
+          "callee": "console.log",
+          "lineNumber": 52
+        }
+      ],
+      "metrics": {
+        "importCount": 18,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/about.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 78,
+      "nonEmptyLines": 71,
+      "functions": [
+        {
+          "name": "repoUrl",
+          "startLine": 66,
+          "endLine": 69,
+          "params": []
+        },
+        {
+          "name": "issuesUrl",
+          "startLine": 72,
+          "endLine": 76,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "repoUrl",
+          "callee": "String(process.env.HOMELEDGER_GITHUB_REPO || GITHUB_REPO || '').trim",
+          "lineNumber": 67
+        },
+        {
+          "caller": "repoUrl",
+          "callee": "String",
+          "lineNumber": 67
+        },
+        {
+          "caller": "repoUrl",
+          "callee": "repo.replace",
+          "lineNumber": 68
+        },
+        {
+          "caller": "issuesUrl",
+          "callee": "repoUrl",
+          "lineNumber": 73
+        },
+        {
+          "caller": "issuesUrl",
+          "callee": "/^https:\\/\\/github\\.com\\/[\\w.-]+\\/[\\w.-]+$/.test",
+          "lineNumber": 74
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/lib/charts.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 270,
+      "nonEmptyLines": 250,
+      "functions": [
+        {
+          "name": "nf",
+          "startLine": 18,
+          "endLine": 20,
+          "params": [
+            "n"
+          ]
+        },
+        {
+          "name": "niceMax",
+          "startLine": 23,
+          "endLine": 30,
+          "params": [
+            "v"
+          ]
+        },
+        {
+          "name": "barChart",
+          "startLine": 39,
+          "endLine": 88,
+          "params": []
+        },
+        {
+          "name": "lineChart",
+          "startLine": 92,
+          "endLine": 145,
+          "params": []
+        },
+        {
+          "name": "donutChart",
+          "startLine": 149,
+          "endLine": 178,
+          "params": []
+        },
+        {
+          "name": "donutLegend",
+          "startLine": 181,
+          "endLine": 196,
+          "params": []
+        },
+        {
+          "name": "rankBars",
+          "startLine": 200,
+          "endLine": 212,
+          "params": []
+        },
+        {
+          "name": "calendarHeatmap",
+          "startLine": 221,
+          "endLine": 259,
+          "params": []
+        },
+        {
+          "name": "progressBar",
+          "startLine": 263,
+          "endLine": 268,
+          "params": [
+            "used",
+            "total"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "nf",
+          "callee": "Number(n || 0).toLocaleString",
+          "lineNumber": 19
+        },
+        {
+          "caller": "nf",
+          "callee": "Number",
+          "lineNumber": 19
+        },
+        {
+          "caller": "niceMax",
+          "callee": "Math.floor",
+          "lineNumber": 25
+        },
+        {
+          "caller": "niceMax",
+          "callee": "Math.log10",
+          "lineNumber": 25
+        },
+        {
+          "caller": "niceMax",
+          "callee": "Math.pow",
+          "lineNumber": 26
+        },
+        {
+          "caller": "barChart",
+          "callee": "series.flatMap",
+          "lineNumber": 44
+        },
+        {
+          "caller": "barChart",
+          "callee": "s.data.map",
+          "lineNumber": 44
+        },
+        {
+          "caller": "barChart",
+          "callee": "Math.abs",
+          "lineNumber": 44
+        },
+        {
+          "caller": "barChart",
+          "callee": "Number",
+          "lineNumber": 44
+        },
+        {
+          "caller": "barChart",
+          "callee": "niceMax",
+          "lineNumber": 45
+        },
+        {
+          "caller": "barChart",
+          "callee": "Math.max",
+          "lineNumber": 45
+        },
+        {
+          "caller": "barChart",
+          "callee": "Math.max",
+          "lineNumber": 46
+        },
+        {
+          "caller": "barChart",
+          "callee": "Math.min",
+          "lineNumber": 48
+        },
+        {
+          "caller": "barChart",
+          "callee": "Math.max",
+          "lineNumber": 48
+        },
+        {
+          "caller": "barChart",
+          "callee": "y.toFixed",
+          "lineNumber": 56
+        },
+        {
+          "caller": "barChart",
+          "callee": "y.toFixed",
+          "lineNumber": 56
+        },
+        {
+          "caller": "barChart",
+          "callee": "(y + 4).toFixed",
+          "lineNumber": 57
+        },
+        {
+          "caller": "barChart",
+          "callee": "nf",
+          "lineNumber": 57
+        },
+        {
+          "caller": "barChart",
+          "callee": "labels.forEach",
+          "lineNumber": 60
+        },
+        {
+          "caller": "barChart",
+          "callee": "series.forEach",
+          "lineNumber": 64
+        },
+        {
+          "caller": "barChart",
+          "callee": "Math.abs",
+          "lineNumber": 65
+        },
+        {
+          "caller": "barChart",
+          "callee": "Number",
+          "lineNumber": 65
+        },
+        {
+          "caller": "barChart",
+          "callee": "x0.toFixed",
+          "lineNumber": 69
+        },
+        {
+          "caller": "barChart",
+          "callee": "y.toFixed",
+          "lineNumber": 69
+        },
+        {
+          "caller": "barChart",
+          "callee": "barW.toFixed",
+          "lineNumber": 69
+        },
+        {
+          "caller": "barChart",
+          "callee": "h.toFixed",
+          "lineNumber": 69
+        },
+        {
+          "caller": "barChart",
+          "callee": "esc",
+          "lineNumber": 69
+        },
+        {
+          "caller": "barChart",
+          "callee": "esc",
+          "lineNumber": 69
+        },
+        {
+          "caller": "barChart",
+          "callee": "nf",
+          "lineNumber": 69
+        },
+        {
+          "caller": "barChart",
+          "callee": "esc",
+          "lineNumber": 69
+        },
+        {
+          "caller": "barChart",
+          "callee": "x0.toFixed",
+          "lineNumber": 71
+        },
+        {
+          "caller": "barChart",
+          "callee": "(padT + innerH - 1.5).toFixed",
+          "lineNumber": 71
+        },
+        {
+          "caller": "barChart",
+          "callee": "barW.toFixed",
+          "lineNumber": 71
+        },
+        {
+          "caller": "barChart",
+          "callee": "cx.toFixed",
+          "lineNumber": 75
+        },
+        {
+          "caller": "barChart",
+          "callee": "esc",
+          "lineNumber": 75
+        },
+        {
+          "caller": "barChart",
+          "callee": "series.forEach",
+          "lineNumber": 80
+        },
+        {
+          "caller": "barChart",
+          "callee": "esc",
+          "lineNumber": 82
+        },
+        {
+          "caller": "lineChart",
+          "callee": "series.flatMap",
+          "lineNumber": 97
+        },
+        {
+          "caller": "lineChart",
+          "callee": "s.data.map",
+          "lineNumber": 97
+        },
+        {
+          "caller": "lineChart",
+          "callee": "Number",
+          "lineNumber": 97
+        },
+        {
+          "caller": "lineChart",
+          "callee": "Math.max",
+          "lineNumber": 98
+        },
+        {
+          "caller": "lineChart",
+          "callee": "Math.min",
+          "lineNumber": 99
+        },
+        {
+          "caller": "lineChart",
+          "callee": "niceMax",
+          "lineNumber": 100
+        },
+        {
+          "caller": "lineChart",
+          "callee": "niceMax",
+          "lineNumber": 101
+        },
+        {
+          "caller": "lineChart",
+          "callee": "Math.abs",
+          "lineNumber": 101
+        },
+        {
+          "caller": "yAt",
+          "callee": "Number",
+          "lineNumber": 105
+        },
+        {
+          "caller": "lineChart",
+          "callee": "series.forEach",
+          "lineNumber": 109
+        },
+        {
+          "caller": "lineChart",
+          "callee": "y.toFixed",
+          "lineNumber": 118
+        },
+        {
+          "caller": "lineChart",
+          "callee": "y.toFixed",
+          "lineNumber": 118
+        },
+        {
+          "caller": "lineChart",
+          "callee": "(y + 4).toFixed",
+          "lineNumber": 119
+        },
+        {
+          "caller": "lineChart",
+          "callee": "nf",
+          "lineNumber": 119
+        },
+        {
+          "caller": "lineChart",
+          "callee": "series.forEach",
+          "lineNumber": 121
+        },
+        {
+          "caller": "lineChart",
+          "callee": "se.data.map",
+          "lineNumber": 122
+        },
+        {
+          "caller": "lineChart",
+          "callee": "xAt",
+          "lineNumber": 122
+        },
+        {
+          "caller": "lineChart",
+          "callee": "yAt",
+          "lineNumber": 122
+        },
+        {
+          "caller": "lineChart",
+          "callee": "pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join",
+          "lineNumber": 124
+        },
+        {
+          "caller": "lineChart",
+          "callee": "pts.map",
+          "lineNumber": 124
+        },
+        {
+          "caller": "lineChart",
+          "callee": "p[0].toFixed",
+          "lineNumber": 124
+        },
+        {
+          "caller": "lineChart",
+          "callee": "p[1].toFixed",
+          "lineNumber": 124
+        },
+        {
+          "caller": "lineChart",
+          "callee": "pts[pts.length - 1][0].toFixed",
+          "lineNumber": 126
+        },
+        {
+          "caller": "lineChart",
+          "callee": "(padT + innerH).toFixed",
+          "lineNumber": 126
+        },
+        {
+          "caller": "lineChart",
+          "callee": "pts[0][0].toFixed",
+          "lineNumber": 126
+        },
+        {
+          "caller": "lineChart",
+          "callee": "(padT + innerH).toFixed",
+          "lineNumber": 126
+        },
+        {
+          "caller": "lineChart",
+          "callee": "pts.forEach",
+          "lineNumber": 129
+        },
+        {
+          "caller": "lineChart",
+          "callee": "p[0].toFixed",
+          "lineNumber": 130
+        },
+        {
+          "caller": "lineChart",
+          "callee": "p[1].toFixed",
+          "lineNumber": 130
+        },
+        {
+          "caller": "lineChart",
+          "callee": "esc",
+          "lineNumber": 130
+        },
+        {
+          "caller": "lineChart",
+          "callee": "esc",
+          "lineNumber": 130
+        },
+        {
+          "caller": "lineChart",
+          "callee": "nf",
+          "lineNumber": 130
+        },
+        {
+          "caller": "lineChart",
+          "callee": "esc",
+          "lineNumber": 130
+        },
+        {
+          "caller": "lineChart",
+          "callee": "labels.forEach",
+          "lineNumber": 133
+        },
+        {
+          "caller": "lineChart",
+          "callee": "xAt(i).toFixed",
+          "lineNumber": 135
+        },
+        {
+          "caller": "lineChart",
+          "callee": "xAt",
+          "lineNumber": 135
+        },
+        {
+          "caller": "lineChart",
+          "callee": "esc",
+          "lineNumber": 135
+        },
+        {
+          "caller": "lineChart",
+          "callee": "series.forEach",
+          "lineNumber": 138
+        },
+        {
+          "caller": "lineChart",
+          "callee": "esc",
+          "lineNumber": 140
+        },
+        {
+          "caller": "donutChart",
+          "callee": "items.reduce",
+          "lineNumber": 150
+        },
+        {
+          "caller": "donutChart",
+          "callee": "Math.abs",
+          "lineNumber": 150
+        },
+        {
+          "caller": "donutChart",
+          "callee": "Number",
+          "lineNumber": 150
+        },
+        {
+          "caller": "donutChart",
+          "callee": "items.forEach",
+          "lineNumber": 159
+        },
+        {
+          "caller": "donutChart",
+          "callee": "Math.abs",
+          "lineNumber": 160
+        },
+        {
+          "caller": "donutChart",
+          "callee": "Number",
+          "lineNumber": 160
+        },
+        {
+          "caller": "donutChart",
+          "callee": "(len - 2).toFixed",
+          "lineNumber": 164
+        },
+        {
+          "caller": "donutChart",
+          "callee": "(circ - len + 2).toFixed",
+          "lineNumber": 164
+        },
+        {
+          "caller": "donutChart",
+          "callee": "(-offset).toFixed",
+          "lineNumber": 165
+        },
+        {
+          "caller": "donutChart",
+          "callee": "esc",
+          "lineNumber": 166
+        },
+        {
+          "caller": "donutChart",
+          "callee": "nf",
+          "lineNumber": 166
+        },
+        {
+          "caller": "donutChart",
+          "callee": "esc",
+          "lineNumber": 166
+        },
+        {
+          "caller": "donutChart",
+          "callee": "((v / total) * 100).toFixed",
+          "lineNumber": 166
+        },
+        {
+          "caller": "donutChart",
+          "callee": "esc",
+          "lineNumber": 171
+        },
+        {
+          "caller": "donutChart",
+          "callee": "esc",
+          "lineNumber": 174
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "items.reduce",
+          "lineNumber": 182
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "Math.abs",
+          "lineNumber": 182
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "Number",
+          "lineNumber": 182
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "items\n    .map((it) => {\n      const v = Math.abs(Number(it.value) || 0);\n      const p = sum ? ((v / sum) * 100).toFixed(1) : '0.0';\n      return `<div class=\"legend-row\">\n        <span class=\"legend-dot\" style=\"background:${it.color}\"></span>\n        <span class=\"legend-name\">${esc(it.name)}</span>\n        <span class=\"legend-bar\"><i style=\"width:${p}%;background:${it.color}\"></i></span>\n        <span class=\"legend-pct\">${p}%</span>\n        <span class=\"legend-val\">${nf(v)}${esc(valueUnit)}</span>\n      </div>`;\n    })\n    .join",
+          "lineNumber": 183
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "items\n    .map",
+          "lineNumber": 183
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "Math.abs",
+          "lineNumber": 185
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "Number",
+          "lineNumber": 185
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "((v / sum) * 100).toFixed",
+          "lineNumber": 186
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "esc",
+          "lineNumber": 189
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "nf",
+          "lineNumber": 192
+        },
+        {
+          "caller": "donutLegend",
+          "callee": "esc",
+          "lineNumber": 192
+        },
+        {
+          "caller": "rankBars",
+          "callee": "Math.max",
+          "lineNumber": 201
+        },
+        {
+          "caller": "rankBars",
+          "callee": "items.map",
+          "lineNumber": 201
+        },
+        {
+          "caller": "rankBars",
+          "callee": "Math.abs",
+          "lineNumber": 201
+        },
+        {
+          "caller": "rankBars",
+          "callee": "Number",
+          "lineNumber": 201
+        },
+        {
+          "caller": "rankBars",
+          "callee": "items\n    .map(\n      (it, idx) => `<div class=\"rank-row\">\n      <span class=\"rank-idx\">${idx + 1}</span>\n      <span class=\"rank-name\" title=\"${esc(it.name)}\">${esc(it.name)}</span>\n      <span class=\"rank-track\"><i style=\"width:${Math.max((Math.abs(it.value) / max) * 100, 1.5).toFixed(1)}%;background:${it.color || C.primary}\"></i></span>\n      <span class=\"rank-val\">${nf(it.value)}${esc(valueUnit)}</span>\n    </div>`\n    )\n    .join",
+          "lineNumber": 202
+        },
+        {
+          "caller": "rankBars",
+          "callee": "items\n    .map",
+          "lineNumber": 202
+        },
+        {
+          "caller": "rankBars",
+          "callee": "esc",
+          "lineNumber": 206
+        },
+        {
+          "caller": "rankBars",
+          "callee": "esc",
+          "lineNumber": 206
+        },
+        {
+          "caller": "rankBars",
+          "callee": "Math.max((Math.abs(it.value) / max) * 100, 1.5).toFixed",
+          "lineNumber": 207
+        },
+        {
+          "caller": "rankBars",
+          "callee": "Math.max",
+          "lineNumber": 207
+        },
+        {
+          "caller": "rankBars",
+          "callee": "Math.abs",
+          "lineNumber": 207
+        },
+        {
+          "caller": "rankBars",
+          "callee": "nf",
+          "lineNumber": 208
+        },
+        {
+          "caller": "rankBars",
+          "callee": "esc",
+          "lineNumber": 208
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "require",
+          "lineNumber": 222
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "month.split('-').map",
+          "lineNumber": 223
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "month.split",
+          "lineNumber": 223
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "daysInMonth",
+          "lineNumber": 224
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "firstWeekday",
+          "lineNumber": 225
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "Math.max",
+          "lineNumber": 226
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "days.map",
+          "lineNumber": 226
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "days.map",
+          "lineNumber": 227
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "Math.ceil",
+          "lineNumber": 229
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "['日', '一', '二', '三', '四', '五', '六'].forEach",
+          "lineNumber": 234
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "Math.floor",
+          "lineNumber": 238
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "String(dayNum).padStart",
+          "lineNumber": 244
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "String",
+          "lineNumber": 244
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "map.get",
+          "lineNumber": 245
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "Math.min",
+          "lineNumber": 246
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "(0.06 + intensity * 0.16).toFixed",
+          "lineNumber": 247
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "(y0 + h - 18).toFixed",
+          "lineNumber": 252
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "fmtAmount",
+          "lineNumber": 252
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "(y0 + h - 6).toFixed",
+          "lineNumber": 253
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "fmtAmount",
+          "lineNumber": 253
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "relDate",
+          "lineNumber": 255
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "fmtAmount",
+          "lineNumber": 255
+        },
+        {
+          "caller": "calendarHeatmap",
+          "callee": "fmtAmount",
+          "lineNumber": 255
+        },
+        {
+          "caller": "progressBar",
+          "callee": "Math.min",
+          "lineNumber": 264
+        },
+        {
+          "caller": "progressBar",
+          "callee": "p.toFixed",
+          "lineNumber": 267
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 9,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/routes/about.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 73,
+      "nonEmptyLines": 67,
+      "functions": [
+        {
+          "name": "safeSize",
+          "startLine": 16,
+          "endLine": 18,
+          "params": [
+            "p"
+          ]
+        },
+        {
+          "name": "dirSize",
+          "startLine": 20,
+          "endLine": 30,
+          "params": [
+            "dir"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "safeSize",
+          "callee": "fs.statSync",
+          "lineNumber": 17
+        },
+        {
+          "caller": "dirSize",
+          "callee": "fs.readdirSync",
+          "lineNumber": 23
+        },
+        {
+          "caller": "dirSize",
+          "callee": "path.join",
+          "lineNumber": 24
+        },
+        {
+          "caller": "dirSize",
+          "callee": "f.isDirectory",
+          "lineNumber": 25
+        },
+        {
+          "caller": "dirSize",
+          "callee": "dirSize",
+          "lineNumber": 25
+        },
+        {
+          "caller": "dirSize",
+          "callee": "fs.statSync",
+          "lineNumber": 26
+        },
+        {
+          "caller": "fmtSize",
+          "callee": "(n / 1073741824).toFixed",
+          "lineNumber": 51
+        },
+        {
+          "caller": "fmtSize",
+          "callee": "(n / 1048576).toFixed",
+          "lineNumber": 52
+        },
+        {
+          "caller": "fmtSize",
+          "callee": "(n / 1024).toFixed",
+          "lineNumber": 53
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 2,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/routes/auth.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 191,
+      "nonEmptyLines": 168,
+      "functions": [
+        {
+          "name": "safeNext",
+          "startLine": 12,
+          "endLine": 16,
+          "params": [
+            "next"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "safeNext",
+          "callee": "next.startsWith",
+          "lineNumber": 14
+        },
+        {
+          "caller": "safeNext",
+          "callee": "next.startsWith",
+          "lineNumber": 14
+        },
+        {
+          "caller": "fail",
+          "callee": "res.status(400).render",
+          "lineNumber": 90
+        },
+        {
+          "caller": "fail",
+          "callee": "res.status",
+          "lineNumber": 90
+        },
+        {
+          "caller": "fail",
+          "callee": "res.status(400).render",
+          "lineNumber": 129
+        },
+        {
+          "caller": "fail",
+          "callee": "res.status",
+          "lineNumber": 129
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "test/verify-about.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 87,
+      "nonEmptyLines": 76,
+      "functions": [
+        {
+          "name": "check",
+          "startLine": 16,
+          "endLine": 19,
+          "params": [
+            "name",
+            "ok"
+          ]
+        },
+        {
+          "name": "req",
+          "startLine": 22,
+          "endLine": 35,
+          "params": [
+            "method",
+            "p"
+          ]
+        },
+        {
+          "name": "csrfOf",
+          "startLine": 37,
+          "endLine": 37,
+          "params": [
+            "html"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 17
+        },
+        {
+          "caller": "check",
+          "callee": "console.log",
+          "lineNumber": 18
+        },
+        {
+          "caller": "req",
+          "callee": "fetch",
+          "lineNumber": 26
+        },
+        {
+          "caller": "req",
+          "callee": "new URLSearchParams(form).toString",
+          "lineNumber": 28
+        },
+        {
+          "caller": "req",
+          "callee": "res.headers.getSetCookie",
+          "lineNumber": 31
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map((c) => c.split(';')[0]).join",
+          "lineNumber": 32
+        },
+        {
+          "caller": "req",
+          "callee": "sc.map",
+          "lineNumber": 32
+        },
+        {
+          "caller": "req",
+          "callee": "c.split",
+          "lineNumber": 32
+        },
+        {
+          "caller": "req",
+          "callee": "Buffer.from",
+          "lineNumber": 33
+        },
+        {
+          "caller": "req",
+          "callee": "res.arrayBuffer",
+          "lineNumber": 33
+        },
+        {
+          "caller": "req",
+          "callee": "buf.toString",
+          "lineNumber": 34
+        },
+        {
+          "caller": "csrfOf",
+          "callee": "html.match",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 3,
+        "classCount": 0
+      }
+    }
+  ]
+}

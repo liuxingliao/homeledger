@@ -2,7 +2,7 @@
   <div class="stat">
     <div class="label">别人欠我（应收）</div>
     <div class="value amount income"><%= helpers.money(receivable) %></div>
-    <div class="delta">未结清的借出款项</div>
+    <div class="delta">未结清的代付款项</div>
   </div>
   <div class="stat">
     <div class="label">我欠别人（应付）</div>
@@ -21,7 +21,7 @@
     <div class="card">
       <div class="card-head"><h2>台账明细</h2><span class="muted small">近 3 天到期的会自动提醒</span></div>
       <% if (!debts.length) { %>
-        <div class="empty"><span class="big">🤝</span>还没有借贷记录<div class="small mt8">也可以直接记「借出 / 借入」，系统会自动汇总到这里</div></div>
+        <div class="empty"><span class="big">🤝</span>还没有借贷记录<div class="small mt8">也可以直接记「代付 / 借入」，系统会自动汇总到这里</div></div>
       <% } %>
       <% debts.forEach(function(d){ %>
         <div style="border-bottom:1px dashed var(--border);padding:10px 0">
@@ -108,7 +108,7 @@
         <button class="btn btn-primary btn-block" type="submit">保存</button>
       </form>
       <div class="notice small mt12">
-        勾选「生成流水」时，系统会记一笔「借出 / 借入」，钱会从账户里进出；关闭则只登记台账不影响余额。
+        勾选「生成流水」时，系统会记一笔「代付 / 借入」，钱会从账户里进出；关闭则只登记台账不影响余额。
       </div>
     </div>
   </div>

@@ -1,0 +1,21 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {"path": "src/views/transactions.ejs", "language": "ejs", "sizeLines": 138, "fileCategory": "code"},
+    {"path": "src/views/txn-form.ejs", "language": "ejs", "sizeLines": 298, "fileCategory": "code"},
+    {"path": "test/run-all.js", "language": "javascript", "sizeLines": 86, "fileCategory": "code"},
+    {"path": "test/selfcheck-static.js", "language": "javascript", "sizeLines": 71, "fileCategory": "code"},
+    {"path": "test/verify-ai-attachments.js", "language": "javascript", "sizeLines": 217, "fileCategory": "code"},
+    {"path": "test/verify-ai-chat.js", "language": "javascript", "sizeLines": 118, "fileCategory": "code"},
+    {"path": "test/verify-settings-admin.js", "language": "javascript", "sizeLines": 140, "fileCategory": "code"}
+  ],
+  "batchImportData": {
+    "src/views/transactions.ejs": [],
+    "src/views/txn-form.ejs": [],
+    "test/run-all.js": [],
+    "test/selfcheck-static.js": [],
+    "test/verify-ai-attachments.js": [],
+    "test/verify-ai-chat.js": [],
+    "test/verify-settings-admin.js": []
+  }
+}

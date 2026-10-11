@@ -125,7 +125,7 @@ router.post('/accounts/:id/delete', auth.requireLogin, auth.requireLedgerWrite, 
   res.redirect('/accounts');
 });
 
-/** 余额调整：生成一笔 adjust 交易，把账面余额拉平到实际值 */
+/** 负债变更：生成一笔 adjust 交易，把账面余额拉平到实际值 */
 router.post('/accounts/:id/adjust', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
   const ledgerId = Number(res.locals.ledger.id);
   const id = Number(req.params.id);
@@ -139,7 +139,7 @@ router.post('/accounts/:id/adjust', auth.requireLogin, auth.requireLedgerWrite, 
     amount_cents: delta,
     account_id: id,
     txn_date: req.body.adjust_date || todayStr(),
-    note: `余额调整：${u.fmtAmount(acc.balance_cents)} → ${u.fmtAmount(actual)}${req.body.note ? ' · ' + req.body.note : ''}`,
+    note: `负债变更：${u.fmtAmount(acc.balance_cents)} → ${u.fmtAmount(actual)}${req.body.note ? ' · ' + req.body.note : ''}`,
     source: 'manual',
   });
   auth.audit(req, 'account.adjust', { entity: 'account', entityId: id, ledgerId, detail: String(delta) });

@@ -1,0 +1,259 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/views/budgets.ejs",
+      "type": "file",
+      "name": "budgets.ejs",
+      "filePath": "src/views/budgets.ejs",
+      "summary": "预算管理页：按分类展示各预算的使用进度条与剩余额度，提供新建、编辑、启停和删除预算的表单，无预算时给出引导空态。",
+      "tags": ["视图模板", "预算", "表单", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/calendar.ejs",
+      "type": "file",
+      "name": "calendar.ejs",
+      "filePath": "src/views/calendar.ejs",
+      "summary": "日历视图页：以月历形式展示每日收支，并呈现本月支出 TOP 排行与消费热力分布。",
+      "tags": ["视图模板", "日历", "统计图表", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/categories.ejs",
+      "type": "file",
+      "name": "categories.ejs",
+      "filePath": "src/views/categories.ejs",
+      "summary": "分类管理页：列出收支分类并支持新建与删除，按收入/支出区分展示。",
+      "tags": ["视图模板", "分类管理", "表单", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/dashboard.ejs",
+      "type": "file",
+      "name": "dashboard.ejs",
+      "filePath": "src/views/dashboard.ejs",
+      "summary": "总览首页：聚合今日速览、收支趋势与支出构成图表、预算进度、账户余额、订阅扣费、借贷、储蓄目标、待报销、即将自动记账及最近记录等卡片，并通过 include 复用 txn-list 局部模板渲染最近交易。",
+      "tags": ["视图模板", "仪表盘", "统计图表", "聚合页", "entry-point"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/views/debts.ejs",
+      "type": "file",
+      "name": "debts.ejs",
+      "filePath": "src/views/debts.ejs",
+      "summary": "借贷台账页：提供新增借贷表单与台账明细列表，支持对单笔借贷执行结算和删除操作。",
+      "tags": ["视图模板", "借贷台账", "表单", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/error.ejs",
+      "type": "file",
+      "name": "error.ejs",
+      "filePath": "src/views/error.ejs",
+      "summary": "通用错误页片段：渲染错误标题与提示信息，并提供返回上一页和回到总览的操作链接，被各路由以 4xx/5xx 状态复用。",
+      "tags": ["视图模板", "错误页", "页面"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/views/export.ejs",
+      "type": "file",
+      "name": "export.ejs",
+      "filePath": "src/views/export.ejs",
+      "summary": "数据导出页：提供 CSV 账单与完整 JSON 数据导出入口，并附数据库文件备份、从备份恢复及 NAS 部署备份建议等运维说明。",
+      "tags": ["视图模板", "数据导出", "备份", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/goals.ejs",
+      "type": "file",
+      "name": "goals.ejs",
+      "filePath": "src/views/goals.ejs",
+      "summary": "储蓄目标页：展示各目标的存入进度，支持新建目标、向目标存入金额和删除目标。",
+      "tags": ["视图模板", "储蓄目标", "表单", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/import.ejs",
+      "type": "file",
+      "name": "import.ejs",
+      "filePath": "src/views/import.ejs",
+      "summary": "账单导入页：上传支付宝/微信账单进行导入，并展示导入历史记录。",
+      "tags": ["视图模板", "账单导入", "表单", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/layout-blank.ejs",
+      "type": "file",
+      "name": "layout-blank.ejs",
+      "filePath": "src/views/layout-blank.ejs",
+      "summary": "认证页独立布局：无侧边栏的极简外壳，渲染站点品牌、flash 提示与页面 body，专用于登录、注册和初始化页。",
+      "tags": ["视图模板", "布局", "认证页", "外壳"],
+      "complexity": "simple",
+      "languageNotes": "通过 body 变量接收子视图渲染结果，与 layout.ejs 一起构成零依赖的双布局机制。"
+    },
+    {
+      "id": "file:src/views/layout.ejs",
+      "type": "file",
+      "name": "layout.ejs",
+      "filePath": "src/views/layout.ejs",
+      "summary": "全站主布局：包含侧边栏导航、账本切换表单、主题（明暗）设置、CSRF meta 与页面 body 容器，所有主功能页均套用此外壳。",
+      "tags": ["视图模板", "布局", "导航", "外壳", "entry-point"],
+      "complexity": "moderate",
+      "languageNotes": "配合 server.js 中自定义 res.render 包装实现的零依赖布局机制：视图先渲染为 body 再嵌入本模板。"
+    },
+    {
+      "id": "file:src/views/ledgers.ejs",
+      "type": "file",
+      "name": "ledgers.ejs",
+      "filePath": "src/views/ledgers.ejs",
+      "summary": "账本管理页：支持新建账本、编辑、归档与删除，并为家庭成员/个人等不同用途的账本提供切换入口。",
+      "tags": ["视图模板", "账本管理", "表单", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/login.ejs",
+      "type": "file",
+      "name": "login.ejs",
+      "filePath": "src/views/login.ejs",
+      "summary": "登录页：用户名密码登录表单，登录失败时回显错误并保留用户名，登录成功后跳转至 next 指定页面。",
+      "tags": ["视图模板", "登录", "表单", "认证页"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/views/members.ejs",
+      "type": "file",
+      "name": "members.ejs",
+      "filePath": "src/views/members.ejs",
+      "summary": "成员管理页：展示账本成员列表与角色权限说明，支持邀请新成员、修改成员角色和移除成员，并列出邀请记录。",
+      "tags": ["视图模板", "成员管理", "权限", "表单"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/no-ledger.ejs",
+      "type": "file",
+      "name": "no-ledger.ejs",
+      "filePath": "src/views/no-ledger.ejs",
+      "summary": "无账本引导页片段：提示用户尚无账本并引导前往创建账本页面。",
+      "tags": ["视图模板", "空态页", "引导"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/views/notifications.ejs",
+      "type": "file",
+      "name": "notifications.ejs",
+      "filePath": "src/views/notifications.ejs",
+      "summary": "通知中心页：列出站内通知，支持单条标记已读与全部已读。",
+      "tags": ["视图模板", "通知", "页面"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/views/partials/txn-list.ejs",
+      "type": "file",
+      "name": "txn-list.ejs",
+      "filePath": "src/views/partials/txn-list.ejs",
+      "summary": "交易列表局部模板：按日期分组渲染收支明细（复用 helpers 的日期与金额格式化），空态给出记账引导，bulk 模式下为批量操作提供勾选框。",
+      "tags": ["视图模板", "局部模板", "交易列表", "复用组件"],
+      "complexity": "moderate",
+      "languageNotes": "通过 include('partials/txn-list', { groups, bulk }) 传入数据，被 dashboard、search、transactions 等页复用。"
+    },
+    {
+      "id": "file:src/views/recurring.ejs",
+      "type": "file",
+      "name": "recurring.ejs",
+      "filePath": "src/views/recurring.ejs",
+      "summary": "周期账单页：管理房租等固定周期记账项，支持新建、启停、立即执行一次和删除。",
+      "tags": ["视图模板", "周期账单", "表单", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/register.ejs",
+      "type": "file",
+      "name": "register.ejs",
+      "filePath": "src/views/register.ejs",
+      "summary": "注册页：创建账号的表单（用户名、昵称、邮箱、密码），校验失败时回显错误与已填内容。",
+      "tags": ["视图模板", "注册", "表单", "认证页"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/views/reports.ejs",
+      "type": "file",
+      "name": "reports.ejs",
+      "filePath": "src/views/reports.ejs",
+      "summary": "报表页：提供净资产走势、近 12 个月收支趋势、每日支出走势、分类排行榜、成员消费对比、星期分布、同期对比与账户余额一览等多维统计图表。",
+      "tags": ["视图模板", "报表", "统计图表", "页面"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/views/search.ejs",
+      "type": "file",
+      "name": "search.ejs",
+      "filePath": "src/views/search.ejs",
+      "summary": "搜索页：按关键字及筛选条件检索交易，搜索结果通过 include 复用 txn-list 局部模板渲染。",
+      "tags": ["视图模板", "搜索", "表单", "页面"],
+      "complexity": "moderate"
+    },
+    {
+      "id": "file:src/views/settings.ejs",
+      "type": "file",
+      "name": "settings.ejs",
+      "filePath": "src/views/settings.ejs",
+      "summary": "设置中心页：聚合个人资料、修改密码、站点与安全设置、AI 截图记账配置、开放 API Token 管理、用户管理、后台任务手动触发、操作审计日志与运行信息等多个管理面板。",
+      "tags": ["视图模板", "设置中心", "管理后台", "表单"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/views/setup.ejs",
+      "type": "file",
+      "name": "setup.ejs",
+      "filePath": "src/views/setup.ejs",
+      "summary": "首次初始化页：引导创建管理员账号并设置站点名称，仅在系统未初始化时展示。",
+      "tags": ["视图模板", "初始化", "表单", "认证页"],
+      "complexity": "simple"
+    },
+    {
+      "id": "file:src/views/subscriptions.ejs",
+      "type": "file",
+      "name": "subscriptions.ejs",
+      "filePath": "src/views/subscriptions.ejs",
+      "summary": "订阅管理页：以卡片展示各订阅项并支持立即扣费、跳过、取消、启停和删除，含新建/编辑表单与历史扣费记录列表。",
+      "tags": ["视图模板", "订阅管理", "表单", "页面"],
+      "complexity": "complex"
+    },
+    {
+      "id": "file:src/views/tags.ejs",
+      "type": "file",
+      "name": "tags.ejs",
+      "filePath": "src/views/tags.ejs",
+      "summary": "标签管理页：列出全部标签，支持新建与删除标签。",
+      "tags": ["视图模板", "标签管理", "表单"],
+      "complexity": "simple"
+    }
+  ],
+  "edges": [
+    { "source": "file:src/views/budgets.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/calendar.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/categories.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/dashboard.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/debts.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/error.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/export.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/goals.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/import.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/ledgers.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/members.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/no-ledger.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/notifications.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/recurring.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/reports.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/search.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/settings.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/subscriptions.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/tags.ejs", "target": "file:src/views/layout.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/login.ejs", "target": "file:src/views/layout-blank.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/register.ejs", "target": "file:src/views/layout-blank.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/setup.ejs", "target": "file:src/views/layout-blank.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/dashboard.ejs", "target": "file:src/views/partials/txn-list.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/search.ejs", "target": "file:src/views/partials/txn-list.ejs", "type": "depends_on", "direction": "forward", "weight": 0.6 },
+    { "source": "file:src/views/layout-blank.ejs", "target": "file:src/views/layout.ejs", "type": "related", "direction": "forward", "weight": 0.5 }
+  ]
+}

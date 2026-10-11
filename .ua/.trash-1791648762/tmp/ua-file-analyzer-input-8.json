@@ -1,0 +1,13 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {"path": "README.md", "language": "markdown", "sizeLines": 373, "fileCategory": "docs"},
+    {"path": "docker-compose-bak.yml", "language": "yaml", "sizeLines": 34, "fileCategory": "config"},
+    {"path": "package.json", "language": "json", "sizeLines": 19, "fileCategory": "config"}
+  ],
+  "batchImportData": {
+    "README.md": [],
+    "docker-compose-bak.yml": [],
+    "package.json": []
+  }
+}

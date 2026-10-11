@@ -1,0 +1,99 @@
+{
+  "projectRoot": "C:/Users/Administrator/Desktop/git/homeledger",
+  "batchFiles": [
+    {
+      "path": "src/db.js",
+      "language": "javascript",
+      "sizeLines": 706,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/ai.js",
+      "language": "javascript",
+      "sizeLines": 669,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/lib/importers.js",
+      "language": "javascript",
+      "sizeLines": 291,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/admin.js",
+      "language": "javascript",
+      "sizeLines": 720,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/ai.js",
+      "language": "javascript",
+      "sizeLines": 257,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/routes/openapi.js",
+      "language": "javascript",
+      "sizeLines": 301,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/verify-ai-image.js",
+      "language": "javascript",
+      "sizeLines": 102,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/verify-model-list.js",
+      "language": "javascript",
+      "sizeLines": 128,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/db.js": [],
+    "src/lib/ai.js": [
+      "src/db.js",
+      "src/lib/util.js"
+    ],
+    "src/lib/importers.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/admin.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/importers.js",
+      "src/lib/scheduler.js",
+      "src/lib/txn.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/ai.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/attachments.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/txn.js"
+    ],
+    "src/routes/openapi.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/attachments.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/txn.js"
+    ],
+    "test/verify-ai-image.js": [
+      "src/db.js",
+      "src/lib/ai.js"
+    ],
+    "test/verify-model-list.js": [
+      "src/db.js",
+      "src/lib/ai.js"
+    ]
+  }
+}

@@ -1,0 +1,155 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 6,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 6,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 6
+    }
+  },
+  "results": [
+    {
+      "path": ".claude/commands/opsx/apply.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 202,
+      "nonEmptyLines": 154,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": ".claude/commands/opsx/archive.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 264,
+      "nonEmptyLines": 200,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": ".claude/commands/opsx/explore.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 239,
+      "nonEmptyLines": 172,
+      "sections": [
+        {
+          "heading": "The Stance",
+          "level": 2,
+          "line": 37
+        },
+        {
+          "heading": "Planning a Change",
+          "level": 2,
+          "line": 48
+        },
+        {
+          "heading": "What You Might Do",
+          "level": 2,
+          "line": 72
+        },
+        {
+          "heading": "OpenSpec Awareness",
+          "level": 2,
+          "line": 122
+        },
+        {
+          "heading": "Check for context",
+          "level": 3,
+          "line": 126
+        },
+        {
+          "heading": "When no change exists",
+          "level": 3,
+          "line": 154
+        },
+        {
+          "heading": "When a change exists",
+          "level": 3,
+          "line": 170
+        },
+        {
+          "heading": "What You Don't Have To Do",
+          "level": 2,
+          "line": 205
+        },
+        {
+          "heading": "Ending Discovery",
+          "level": 2,
+          "line": 216
+        },
+        {
+          "heading": "Guardrails",
+          "level": 2,
+          "line": 229
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 10
+      }
+    },
+    {
+      "path": ".claude/commands/opsx/propose.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 170,
+      "nonEmptyLines": 125,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": ".claude/commands/opsx/sync.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 286,
+      "nonEmptyLines": 214,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    },
+    {
+      "path": ".claude/commands/opsx/update.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 105,
+      "nonEmptyLines": 80,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 0
+      }
+    }
+  ]
+}

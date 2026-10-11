@@ -1,0 +1,100 @@
+[
+  {
+    "order": 1,
+    "title": "项目概览",
+    "description": "从 README.md 开始了解家账簿 HomeLedger：一个自托管的家庭记账系统，支持 14 种交易类型、AI 截图/文本自动记账、家庭多人共享与开放 API。技术形态是 Node.js 22+ / Express / EJS 的纯后端 SSR 应用，数据自持于单文件 SQLite，零原生依赖、无前端构建工具。README 还给出三种部署方式与 7 套件回归测试的运行方法，为后续每一步提供路线图。",
+    "nodeIds": ["document:README.md"]
+  },
+  {
+    "order": 2,
+    "title": "应用入口与启动流程",
+    "description": "server.js 是全服务端唯一入口：初始化 SQLite 并自动创建首个管理员，配置 Express 会话、CSRF 与静态资源，挂载全部业务路由，还实现了零依赖的 EJS 布局机制与优雅停机。package.json 印证了项目的极简哲学——运行时依赖仅 express、express-session 与 ejs 三个包，入口即 server.js。",
+    "nodeIds": ["file:server.js", "config:package.json"],
+    "languageLesson": "项目要求 Node >= 22.5.0，因为依赖 Node 内置的 node:sqlite 模块——无需编译原生扩展即可操作 SQLite，这是「零原生依赖」得以成立的关键。"
+  },
+  {
+    "order": 3,
+    "title": "数据持久层",
+    "description": "db.js 是整个应用唯一的数据库访问入口（全图 fan-in 最高，被 24 个模块依赖）：定义 users/ledgers/transactions/categories 等全套建表 DDL，提供 all/get/run/tx 查询封装与轻量列迁移（ensureColumn），并内置系统分类、汇率种子数据和账户余额重算等核心领域函数。后续所有业务模块都构建在这一层之上。",
+    "nodeIds": ["file:src/db.js"],
+    "languageLesson": "ensureColumn 式「轻量列迁移」是单文件 SQLite 应用的常见模式：启动时检查表结构并按需 ALTER TABLE 补列，避免引入独立的迁移框架，同时保证老库升级无痛。"
+  },
+  {
+    "order": 4,
+    "title": "通用工具库与金额表示",
+    "description": "util.js 被全项目几乎所有模块复用（fan-in 17、fan-out 42），汇集了金额格式化与解析、中文日期/月份运算、HTML 转义、稳定取色、头像 URL 等纯函数。它是理解后续各业务模块的「词汇表」——尤其是金额的处理方式，贯穿记账、分摊、报表每一条链路。",
+    "nodeIds": ["file:src/lib/util.js"],
+    "languageLesson": "金额以「分」为单位的整数存储，避免浮点数精度误差——这是记账类系统的经典做法：解析时乘 100 取整，展示时再格式化回元。"
+  },
+  {
+    "order": 5,
+    "title": "认证、会话与安全",
+    "description": "auth.js 是安全核心：scrypt 密码哈希与恒时校验、SQLite 会话存储、登录限流、审计日志、CSRF 防护，以及账本成员角色权限中间件。routes/auth.js 则把这套机制暴露为登录（含失败锁定）、登出、注册、首次初始化 /setup 与邀请码加入账本等端点。理解了这一步，才能明白后续每个路由外层的权限防线。",
+    "nodeIds": ["file:src/lib/auth.js", "file:src/routes/auth.js"],
+    "languageLesson": "恒时比较（timing-safe comparison）用于密码与会话校验，保证比对耗时与内容无关，防止时序侧信道攻击逐字节猜测密钥。"
+  },
+  {
+    "order": 6,
+    "title": "记账中枢：交易业务逻辑",
+    "description": "txn.js 是全站记账逻辑的中枢（fan-out 48，全项目最广）：覆盖交易 CRUD、分页筛选、标签、AA 分摊、报销、债务同步，以及汇总/分类/成员/净资产趋势等统计查询。routes/transactions.js 展示了典型的分层协作：先用 formdata.js 把表单解析为标准账目数据，再委托 txn 处理业务。formdata.js 同时负责从 SQLite 加载分类树、账户、成员、标签等下拉数据，被多个路由共用。",
+    "nodeIds": ["file:src/lib/txn.js", "file:src/lib/formdata.js", "file:src/routes/transactions.js"]
+  },
+  {
+    "order": 7,
+    "title": "SSR 视图与交易表单",
+    "description": "这是纯后端 SSR 架构的界面侧：layout.ejs 是全站主布局（fan-in 21，被 21 个页面套用），包含侧边栏导航、账本切换、明暗主题与 CSRF meta。txn-form.ejs 则是最复杂的表单视图，覆盖 7 种基础类型与 7 种扩展类型（报销、退款、投资买卖等）的切换，内嵌分类九宫格、AA 分账行与多币种/汇率折叠区。第 6 步的 formdata 数据正是渲染进这些模板的。",
+    "nodeIds": ["file:src/views/layout.ejs", "file:src/views/txn-form.ejs"],
+    "languageLesson": "EJS 模板通过 include 复用局部模板（如 txn-list），而项目在 server.js 中自实现了布局机制——所有页面套用同一外壳，不依赖任何模板布局库。"
+  },
+  {
+    "order": 8,
+    "title": "前端交互与样式",
+    "description": "public/js/app.js 是浏览器端唯一主脚本：IIFE 封装的无依赖原生 JS，负责记账表单类型切换与拆分均摊、AI 截图识别页、导入预览、批量操作、灯箱等全站交互。app.css 用 CSS 变量定义主题色与明暗外观，是全站唯一样式表；manifest.webmanifest 则让应用可安装为 PWA。没有构建工具、没有框架，全靠服务端渲染加少量原生脚本。",
+    "nodeIds": ["file:public/js/app.js", "file:public/css/app.css", "file:public/manifest.webmanifest"],
+    "languageLesson": "IIFE（立即执行函数表达式）配合模块化函数挂载，是不用打包工具时隔离全局作用域的经典手法——所有交互逻辑收敛在一个闭包内，避免污染 window。"
+  },
+  {
+    "order": 9,
+    "title": "AI 自动记账引擎",
+    "description": "ai.js 是 AI 记账的核心：从 settings 读取 OpenAI 兼容配置，把账单截图/文本经 chat completions 接口识别为结构化交易；未配置模型时内置的中文关键词分类、日期与金额提取规则引擎兜底，保证纯离线可用。attachments.js 把截图落盘到 uploads 目录并在 SQLite 登记（含路径穿越校验），支撑「账单原图随记录存档」；routes/ai.js 则串起识别请求、草稿确认批量入库与 AI 设置页面。",
+    "nodeIds": ["file:src/lib/ai.js", "file:src/lib/attachments.js", "file:src/routes/ai.js"]
+  },
+  {
+    "order": 10,
+    "title": "开放 API 与 AI 助手集成",
+    "description": "routes/openapi.js 提供基于 Bearer Token 鉴权的开放 API：令牌管理、/api/open/v1 下的记一笔、AI 截图/文本识别（草稿与确认模式）与最近交易查询，供第三方与自动化脚本调用。openclaw-skill 的 SKILL.md 则是一个现成的消费示例——AI 助手通过环境变量传入 URL 与 Token，把截图转 dataURL 或口述消费自动记入账簿。这是「AI 记账」能力从网页走向聊天机器人的桥梁。",
+    "nodeIds": ["file:src/routes/openapi.js", "document:openclaw-skill/homeledger-bookkeeping/SKILL.md"]
+  },
+  {
+    "order": 11,
+    "title": "报表图表与仪表盘",
+    "description": "charts.js 用纯字符串拼接在服务端生成 SVG 图表——柱状图、折线图、环形图、日历热力图、进度条，无需任何前端图表库、完全离线。routes/reports.js 解析时间范围后调用 txn 库产出十余项统计并渲染 reports.ejs（净资产走势、分类排行、成员对比等）。dashboard 路由同样复用这套数据链路，聚合当月收支、预算进度与订阅扣费等卡片渲染首页。",
+    "nodeIds": ["file:src/lib/charts.js", "file:src/routes/reports.js", "file:src/views/reports.ejs"],
+    "languageLesson": "服务端 SVG 渲染把图表生成交给后端字符串拼接：数据即图形，浏览器零 JS、零图表库依赖，与项目「纯后端 SSR、完全离线」的定位高度一致。"
+  },
+  {
+    "order": 12,
+    "title": "账单导入与后台管理",
+    "description": "importers.js 自动识别支付宝、微信支付等账单格式与编码（UTF-8/GBK），解析表头并归一化为交易记录，导入时按 uid 去重、自动创建缺失账户，另提供标准 CSV 导出。routes/admin.js 是承载这些能力的后台枢纽——集中了设置页、成员管理、预算/定期记账维护、导入预览与执行、CSV 备份导出及系统管理。",
+    "nodeIds": ["file:src/lib/importers.js", "file:src/routes/admin.js"]
+  },
+  {
+    "order": 13,
+    "title": "理财规划与定时任务",
+    "description": "subscriptions.js 实现订阅管理业务：周期推进与首扣日计算、年化成本折算、到期自动扣费生成交易、试用转正与续费提醒。scheduler.js 则是定时调度器，由 server 启动时初始化，每日执行周期账单入账、订阅扣费、预算超支预警、借贷到期与储蓄目标提醒、过期数据清理。这让家账簿从「被动记账」升级为「主动提醒」的理财助手。",
+    "nodeIds": ["file:src/lib/subscriptions.js", "file:src/lib/scheduler.js"]
+  },
+  {
+    "order": 14,
+    "title": "测试与质量保障",
+    "description": "run-all.js 为 7 个 verify-* 端到端套件逐一启动干净的独立服务实例（独立 DATA_DIR、端口 8099），轮询 /healthz 就绪后运行并汇总结果，任一失败即退出码 1。selfcheck-static.js 做静态自检：编译全部 EJS 模板、语法检查、校验 package.json 与 CHANGELOG 版本一致性、检测悬空视图引用。零测试框架，全靠 Node 原生脚本。",
+    "nodeIds": ["file:test/run-all.js", "file:test/selfcheck-static.js"]
+  },
+  {
+    "order": 15,
+    "title": "部署与打包",
+    "description": "Dockerfile 基于node:22-slim 单阶段构建，以非 root 用户运行 server.js 并通过 HEALTHCHECK 探测 /healthz；docker-compose.yml 用预构建的 ghcr.io 镜像一条命令跑通，把 ./data 目录挂载持久化账本数据——备份即拷贝目录。packaging/fpk/README.md 则说明如何打成飞牛 fnOS 原生应用包（.fpk），覆盖 fnpack 与纯 Python 两条打包路径，让自托管延伸到 NAS 桌面。",
+    "nodeIds": ["service:Dockerfile", "service:docker-compose.yml", "document:packaging/fpk/README.md"],
+    "languageLesson": "HEALTHCHECK 让 Docker 主动探测 /healthz 判断容器健康状态；数据卷挂载（./data → /data）把有状态数据与无状态镜像分离，升级镜像不丢账目。"
+  }
+]

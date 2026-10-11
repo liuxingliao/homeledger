@@ -1,0 +1,16 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 0,
+  "edgesRestored": 16,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "All 323 nodes structurally valid: no missing id/summary/tags, no duplicates, no unknown types, no non-canonical complexity values.",
+    "Could-not-fix edge file:server.js -> file:package.json was already resolved by the script itself: the imports edge to config:package.json was recovered from the import map, and batch 8 provides the equivalent configures edge (config:package.json -> file:server.js). No action needed.",
+    "The 16 dropped tested_by edges were NOT orphan-endpoint drops as reported: all 16 had both endpoints present in the final node set. They were misclassified as prod<->prod pairs because test/verify-*.js files were not recognized as test nodes. All 16 are legitimate prod-file -> test-file relationships backed by batch data and were restored with their original attributes (direction forward, weight 0.5). 8 of the 16 pairs have no imports-edge coverage, so they would have been lost entirely.",
+    "Cross-batch import verification: all 97 importMap entries are represented by imports edges in the graph (checked file: and config: ID variants); 0 edges added.",
+    "Upstream observation: only 1 class node across 224 function nodes in a JS/Node project is unusual; either the codebase genuinely has few classes or batches under-extracted class nodes. Not fixable at merge level.",
+    "Final graph: 323 nodes, 632 edges (616 + 16 restored)."
+  ]
+}

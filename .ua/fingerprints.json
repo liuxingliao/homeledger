@@ -1,0 +1,3129 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "bf718f8748f002907bb6479c1bc96578d93fb7b6",
+  "generatedAt": "2026-10-10T16:12:32.658Z",
+  "files": {
+    ".claude/commands/opsx/apply.md": {
+      "filePath": ".claude/commands/opsx/apply.md",
+      "contentHash": "9a980fe310f04f662f8426c89a69c286cf764a73191c2541f0f281c11d97dbe0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 203,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/commands/opsx/archive.md": {
+      "filePath": ".claude/commands/opsx/archive.md",
+      "contentHash": "0c48963c41c06b12553b405cd87b0ce0af09b3a8d93dce27a8505fe32d8d88e6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 265,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/commands/opsx/explore.md": {
+      "filePath": ".claude/commands/opsx/explore.md",
+      "contentHash": "308878c7539da2b8754e03b840332a600520c74238c238c1dea54e54b3a36202",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 240,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/commands/opsx/propose.md": {
+      "filePath": ".claude/commands/opsx/propose.md",
+      "contentHash": "6cb69de2ff28d549ca6a49b0783dcf8013fc33ee42b8962b89f61c65d01ff027",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 171,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/commands/opsx/sync.md": {
+      "filePath": ".claude/commands/opsx/sync.md",
+      "contentHash": "a946e1a29b7421e1a6fd1fe1008f23c8b3739b8345f8487bbe1ffcf934fd0bec",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 287,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/commands/opsx/update.md": {
+      "filePath": ".claude/commands/opsx/update.md",
+      "contentHash": "341d2648a4686ea080e3db2af1ed25cd160da56d558eb9b127eee4f813a2c9b8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 106,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/skills/openspec-apply-change/SKILL.md": {
+      "filePath": ".claude/skills/openspec-apply-change/SKILL.md",
+      "contentHash": "e1c7b1a5dc403b511ebeb734e718b075ccab0ebdfe45fe180bb746ea0e730e6b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 207,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/skills/openspec-archive-change/SKILL.md": {
+      "filePath": ".claude/skills/openspec-archive-change/SKILL.md",
+      "contentHash": "0453cfa549b9d22007af5ab547b049b2f6d200224f6e6b4df24873bf659c0819",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 222,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/skills/openspec-explore/SKILL.md": {
+      "filePath": ".claude/skills/openspec-explore/SKILL.md",
+      "contentHash": "6d608a81e9d475684ff705e7f811167dc4434fdb8c3bc31c019ddefac6a5a589",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 355,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/skills/openspec-propose/SKILL.md": {
+      "filePath": ".claude/skills/openspec-propose/SKILL.md",
+      "contentHash": "aad01b96faad2790707e01adefb23ac85c3e646e52a62d554390ebdb76201e18",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 175,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/skills/openspec-sync-specs/SKILL.md": {
+      "filePath": ".claude/skills/openspec-sync-specs/SKILL.md",
+      "contentHash": "489cd9bd56e16248f7a19fb7331f95737adba78fa3aa270207b57c0d900d0e5c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 291,
+      "hasStructuralAnalysis": false
+    },
+    ".claude/skills/openspec-update-change/SKILL.md": {
+      "filePath": ".claude/skills/openspec-update-change/SKILL.md",
+      "contentHash": "a40a7d8e7181353f74ff2706589b6489233337253119ea127d2e6cca2c6ca625",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 110,
+      "hasStructuralAnalysis": false
+    },
+    ".ua/config.json": {
+      "filePath": ".ua/config.json",
+      "contentHash": "5d2ff006cff22c68edd4776249d562ea8c73915a61c6214eb85933865a9402e7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 4,
+      "hasStructuralAnalysis": false
+    },
+    "Dockerfile": {
+      "filePath": "Dockerfile",
+      "contentHash": "425063e9955af4f9e0ba43094f9ea7a287eac0d6aacd57f3d7ff17105701a514",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 30,
+      "hasStructuralAnalysis": false
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "1f0176ec9c4d88505a9488e427e36872da5f3a1702341ec78006b4f3509ae412",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 374,
+      "hasStructuralAnalysis": false
+    },
+    "docker-compose-bak.yml": {
+      "filePath": "docker-compose-bak.yml",
+      "contentHash": "a0e0b20d4b98126c9a9abeea7422ceff8d63363e643c4cae4ce5d155154b5757",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 35,
+      "hasStructuralAnalysis": false
+    },
+    "docker-compose.yml": {
+      "filePath": "docker-compose.yml",
+      "contentHash": "9c9a6c9b82a005f9ecf57ed7d7fb720ed8ddedf816391e62752061e30d6b19af",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 15,
+      "hasStructuralAnalysis": false
+    },
+    "openclaw-skill/homeledger-bookkeeping/SKILL.md": {
+      "filePath": "openclaw-skill/homeledger-bookkeeping/SKILL.md",
+      "contentHash": "5637bf690a920487b685cfcbe0b4235cabfc1dfb85652afdc424bb82ab04f47c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 107,
+      "hasStructuralAnalysis": false
+    },
+    "openspec/changes/archive/.gitkeep": {
+      "filePath": "openspec/changes/archive/.gitkeep",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    },
+    "openspec/config.yaml": {
+      "filePath": "openspec/config.yaml",
+      "contentHash": "f0082e9c22e8ce1d611c0f3b4d4915ce445e7ff2553cda6b713b6c25f390984c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": false
+    },
+    "openspec/specs/.gitkeep": {
+      "filePath": "openspec/specs/.gitkeep",
+      "contentHash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 1,
+      "hasStructuralAnalysis": false
+    },
+    "package.json": {
+      "filePath": "package.json",
+      "contentHash": "4c218ef643208d79b8cd16aa3a84fe3284cf051fa038793180662731d26390d6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 20,
+      "hasStructuralAnalysis": false
+    },
+    "packaging/fpk/README.md": {
+      "filePath": "packaging/fpk/README.md",
+      "contentHash": "f0d13d8af1b8a02eef0782e9fc6ad3a82246b7d9fcfa83c6609cdc2010bc0a09",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 106,
+      "hasStructuralAnalysis": false
+    },
+    "packaging/fpk/build-fpk.sh": {
+      "filePath": "packaging/fpk/build-fpk.sh",
+      "contentHash": "c502dd3049d35c06e2ac3ce97693ac791ff2b27060ba46e17307012b205a3f86",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 134,
+      "hasStructuralAnalysis": false
+    },
+    "packaging/fpk/cmd-main": {
+      "filePath": "packaging/fpk/cmd-main",
+      "contentHash": "12dc8eed159af41ea4c82813ed50f79f942dcced6821d18721ca203b942a6af0",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 242,
+      "hasStructuralAnalysis": false
+    },
+    "packaging/fpk/make-fpk.py": {
+      "filePath": "packaging/fpk/make-fpk.py",
+      "contentHash": "2b293821a4f50bd3684b2e4cc9b4dbd2fbfefc15e145cc49dd3f6d58b8b1b5ea",
+      "functions": [
+        {
+          "name": "add_tree",
+          "params": [
+            "tf",
+            "src_root",
+            "arc_root",
+            "app_root"
+          ],
+          "exported": true,
+          "lineCount": 24
+        },
+        {
+          "name": "build_app_tgz",
+          "params": [
+            "app_dir",
+            "out_path"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "write_text",
+          "params": [
+            "path",
+            "content"
+          ],
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "build_fpk",
+          "params": [
+            "outer_dir",
+            "out_path"
+          ],
+          "exported": true,
+          "lineCount": 23
+        },
+        {
+          "name": "main",
+          "params": [],
+          "exported": true,
+          "lineCount": 73
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        },
+        {
+          "source": "sys",
+          "specifiers": [
+            "sys"
+          ]
+        },
+        {
+          "source": "tarfile",
+          "specifiers": [
+            "tarfile"
+          ]
+        },
+        {
+          "source": "shutil",
+          "specifiers": [
+            "shutil"
+          ]
+        },
+        {
+          "source": "tempfile",
+          "specifiers": [
+            "tempfile"
+          ]
+        }
+      ],
+      "exports": [
+        "add_tree",
+        "build_app_tgz",
+        "write_text",
+        "build_fpk",
+        "main"
+      ],
+      "totalLines": 214,
+      "hasStructuralAnalysis": true
+    },
+    "public/css/app.css": {
+      "filePath": "public/css/app.css",
+      "contentHash": "af5483bd1fc0144d572eef122d3a3d0999caddd9c9b6f3b7c6e7b35c1087a7ef",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 757,
+      "hasStructuralAnalysis": false
+    },
+    "public/js/app.js": {
+      "filePath": "public/js/app.js",
+      "contentHash": "2b00e80ea44671364e28f4b99a38e7705cc960cd1883dd3615840a2142944a20",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 724,
+      "hasStructuralAnalysis": true
+    },
+    "public/js/assistant.js": {
+      "filePath": "public/js/assistant.js",
+      "contentHash": "227430ed8cf5801e817d9b6c510336f36f120c77ed382f7df43a87836479bd13",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 198,
+      "hasStructuralAnalysis": true
+    },
+    "public/manifest.webmanifest": {
+      "filePath": "public/manifest.webmanifest",
+      "contentHash": "2a9bdac549c85ebea47f349b243e362bd7cc32f854573f5dbf281a5d0ece2d57",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 19,
+      "hasStructuralAnalysis": false
+    },
+    "scripts/reset-password.js": {
+      "filePath": "scripts/reset-password.js",
+      "contentHash": "796b13c13a3c169ad7610692f99fc7c85e2765717230a7ad1e4d56497d08bcb6",
+      "functions": [
+        {
+          "name": "hashPassword",
+          "params": [
+            "plain"
+          ],
+          "exported": false,
+          "lineCount": 7
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/seed-demo.js": {
+      "filePath": "scripts/seed-demo.js",
+      "contentHash": "a8b52c793b579e006feff6ccd905b36db833efdad95a282dcc40d5daf1be398c",
+      "functions": [
+        {
+          "name": "d",
+          "params": [
+            "offsetDays"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "main",
+          "params": [],
+          "exported": false,
+          "lineCount": 110
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 132,
+      "hasStructuralAnalysis": true
+    },
+    "server.js": {
+      "filePath": "server.js",
+      "contentHash": "b04e185e15e9f915be2d041d64f803ea08c87a98f2e4aee46d4aa80c21c92bc6",
+      "functions": [
+        {
+          "name": "assetStamp",
+          "params": [
+            "rel"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "bootstrapAdmin",
+          "params": [],
+          "exported": false,
+          "lineCount": 18
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 228,
+      "hasStructuralAnalysis": true
+    },
+    "src/db.js": {
+      "filePath": "src/db.js",
+      "contentHash": "95a5885a1e148506f62e240601598c3eebdabd1d25884af49a842bc501f86d76",
+      "functions": [
+        {
+          "name": "pad",
+          "params": [
+            "n"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "nowStr",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "todayStr",
+          "params": [],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "B",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "N",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "prep",
+          "params": [
+            "sql"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "all",
+          "params": [
+            "sql",
+            "...p"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "get",
+          "params": [
+            "sql",
+            "...p"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "run",
+          "params": [
+            "sql",
+            "...p"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "tx",
+          "params": [
+            "fn"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "tableColumns",
+          "params": [
+            "table"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "ensureColumn",
+          "params": [
+            "table",
+            "column",
+            "ddl"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "getSetting",
+          "params": [
+            "key"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "setSetting",
+          "params": [
+            "key",
+            "value"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "allSettings",
+          "params": [],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "seedSystemCategories",
+          "params": [],
+          "exported": false,
+          "lineCount": 25
+        },
+        {
+          "name": "seedSettings",
+          "params": [],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "seedExchangeRates",
+          "params": [],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "createDefaultAccounts",
+          "params": [
+            "ledgerId",
+            "userId"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "addLedgerMember",
+          "params": [
+            "ledgerId",
+            "userId"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "createDefaultLedger",
+          "params": [
+            "userId",
+            "displayName"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "txnEffects",
+          "params": [
+            "t"
+          ],
+          "exported": false,
+          "lineCount": 40
+        },
+        {
+          "name": "recalcBalances",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "init",
+          "params": [],
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 707,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/about.js": {
+      "filePath": "src/lib/about.js",
+      "contentHash": "959a189c337c9a44723ca2cffc8587bea1fe3b012bbae87dc572043a22521e18",
+      "functions": [
+        {
+          "name": "repoUrl",
+          "params": [],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "issuesUrl",
+          "params": [],
+          "exported": false,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 79,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/ai.js": {
+      "filePath": "src/lib/ai.js",
+      "contentHash": "b08d7dcad504da41c493e9225e1bb6a8bb27f191d23103356d3d052d53916d9a",
+      "functions": [
+        {
+          "name": "isHeaderSafe",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "isMaskedSecret",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "sanitizeSecret",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "getAiConfig",
+          "params": [],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "isLocalUrl",
+          "params": [
+            "url"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "isAiReady",
+          "params": [],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "isAiUsable",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "classifyByKeywords",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "guessAccountName",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "parseDateWords",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 24
+        },
+        {
+          "name": "extractAmount",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "parseTextByRules",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 26
+        },
+        {
+          "name": "cleanMerchant",
+          "params": [
+            "line"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "extractJson",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "callModel",
+          "params": [
+            "messages"
+          ],
+          "exported": false,
+          "lineCount": 46
+        },
+        {
+          "name": "buildContext",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "buildUserPrompt",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "resolveCategoryId",
+          "params": [
+            "ledgerId",
+            "nameHint",
+            "kind"
+          ],
+          "exported": false,
+          "lineCount": 34
+        },
+        {
+          "name": "resolveAccountId",
+          "params": [
+            "ledgerId",
+            "nameHint"
+          ],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "normalizeItem",
+          "params": [
+            "raw",
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 29
+        },
+        {
+          "name": "analyzeBill",
+          "params": [],
+          "exported": false,
+          "lineCount": 53
+        },
+        {
+          "name": "testConnection",
+          "params": [],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "guessVision",
+          "params": [
+            "modelId"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "listModels",
+          "params": [],
+          "exported": false,
+          "lineCount": 47
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 670,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/attachments.js": {
+      "filePath": "src/lib/attachments.js",
+      "contentHash": "59de241295a399484f27b940d091a2b63f5af8383603dc2c6b6c8cfe561c809a",
+      "functions": [
+        {
+          "name": "uploadsRoot",
+          "params": [],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "webUrl",
+          "params": [
+            "rel"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "parseDataUrl",
+          "params": [
+            "dataUrl"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "saveDataUrlImage",
+          "params": [],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "linkImagesToTxns",
+          "params": [],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "listByTxnIds",
+          "params": [],
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "listByTxn",
+          "params": [
+            "txnId"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "countByTxnIds",
+          "params": [],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "attachCounts",
+          "params": [],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "getById",
+          "params": [
+            "ledgerId",
+            "id"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "resolveFile",
+          "params": [
+            "ledgerId",
+            "id"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "removeById",
+          "params": [
+            "ledgerId",
+            "id"
+          ],
+          "exported": false,
+          "lineCount": 11
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 187,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/auth.js": {
+      "filePath": "src/lib/auth.js",
+      "contentHash": "79393caae21152f93e4b97efec0e3ca11775a781ba8651faa582d508a1093489",
+      "functions": [
+        {
+          "name": "hashPassword",
+          "params": [
+            "plain"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "verifyPassword",
+          "params": [
+            "plain",
+            "stored"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "audit",
+          "params": [
+            "req",
+            "action"
+          ],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "loginKey",
+          "params": [
+            "req",
+            "username"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "tooManyAttempts",
+          "params": [
+            "req",
+            "username"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "recordFailure",
+          "params": [
+            "req",
+            "username"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "clearFailures",
+          "params": [
+            "req",
+            "username"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "context",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 41
+        },
+        {
+          "name": "requireLogin",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "requireAdmin",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "membership",
+          "params": [
+            "userId",
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "canWrite",
+          "params": [
+            "role"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "canManage",
+          "params": [
+            "role"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "requireLedgerWrite",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "requireLedgerManage",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "csrfToken",
+          "params": [
+            "req"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "csrfProtect",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "notify",
+          "params": [
+            "userId"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "alreadyNotified",
+          "params": [
+            "dedupeKey"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "ledgerWriterIds",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 6
+        }
+      ],
+      "classes": [
+        {
+          "name": "SqliteSessionStore",
+          "methods": [
+            "constructor",
+            "_expiry",
+            "get",
+            "set",
+            "touch",
+            "destroy",
+            "clear"
+          ],
+          "properties": [],
+          "exported": false,
+          "lineCount": 46
+        }
+      ],
+      "imports": [],
+      "exports": [],
+      "totalLines": 273,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/charts.js": {
+      "filePath": "src/lib/charts.js",
+      "contentHash": "1d67099169e015cb275535f1864dba6c24b5a69f4a95ebdbf76775b8e62bf09e",
+      "functions": [
+        {
+          "name": "nf",
+          "params": [
+            "n"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "niceMax",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "barChart",
+          "params": [],
+          "exported": false,
+          "lineCount": 50
+        },
+        {
+          "name": "lineChart",
+          "params": [],
+          "exported": false,
+          "lineCount": 54
+        },
+        {
+          "name": "donutChart",
+          "params": [],
+          "exported": false,
+          "lineCount": 30
+        },
+        {
+          "name": "donutLegend",
+          "params": [],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "rankBars",
+          "params": [],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "calendarHeatmap",
+          "params": [],
+          "exported": false,
+          "lineCount": 39
+        },
+        {
+          "name": "progressBar",
+          "params": [
+            "used",
+            "total"
+          ],
+          "exported": false,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 271,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/formdata.js": {
+      "filePath": "src/lib/formdata.js",
+      "contentHash": "d666e03c8fd05cd1bb27233dd290d8b118246d4194398bed8afbe6d00cc5898b",
+      "functions": [
+        {
+          "name": "categoryTree",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "flatCategories",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "accounts",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "archivedAccounts",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "members",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "tags",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "txFormData",
+          "params": [
+            "ledgerId",
+            "userId"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "kindOf",
+          "params": [
+            "type"
+          ],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 72,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/importers.js": {
+      "filePath": "src/lib/importers.js",
+      "contentHash": "af427894b3b5321289a3273f424491c64c82610bce7c21a0a810a7870e3b0edd",
+      "functions": [
+        {
+          "name": "decodeBuffer",
+          "params": [
+            "buf"
+          ],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "parseCsvLine",
+          "params": [
+            "line"
+          ],
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "parseCsv",
+          "params": [
+            "text"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "isHeaderRow",
+          "params": [
+            "cells"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "headerIndex",
+          "params": [
+            "header",
+            "candidates"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "detectSource",
+          "params": [
+            "headerLine",
+            "fullText"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "normalizeRow",
+          "params": [],
+          "exported": false,
+          "lineCount": 26
+        },
+        {
+          "name": "normalizeDate",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "parseBill",
+          "params": [
+            "buffer"
+          ],
+          "exported": false,
+          "lineCount": 44
+        },
+        {
+          "name": "ensureAccount",
+          "params": [
+            "ledgerId",
+            "name",
+            "createdList"
+          ],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "importRecords",
+          "params": [],
+          "exported": false,
+          "lineCount": 71
+        },
+        {
+          "name": "csvEscape",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "toCsv",
+          "params": [
+            "header",
+            "rows"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "exportRows",
+          "params": [
+            "ledgerId",
+            "rows"
+          ],
+          "exported": false,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 292,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/scheduler.js": {
+      "filePath": "src/lib/scheduler.js",
+      "contentHash": "0b7840756f1206661f76f7f16ef907508f9ce894843bc15cd3bc45e66be1ffed",
+      "functions": [
+        {
+          "name": "advanceDate",
+          "params": [
+            "dateStr",
+            "rule"
+          ],
+          "exported": false,
+          "lineCount": 24
+        },
+        {
+          "name": "runDueRecurring",
+          "params": [],
+          "exported": false,
+          "lineCount": 41
+        },
+        {
+          "name": "budgetUsed",
+          "params": [
+            "b",
+            "month"
+          ],
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "budgetPeriodRange",
+          "params": [
+            "b"
+          ],
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "budgetUsedInRange",
+          "params": [
+            "b",
+            "start",
+            "end"
+          ],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "checkBudgets",
+          "params": [],
+          "exported": false,
+          "lineCount": 28
+        },
+        {
+          "name": "checkDebts",
+          "params": [],
+          "exported": false,
+          "lineCount": 25
+        },
+        {
+          "name": "checkGoals",
+          "params": [],
+          "exported": false,
+          "lineCount": 20
+        },
+        {
+          "name": "runSubscriptions",
+          "params": [],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "cleanup",
+          "params": [],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "runDaily",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        },
+        {
+          "name": "initScheduler",
+          "params": [],
+          "exported": false,
+          "lineCount": 19
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 280,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/subscriptions.js": {
+      "filePath": "src/lib/subscriptions.js",
+      "contentHash": "8fd51ad9b3f29df0805f7dad697bd301877ba34c43149852eff86666ef1b6a01",
+      "functions": [
+        {
+          "name": "cycleOf",
+          "params": [
+            "v"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "cycleLabel",
+          "params": [
+            "cycle"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "statusLabel",
+          "params": [
+            "s"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "lastDayOf",
+          "params": [
+            "year",
+            "month"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "advance",
+          "params": [
+            "dateStr"
+          ],
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "firstChargeDate",
+          "params": [],
+          "exported": false,
+          "lineCount": 22
+        },
+        {
+          "name": "daysUntil",
+          "params": [
+            "dateStr"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "annualCents",
+          "params": [
+            "sub"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "monthlyCents",
+          "params": [
+            "sub"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "decorate",
+          "params": [
+            "sub"
+          ],
+          "exported": false,
+          "lineCount": 19
+        },
+        {
+          "name": "overview",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 40
+        },
+        {
+          "name": "chargesOf",
+          "params": [
+            "ledgerId",
+            "subId"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "charge",
+          "params": [
+            "sub",
+            "userId"
+          ],
+          "exported": false,
+          "lineCount": 24
+        },
+        {
+          "name": "runDue",
+          "params": [],
+          "exported": false,
+          "lineCount": 53
+        },
+        {
+          "name": "checkReminders",
+          "params": [],
+          "exported": false,
+          "lineCount": 40
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 342,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/txn.js": {
+      "filePath": "src/lib/txn.js",
+      "contentHash": "bdf1b1a5042c8309c095fd733dc1a03f209d1df10bbad96dfad33323c6577c4c",
+      "functions": [
+        {
+          "name": "decorate",
+          "params": [
+            "t"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "buildWhere",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 49
+        },
+        {
+          "name": "listTransactions",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 31
+        },
+        {
+          "name": "groupByDate",
+          "params": [
+            "rows"
+          ],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "getTransaction",
+          "params": [
+            "id",
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "pickAccount",
+          "params": [
+            "ledgerId",
+            "id"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "pickCategory",
+          "params": [
+            "ledgerId",
+            "id"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "createTransaction",
+          "params": [
+            "ledgerId",
+            "userId",
+            "d"
+          ],
+          "exported": false,
+          "lineCount": 38
+        },
+        {
+          "name": "updateTransaction",
+          "params": [
+            "id",
+            "ledgerId",
+            "userId",
+            "d"
+          ],
+          "exported": false,
+          "lineCount": 27
+        },
+        {
+          "name": "softDelete",
+          "params": [
+            "id",
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "bulkDelete",
+          "params": [
+            "ids",
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 7
+        },
+        {
+          "name": "markReimbursed",
+          "params": [
+            "ids",
+            "ledgerId",
+            "userId",
+            "accountId"
+          ],
+          "exported": false,
+          "lineCount": 23
+        },
+        {
+          "name": "applyTags",
+          "params": [
+            "txnId",
+            "ledgerId",
+            "tagsInput"
+          ],
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "colorFromName",
+          "params": [
+            "name"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "saveSplits",
+          "params": [
+            "ledgerId",
+            "txnId",
+            "groupId",
+            "splits"
+          ],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "splitsOf",
+          "params": [
+            "txnId"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "syncDebts",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 36
+        },
+        {
+          "name": "rangeOf",
+          "params": [
+            "month"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "summary",
+          "params": [
+            "ledgerId",
+            "start",
+            "end"
+          ],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "categoryBreakdown",
+          "params": [
+            "ledgerId",
+            "start",
+            "end"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "subcategoryBreakdown",
+          "params": [
+            "ledgerId",
+            "start",
+            "end"
+          ],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "monthlyTrend",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "memberBreakdown",
+          "params": [
+            "ledgerId",
+            "start",
+            "end"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "dailyBreakdown",
+          "params": [
+            "ledgerId",
+            "start",
+            "end"
+          ],
+          "exported": false,
+          "lineCount": 11
+        },
+        {
+          "name": "accountOverview",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "netWorthTrend",
+          "params": [
+            "ledgerId"
+          ],
+          "exported": false,
+          "lineCount": 23
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 516,
+      "hasStructuralAnalysis": true
+    },
+    "src/lib/util.js": {
+      "filePath": "src/lib/util.js",
+      "contentHash": "ff0e7f39a5825611ab2e6198286ca01ea359cab4e0222c06fd16603ed6607300",
+      "functions": [
+        {
+          "name": "currencySymbol",
+          "params": [
+            "code"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "fmtAmount",
+          "params": [
+            "cents"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "money",
+          "params": [
+            "cents"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "signedMoney",
+          "params": [
+            "cents"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "compactMoney",
+          "params": [
+            "cents"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "parseAmountToCents",
+          "params": [
+            "input"
+          ],
+          "exported": false,
+          "lineCount": 8
+        },
+        {
+          "name": "pad",
+          "params": [
+            "n"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "fmtDate",
+          "params": [
+            "d"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "fmtDateTime",
+          "params": [
+            "d"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "relDate",
+          "params": [
+            "dateStr",
+            "today"
+          ],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "weekdayOf",
+          "params": [
+            "dateStr"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "addDays",
+          "params": [
+            "dateStr",
+            "n"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "addMonths",
+          "params": [
+            "monthStr",
+            "n"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "monthOf",
+          "params": [
+            "dateStr"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "monthStart",
+          "params": [
+            "monthStr"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "monthEnd",
+          "params": [
+            "monthStr"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "daysInMonth",
+          "params": [
+            "monthStr"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "monthLabel",
+          "params": [
+            "monthStr"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "monthShort",
+          "params": [
+            "monthStr"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "lastMonths",
+          "params": [
+            "n"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "monthDays",
+          "params": [
+            "monthStr"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "firstWeekday",
+          "params": [
+            "monthStr"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "pct",
+          "params": [
+            "a",
+            "b"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "clamp",
+          "params": [
+            "v",
+            "a",
+            "b"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "esc",
+          "params": [
+            "s"
+          ],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "truncate",
+          "params": [
+            "s"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "colorFor",
+          "params": [
+            "str"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "initials",
+          "params": [
+            "name"
+          ],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "uid",
+          "params": [],
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "toBase",
+          "params": [
+            "amountCents",
+            "rate"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "barPct",
+          "params": [
+            "used",
+            "total"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "auditAction",
+          "params": [
+            "action"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "auditTarget",
+          "params": [
+            "entity",
+            "entityId"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "auditDetail",
+          "params": [
+            "a"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "avatarUrl",
+          "params": [
+            "u"
+          ],
+          "exported": false,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 285,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/about.js": {
+      "filePath": "src/routes/about.js",
+      "contentHash": "5527a19b8e4c46d62ecf11b9658b093e0463443c2ce8d26d6929af850ca2f11a",
+      "functions": [
+        {
+          "name": "safeSize",
+          "params": [
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "dirSize",
+          "params": [
+            "dir"
+          ],
+          "exported": false,
+          "lineCount": 11
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 74,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/accounts.js": {
+      "filePath": "src/routes/accounts.js",
+      "contentHash": "559b98313d3a2a52becd08f3e9e27385839dbcf31301521dc13218e2e0a2eb53",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 297,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/admin.js": {
+      "filePath": "src/routes/admin.js",
+      "contentHash": "71b96c645d0ebc55502e45642bba8423ac718f0c7e7c34d9da09a9c991a03dd5",
+      "functions": [
+        {
+          "name": "safeSize",
+          "params": [
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "hashToken",
+          "params": [
+            "plain"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "AVATAR_DIR",
+          "params": [],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "parseAvatarDataUrl",
+          "params": [
+            "dataUrl"
+          ],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "removeAvatarFile",
+          "params": [
+            "avatarPath"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "dirSize",
+          "params": [
+            "dir"
+          ],
+          "exported": false,
+          "lineCount": 11
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 721,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/ai.js": {
+      "filePath": "src/routes/ai.js",
+      "contentHash": "acb400cf3a6dac0028969f8dcebb87e60db3fdc3bab81de1638c282bdf304c58",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 258,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/auth.js": {
+      "filePath": "src/routes/auth.js",
+      "contentHash": "f345f733f86d80e599b6212d12db70d1a3120f07f4a5f25a91e8d9c14df8201d",
+      "functions": [
+        {
+          "name": "safeNext",
+          "params": [
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 192,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/dashboard.js": {
+      "filePath": "src/routes/dashboard.js",
+      "contentHash": "dad7f5687d13bc8dd6df09e9a0380d4729af9cff44ae279ff434f1e04cd4bddd",
+      "functions": [
+        {
+          "name": "monthOfToday",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 177,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/openapi.js": {
+      "filePath": "src/routes/openapi.js",
+      "contentHash": "5df1dbde6af77510930222e022385ea98081ff10c2480fd23be40a8ffd9f754d",
+      "functions": [
+        {
+          "name": "hashToken",
+          "params": [
+            "plain"
+          ],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "mintToken",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "requireToken",
+          "params": [
+            "req",
+            "res",
+            "next"
+          ],
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "resolveCategory",
+          "params": [
+            "ledgerId",
+            "name",
+            "kind"
+          ],
+          "exported": false,
+          "lineCount": 12
+        },
+        {
+          "name": "resolveAccount",
+          "params": [
+            "ledgerId",
+            "name"
+          ],
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "parseAmount",
+          "params": [
+            "body"
+          ],
+          "exported": false,
+          "lineCount": 6
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 302,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/planning.js": {
+      "filePath": "src/routes/planning.js",
+      "contentHash": "465535427e7d4aadcd2e05c93245e2b6b78289ebf7bc9baad50f4f2f809b3b1c",
+      "functions": [
+        {
+          "name": "remainingDays",
+          "params": [
+            "b",
+            "range"
+          ],
+          "exported": false,
+          "lineCount": 8
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 396,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/reports.js": {
+      "filePath": "src/routes/reports.js",
+      "contentHash": "eef738924155bf5c11fd44bf41c822a68d024ac64888916f24a805ba56b6d13e",
+      "functions": [
+        {
+          "name": "parseRange",
+          "params": [
+            "q"
+          ],
+          "exported": false,
+          "lineCount": 29
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 100,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/subscriptions.js": {
+      "filePath": "src/routes/subscriptions.js",
+      "contentHash": "370ecdbda31b79a2dd1d0295581dc3e6de52922dc9cd2ac95402c28c385681d1",
+      "functions": [
+        {
+          "name": "readForm",
+          "params": [
+            "body",
+            "userId"
+          ],
+          "exported": false,
+          "lineCount": 37
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 211,
+      "hasStructuralAnalysis": true
+    },
+    "src/routes/transactions.js": {
+      "filePath": "src/routes/transactions.js",
+      "contentHash": "f8e679bbbd55f2dcd030764fa6d0f31d64f1f57b2e23bc915fc38557030a8f27",
+      "functions": [
+        {
+          "name": "readForm",
+          "params": [
+            "body"
+          ],
+          "exported": false,
+          "lineCount": 27
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 228,
+      "hasStructuralAnalysis": true
+    },
+    "src/views/about.ejs": {
+      "filePath": "src/views/about.ejs",
+      "contentHash": "d43bbd94ee2b0c0e710a71be8e7761cbc7ad5146faca40cb563337ac9896077a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 110,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/account-detail.ejs": {
+      "filePath": "src/views/account-detail.ejs",
+      "contentHash": "7e1d3dfb79817ada1e16bc42b042217abc368aae106f4171c3fda201c40b561b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 59,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/accounts.ejs": {
+      "filePath": "src/views/accounts.ejs",
+      "contentHash": "393391dafd7045cd890942daa0dffc4d24c87cd08d0455432eae334300f98b76",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 184,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/ai.ejs": {
+      "filePath": "src/views/ai.ejs",
+      "contentHash": "3ffd42dfd60c83f7ed66b4663ed0bac34f24b61cf5832435d6eddae9269d51dc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 101,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/attachments.ejs": {
+      "filePath": "src/views/attachments.ejs",
+      "contentHash": "6ab5580be4d94ced314083ef3ac53c3eba4d544ae31afa91b0f0b59016593a04",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 38,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/budgets.ejs": {
+      "filePath": "src/views/budgets.ejs",
+      "contentHash": "64bcc03099d1d0c5d371451ac36d48d1d55ead5c553fc4842b9c038080ae3e45",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 202,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/calendar.ejs": {
+      "filePath": "src/views/calendar.ejs",
+      "contentHash": "1f818ac472bcdec4be779a914458470749b951d615d1af17984d7f835eb25def",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 89,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/categories.ejs": {
+      "filePath": "src/views/categories.ejs",
+      "contentHash": "94452d876949d23450da019e7731bff974a027ff7e408fa1f6d3e9aaa6b2196c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 71,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/dashboard.ejs": {
+      "filePath": "src/views/dashboard.ejs",
+      "contentHash": "776f7802ac02e5d34558ad5d6187ed8df14e7879a06bb5421e0a0ec86bfee9d3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 230,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/debts.ejs": {
+      "filePath": "src/views/debts.ejs",
+      "contentHash": "e1688812a0bafc6ffe8e2e970f51e566b9c0326b2a96dc43e6720dffdf70b36a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 116,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/error.ejs": {
+      "filePath": "src/views/error.ejs",
+      "contentHash": "c39efd230567531d511eb24a0f66fea8167fcb0bf0762df8132522c0e2b89e40",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 12,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/export.ejs": {
+      "filePath": "src/views/export.ejs",
+      "contentHash": "ae070db8a4b8958a61d4821da1bd0c8cb141bc80845937ecd3975fdc98c1dbad",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 76,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/goals.ejs": {
+      "filePath": "src/views/goals.ejs",
+      "contentHash": "7c00319bf8034b84ad1cc4d8fe8e0eab61c759dc5d8423f40850d3b0182d2d3a",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 78,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/import.ejs": {
+      "filePath": "src/views/import.ejs",
+      "contentHash": "f0a32d8422bc934d312ba8b9d136c471a28827f2a3b35f86d17ebeeb66985f04",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 52,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/layout-blank.ejs": {
+      "filePath": "src/views/layout-blank.ejs",
+      "contentHash": "63859c2b2816f227779b876c5254e2443f9d18611e3cf44d4c7bc2c19c385cc2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/layout.ejs": {
+      "filePath": "src/views/layout.ejs",
+      "contentHash": "5f1a53d86670d9e6fda770272cfa34434104d2237c8afaee2501c0a5c02f4733",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 183,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/ledgers.ejs": {
+      "filePath": "src/views/ledgers.ejs",
+      "contentHash": "10650c8b1a70afe24eddb3545868784ff917d201ceeb1231551f7a832e502bb7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 113,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/login.ejs": {
+      "filePath": "src/views/login.ejs",
+      "contentHash": "c34442558a0429b8cdb4784f38803ed9d90a0b6f548d11c8f0018d5a6cb0ef22",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 25,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/members.ejs": {
+      "filePath": "src/views/members.ejs",
+      "contentHash": "01fe1e52c556f87c1aa14179cff5695cf80259df7946f5dc150fe3b47959f3d1",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 115,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/no-ledger.ejs": {
+      "filePath": "src/views/no-ledger.ejs",
+      "contentHash": "eee88a7fd19ae0d75e038f322ae4ebcbe3682e54487591e9563c7ef98a78da4b",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 11,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/notifications.ejs": {
+      "filePath": "src/views/notifications.ejs",
+      "contentHash": "a6fc20598b48b59a15418821d5183a985bc3b136acba7136a0b243c2257e5985",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 41,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/partials/txn-list.ejs": {
+      "filePath": "src/views/partials/txn-list.ejs",
+      "contentHash": "efabee21f67d64ce9f0ed74876c9f1aa7906b63f76568cdce8cf8166647d8ad8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 71,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/recurring.ejs": {
+      "filePath": "src/views/recurring.ejs",
+      "contentHash": "b12b822f8785286a3ccd2efbedb47319b3b78b9db781d98e043485e134c92f0d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 125,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/register.ejs": {
+      "filePath": "src/views/register.ejs",
+      "contentHash": "70d4df08cc3f358c67ee6e74eb8cab1547d860327ab8fd2d592960f91eb25dd8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 32,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/reports.ejs": {
+      "filePath": "src/views/reports.ejs",
+      "contentHash": "37a4befed5194834ec9059238aa021111b9e15b0758cc0f6e64d17460754b1af",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 226,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/search.ejs": {
+      "filePath": "src/views/search.ejs",
+      "contentHash": "e6cb44030c67b3f02604b4ba9131e5a2242f7e32e5989e2ba5d038332198547f",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 75,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/settings.ejs": {
+      "filePath": "src/views/settings.ejs",
+      "contentHash": "c77ba06dd3028dfc4693675f3a599de4ce9d6f9face4dc4dc0577d9477e235ff",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 418,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/setup.ejs": {
+      "filePath": "src/views/setup.ejs",
+      "contentHash": "dd9bb53ce84c78635d8bb6bd3c6473d6f2748ea1679ef7d6831a04f4ec175141",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/subscriptions.ejs": {
+      "filePath": "src/views/subscriptions.ejs",
+      "contentHash": "e45675ddf4af0de9b703ea7557e7cd0e30df91d3efb82722b84a31bd2ad3a9d8",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 297,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/tags.ejs": {
+      "filePath": "src/views/tags.ejs",
+      "contentHash": "e3bef40b25e22446e64f39a6f28e7ab5146d042a187961cc0ff7e96a1a345660",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 33,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/transactions.ejs": {
+      "filePath": "src/views/transactions.ejs",
+      "contentHash": "250546dae335dd29c57095dfabc7e5a916fcd429fa03bdd396fc2b2ffbbe187d",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 139,
+      "hasStructuralAnalysis": false
+    },
+    "src/views/txn-form.ejs": {
+      "filePath": "src/views/txn-form.ejs",
+      "contentHash": "56f4c23ead42ece6b183f6f3b166d7ef2a841fcab988a950663c2d0cda46d9e5",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 299,
+      "hasStructuralAnalysis": false
+    },
+    "test/run-all.js": {
+      "filePath": "test/run-all.js",
+      "contentHash": "b0eb1830dd6170f56b8663ba7118b803c68a49a2abeff29405e9da91b48a41a4",
+      "functions": [
+        {
+          "name": "healthz",
+          "params": [
+            "timeoutMs"
+          ],
+          "exported": false,
+          "lineCount": 16
+        },
+        {
+          "name": "run",
+          "params": [
+            "cmd",
+            "args",
+            "opts"
+          ],
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 87,
+      "hasStructuralAnalysis": true
+    },
+    "test/selfcheck-static.js": {
+      "filePath": "test/selfcheck-static.js",
+      "contentHash": "29c1683b97a9c6583f5364f6fc42f15adfe000f532595e6a69c3e23bac3a2156",
+      "functions": [
+        {
+          "name": "ok",
+          "params": [
+            "name",
+            "cond",
+            "detail"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "walk",
+          "params": [
+            "dir",
+            "depth"
+          ],
+          "exported": false,
+          "lineCount": 9
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 72,
+      "hasStructuralAnalysis": true
+    },
+    "test/verify-about.js": {
+      "filePath": "test/verify-about.js",
+      "contentHash": "3207dcd30e3b53bc4e5529299d5f2c708bcbb286011162e80187cd7034d2a862",
+      "functions": [
+        {
+          "name": "check",
+          "params": [
+            "name",
+            "ok"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "req",
+          "params": [
+            "method",
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "csrfOf",
+          "params": [
+            "html"
+          ],
+          "exported": false,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 88,
+      "hasStructuralAnalysis": true
+    },
+    "test/verify-ai-attachments.js": {
+      "filePath": "test/verify-ai-attachments.js",
+      "contentHash": "6c3388826aad17ca0540e23660cd7f835d19869a597421a9bedbf4220dd89af8",
+      "functions": [
+        {
+          "name": "check",
+          "params": [
+            "name",
+            "ok"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "req",
+          "params": [
+            "method",
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 17
+        },
+        {
+          "name": "csrfOf",
+          "params": [
+            "html"
+          ],
+          "exported": false,
+          "lineCount": 1
+        },
+        {
+          "name": "uploadFiles",
+          "params": [],
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 218,
+      "hasStructuralAnalysis": true
+    },
+    "test/verify-ai-chat.js": {
+      "filePath": "test/verify-ai-chat.js",
+      "contentHash": "511386b2be1161d197386137d723642babcb4837f6a217e5f3cbc9a8be5d8577",
+      "functions": [
+        {
+          "name": "check",
+          "params": [
+            "name",
+            "ok"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "req",
+          "params": [
+            "method",
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "csrfOf",
+          "params": [
+            "html"
+          ],
+          "exported": false,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 119,
+      "hasStructuralAnalysis": true
+    },
+    "test/verify-ai-image.js": {
+      "filePath": "test/verify-ai-image.js",
+      "contentHash": "ff0b83a247c1375253f35c78df8603fafc9d4ebedbae8b547a411a3782c43f75",
+      "functions": [
+        {
+          "name": "check",
+          "params": [
+            "name",
+            "ok"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "imgUrls",
+          "params": [],
+          "exported": false,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 103,
+      "hasStructuralAnalysis": true
+    },
+    "test/verify-model-list.js": {
+      "filePath": "test/verify-model-list.js",
+      "contentHash": "d08d7fbff868019deea0fa1c0153ce6203d66dc1b8b3fff523b2710e0553fb6b",
+      "functions": [
+        {
+          "name": "check",
+          "params": [
+            "name",
+            "ok"
+          ],
+          "exported": false,
+          "lineCount": 4
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 129,
+      "hasStructuralAnalysis": true
+    },
+    "test/verify-settings-admin.js": {
+      "filePath": "test/verify-settings-admin.js",
+      "contentHash": "5bd24853d6cc5db0bcb77349eb325274d05a1980da160c54ef972b717902cc7c",
+      "functions": [
+        {
+          "name": "check",
+          "params": [
+            "name",
+            "ok"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "req",
+          "params": [
+            "method",
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 15
+        },
+        {
+          "name": "csrfOf",
+          "params": [
+            "html"
+          ],
+          "exported": false,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 141,
+      "hasStructuralAnalysis": true
+    },
+    "test/verify-subscriptions.js": {
+      "filePath": "test/verify-subscriptions.js",
+      "contentHash": "d1200dd4a520b3c9793f2d615f395876868e89f0e5a52a7d315510b47b1bce9f",
+      "functions": [
+        {
+          "name": "check",
+          "params": [
+            "name",
+            "ok"
+          ],
+          "exported": false,
+          "lineCount": 4
+        },
+        {
+          "name": "shift",
+          "params": [
+            "days"
+          ],
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "addSub",
+          "params": [
+            "fields"
+          ],
+          "exported": false,
+          "lineCount": 18
+        },
+        {
+          "name": "req",
+          "params": [
+            "method",
+            "p"
+          ],
+          "exported": false,
+          "lineCount": 14
+        },
+        {
+          "name": "csrfOf",
+          "params": [
+            "html"
+          ],
+          "exported": false,
+          "lineCount": 1
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 350,
+      "hasStructuralAnalysis": true
+    }
+  }
+}

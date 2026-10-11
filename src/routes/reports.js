@@ -52,6 +52,8 @@ router.get('/reports', auth.requireLogin, (req, res) => {
   const trend = txn.monthlyTrend(ledgerId, 12);
   const days = txn.dailyBreakdown(ledgerId, range.start, range.end);
   const members = txn.memberBreakdown(ledgerId, range.start, range.end);
+  const tagStats = txn.tagBreakdown(ledgerId, range.start, range.end, kind);
+  const peopleStats = txn.participantBreakdown(ledgerId, range.start, range.end);
   const netWorth = txn.netWorthTrend(ledgerId, 12);
   const overview = txn.accountOverview(ledgerId);
 
@@ -90,6 +92,7 @@ router.get('/reports', auth.requireLogin, (req, res) => {
   res.render('reports', {
     title: '报表分析', activeNav: 'reports',
     range, kind, sum, cats, subcats, trend, days, members, netWorth, overview,
+    tagStats, peopleStats,
     compare, weekday, expenseCount, maxDay, activeDays,
     top: req.query.top || null,
     today: todayStr(),

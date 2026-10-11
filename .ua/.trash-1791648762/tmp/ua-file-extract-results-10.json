@@ -1,0 +1,44 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 0,
+  "filesSkipped": [
+    "src/views/budgets.ejs",
+    "src/views/calendar.ejs",
+    "src/views/categories.ejs",
+    "src/views/dashboard.ejs",
+    "src/views/debts.ejs",
+    "src/views/error.ejs",
+    "src/views/export.ejs",
+    "src/views/goals.ejs",
+    "src/views/import.ejs",
+    "src/views/layout-blank.ejs",
+    "src/views/layout.ejs",
+    "src/views/ledgers.ejs",
+    "src/views/login.ejs",
+    "src/views/members.ejs",
+    "src/views/no-ledger.ejs",
+    "src/views/notifications.ejs",
+    "src/views/partials/txn-list.ejs",
+    "src/views/recurring.ejs",
+    "src/views/register.ejs",
+    "src/views/reports.ejs",
+    "src/views/search.ejs",
+    "src/views/settings.ejs",
+    "src/views/setup.ejs",
+    "src/views/subscriptions.ejs",
+    "src/views/tags.ejs"
+  ],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 0,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 0,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": []
+}

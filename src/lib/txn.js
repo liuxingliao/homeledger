@@ -16,7 +16,8 @@ SELECT t.*,
   a.name AS account_name, a.icon AS account_icon, a.type AS account_type,
   ta.name AS to_account_name, ta.icon AS to_account_icon,
   u.display_name AS member_name, u.avatar_color AS member_color,
-  (SELECT GROUP_CONCAT(tg.name, ' ') FROM transaction_tags tt JOIN tags tg ON tg.id = tt.tag_id WHERE tt.transaction_id = t.id) AS tag_names
+  (SELECT GROUP_CONCAT(tg.name, ' ') FROM transaction_tags tt JOIN tags tg ON tg.id = tt.tag_id WHERE tt.transaction_id = t.id) AS tag_names,
+  (SELECT GROUP_CONCAT(lp.name, ' ') FROM transaction_participants tp JOIN ledger_people lp ON lp.id = tp.person_id WHERE tp.transaction_id = t.id) AS participant_names
 FROM transactions t
 LEFT JOIN categories c ON c.id = t.category_id
 LEFT JOIN categories pc ON pc.id = c.parent_id
@@ -70,6 +71,10 @@ function buildWhere(ledgerId, f = {}) {
   if (f.tagId) {
     where.push('EXISTS (SELECT 1 FROM transaction_tags tt WHERE tt.transaction_id = t.id AND tt.tag_id = ?)');
     params.push(f.tagId);
+  }
+  if (f.personId) {
+    where.push('EXISTS (SELECT 1 FROM transaction_participants tp WHERE tp.transaction_id = t.id AND tp.person_id = ?)');
+    params.push(f.personId);
   }
   if (f.month) {
     where.push("strftime('%Y-%m', t.txn_date) = ?");
@@ -193,6 +198,7 @@ function createTransaction(ledgerId, userId, d) {
   );
   const id = info.lastInsertRowid;
   applyTags(id, ledgerId, d.tags);
+  applyParticipants(id, ledgerId, d.people);
   if (d.splits && d.splits.length) saveSplits(ledgerId, id, d.group_id, d.splits);
   recalcBalances(ledgerId);
   syncDebts(ledgerId);
@@ -221,6 +227,7 @@ function updateTransaction(id, ledgerId, userId, d) {
     nowStr(), id
   );
   applyTags(id, ledgerId, d.tags, true);
+  applyParticipants(id, ledgerId, d.people, true);
   if (d.splits && d.splits.length) saveSplits(ledgerId, id, old.group_id, d.splits);
   recalcBalances(ledgerId);
   syncDebts(ledgerId);
@@ -297,6 +304,34 @@ function colorFromName(name) {
   return palette[h % palette.length];
 }
 
+/* ------------------------------ 参与成员(自由名单) ----------------------------- */
+
+/** 自由成员 find-or-create:纯名字、按账本隔离、同账本唯一 */
+function ensurePerson(ledgerId, name) {
+  const n = String(name || '').trim().slice(0, 20);
+  if (!n) return null;
+  let p = get('SELECT id FROM ledger_people WHERE ledger_id = ? AND name = ?', ledgerId, n);
+  if (!p) {
+    const info = run('INSERT INTO ledger_people (ledger_id, name, color, created_at) VALUES (?,?,?,?)', ledgerId, n, colorFromName(n), nowStr());
+    p = { id: info.lastInsertRowid };
+  }
+  return Number(p.id);
+}
+
+/** 交易参与成员:空格/逗号分隔,≤8 人;replace 为编辑时的替换语义(与标签一致) */
+function applyParticipants(txnId, ledgerId, input, replace = false) {
+  const names = String(input || '')
+    .split(/[,，、\s]+/)
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 8);
+  if (replace) run('DELETE FROM transaction_participants WHERE transaction_id = ?', txnId);
+  for (const name of names) {
+    const pid = ensurePerson(ledgerId, name);
+    if (pid) { try { run('INSERT OR IGNORE INTO transaction_participants (transaction_id, person_id) VALUES (?,?)', txnId, pid); } catch { /* ignore */ } }
+  }
+}
+
 /* ---------------------------------- 分账 ---------------------------------- */
 
 function saveSplits(ledgerId, txnId, groupId, splits) {
@@ -323,7 +358,7 @@ function splitsOf(txnId) {
 
 /**
  * 根据借贷类交易自动维护 debts 台账：
- * 借出 → 生成应收；借入 → 生成应付。同一 (方向, 对手方) 未结清的台账自动累加。
+ * 代付(lend) → 生成应收；借入(borrow) → 生成应付。同一 (方向, 对手方) 未结清的台账自动累加。
  */
 function syncDebts(ledgerId) {
   const rows = all(
@@ -453,6 +488,38 @@ function memberBreakdown(ledgerId, start, end) {
   ).map((r) => ({ ...r, expense: Number(r.expense), income: Number(r.income), cnt: Number(r.cnt) }));
 }
 
+/** 按标签聚合（kind=expense|income；未打标签的交易归入「未打标签」行） */
+function tagBreakdown(ledgerId, start, end, kind = 'expense') {
+  const types = kind === 'income' ? INCOME_TYPES : EXPENSE_TYPES;
+  return all(
+    `SELECT COALESCE(tg.name, '未打标签') AS name, COALESCE(tg.color, '#8c8c8c') AS color,
+       SUM(t.amount_base_cents) AS total, COUNT(*) AS cnt
+     FROM transactions t
+     LEFT JOIN transaction_tags tt ON tt.transaction_id = t.id
+     LEFT JOIN tags tg ON tg.id = tt.tag_id
+     WHERE t.ledger_id = ? AND t.deleted_at IS NULL AND t.txn_date BETWEEN ? AND ?
+       AND t.type IN (${types.map(() => '?').join(',')})
+     GROUP BY COALESCE(tg.name, '未打标签') ORDER BY total DESC`,
+    ledgerId, start, end, ...types
+  ).map((r) => ({ ...r, total: Number(r.total), cnt: Number(r.cnt) }));
+}
+
+/** 按参与成员聚合(无参与人的交易归入「无参与人」行;多参与人交易在每人名下各计一次) */
+function participantBreakdown(ledgerId, start, end) {
+  return all(
+    `SELECT lp.id, COALESCE(lp.name, '无参与人') AS name, COALESCE(lp.color, '#8c8c8c') AS color,
+       COALESCE(SUM(CASE WHEN t.type IN (${EXPENSE_TYPES.map(() => '?').join(',')}) THEN t.amount_base_cents ELSE 0 END),0) AS expense,
+       COALESCE(SUM(CASE WHEN t.type IN (${INCOME_TYPES.map(() => '?').join(',')}) THEN t.amount_base_cents ELSE 0 END),0) AS income,
+       COUNT(DISTINCT t.id) AS cnt
+     FROM transactions t
+     LEFT JOIN transaction_participants tp ON tp.transaction_id = t.id
+     LEFT JOIN ledger_people lp ON lp.id = tp.person_id
+     WHERE t.ledger_id = ? AND t.deleted_at IS NULL AND t.txn_date BETWEEN ? AND ?
+     GROUP BY lp.id ORDER BY expense DESC`,
+    ...EXPENSE_TYPES, ...INCOME_TYPES, ledgerId, start, end
+  ).map((r) => ({ ...r, expense: Number(r.expense), income: Number(r.income), cnt: Number(r.cnt) }));
+}
+
 /** 每日聚合（日历/趋势） */
 function dailyBreakdown(ledgerId, start, end) {
   return all(
@@ -511,5 +578,6 @@ module.exports = {
   createTransaction, updateTransaction, softDelete, bulkDelete, markReimbursed,
   applyTags, saveSplits, splitsOf,
   summary, categoryBreakdown, subcategoryBreakdown, monthlyTrend, memberBreakdown,
+  tagBreakdown, participantBreakdown, applyParticipants, ensurePerson,
   dailyBreakdown, accountOverview, netWorthTrend, rangeOf, syncDebts,
 };

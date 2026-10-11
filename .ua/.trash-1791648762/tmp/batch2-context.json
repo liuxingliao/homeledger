@@ -1,0 +1,215 @@
+{
+ "batchImportData": {
+  "scripts/seed-demo.js": [
+   "src/db.js",
+   "src/lib/attachments.js",
+   "src/lib/auth.js",
+   "src/lib/txn.js",
+   "src/lib/util.js"
+  ],
+  "src/lib/attachments.js": [
+   "src/db.js",
+   "src/lib/util.js"
+  ],
+  "src/lib/txn.js": [
+   "src/db.js",
+   "src/lib/attachments.js",
+   "src/lib/util.js"
+  ],
+  "src/lib/util.js": [],
+  "src/routes/accounts.js": [
+   "src/db.js",
+   "src/lib/auth.js",
+   "src/lib/formdata.js",
+   "src/lib/txn.js",
+   "src/lib/util.js"
+  ],
+  "src/routes/transactions.js": [
+   "src/db.js",
+   "src/lib/attachments.js",
+   "src/lib/auth.js",
+   "src/lib/formdata.js",
+   "src/lib/txn.js",
+   "src/lib/util.js"
+  ]
+ },
+ "neighborMap": {
+  "scripts/seed-demo.js": [
+   {
+    "path": "src/db.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/auth.js",
+    "batchIndex": 4,
+    "symbols": []
+   }
+  ],
+  "src/lib/attachments.js": [
+   {
+    "path": "src/db.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/ai.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/dashboard.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/openapi.js",
+    "batchIndex": 1,
+    "symbols": []
+   }
+  ],
+  "src/lib/txn.js": [
+   {
+    "path": "src/db.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/admin.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/ai.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/dashboard.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/openapi.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/planning.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/reports.js",
+    "batchIndex": 5,
+    "symbols": []
+   }
+  ],
+  "src/lib/util.js": [
+   {
+    "path": "server.js",
+    "batchIndex": 3,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/ai.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/charts.js",
+    "batchIndex": 3,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/importers.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/scheduler.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/subscriptions.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/admin.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/auth.js",
+    "batchIndex": 3,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/dashboard.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/planning.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/reports.js",
+    "batchIndex": 5,
+    "symbols": []
+   },
+   {
+    "path": "src/routes/subscriptions.js",
+    "batchIndex": 5,
+    "symbols": []
+   }
+  ],
+  "src/routes/accounts.js": [
+   {
+    "path": "src/db.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/auth.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/formdata.js",
+    "batchIndex": 5,
+    "symbols": []
+   },
+   {
+    "path": "server.js",
+    "batchIndex": 3,
+    "symbols": []
+   }
+  ],
+  "src/routes/transactions.js": [
+   {
+    "path": "src/db.js",
+    "batchIndex": 1,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/auth.js",
+    "batchIndex": 4,
+    "symbols": []
+   },
+   {
+    "path": "src/lib/formdata.js",
+    "batchIndex": 5,
+    "symbols": []
+   },
+   {
+    "path": "server.js",
+    "batchIndex": 3,
+    "symbols": []
+   }
+  ]
+ }
+}

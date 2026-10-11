@@ -1,7 +1,7 @@
 'use strict';
 /** 预算 / 周期账单 / 借贷台账 / 储蓄目标 */
 const express = require('express');
-const { all, get, run, tx, nowStr, todayStr } = require('../db');
+const { all, get, run, tx, nowStr, todayStr, TXN_TYPE_MAP } = require('../db');
 const auth = require('../lib/auth');
 const txn = require('../lib/txn');
 const fd = require('../lib/formdata');
@@ -264,7 +264,7 @@ router.post('/debts', auth.requireLogin, auth.requireLedgerWrite, (req, res) => 
       account_id: req.body.account_id || null,
       txn_date: req.body.date || todayStr(),
       merchant: counterparty,
-      note: req.body.note || (direction === 'receivable' ? '借出' : '借入'),
+      note: req.body.note || (direction === 'receivable' ? (TXN_TYPE_MAP.lend?.label || '代付') : (TXN_TYPE_MAP.borrow?.label || '借入')),
       source: 'manual',
     });
     res.flash('success', '已记一笔并同步到借贷台账');
@@ -296,7 +296,7 @@ router.post('/debts/:id/settle', auth.requireLogin, auth.requireLedgerWrite, (re
     account_id: req.body.account_id || d.account_id,
     txn_date: req.body.date || todayStr(),
     merchant: d.counterparty,
-    note: (d.direction === 'receivable' ? '收回借款 · ' : '偿还借款 · ') + d.counterparty,
+    note: (d.direction === 'receivable' ? ((TXN_TYPE_MAP.repay_receive?.label || '收债') + ' · ') : ((TXN_TYPE_MAP.repay_pay?.label || '还款') + ' · ')) + d.counterparty,
     source: 'manual',
   });
   // 优先核销手工台账

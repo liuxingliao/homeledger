@@ -1,0 +1,537 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "filesUnreadable": [],
+  "analysisOutcomes": {
+    "structure": {
+      "succeeded": 3,
+      "failed": 0
+    },
+    "callGraph": {
+      "succeeded": 3,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "results": [
+    {
+      "path": "src/lib/formdata.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 65,
+      "functions": [
+        {
+          "name": "categoryTree",
+          "startLine": 5,
+          "endLine": 16,
+          "params": [
+            "ledgerId"
+          ]
+        },
+        {
+          "name": "flatCategories",
+          "startLine": 18,
+          "endLine": 28,
+          "params": [
+            "ledgerId"
+          ]
+        },
+        {
+          "name": "accounts",
+          "startLine": 30,
+          "endLine": 32,
+          "params": [
+            "ledgerId"
+          ]
+        },
+        {
+          "name": "archivedAccounts",
+          "startLine": 33,
+          "endLine": 35,
+          "params": [
+            "ledgerId"
+          ]
+        },
+        {
+          "name": "members",
+          "startLine": 36,
+          "endLine": 43,
+          "params": [
+            "ledgerId"
+          ]
+        },
+        {
+          "name": "tags",
+          "startLine": 44,
+          "endLine": 50,
+          "params": [
+            "ledgerId"
+          ]
+        },
+        {
+          "name": "txFormData",
+          "startLine": 53,
+          "endLine": 64,
+          "params": [
+            "ledgerId",
+            "userId"
+          ]
+        },
+        {
+          "name": "kindOf",
+          "startLine": 67,
+          "endLine": 69,
+          "params": [
+            "type"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "categoryTree",
+          "callee": "all",
+          "lineNumber": 6
+        },
+        {
+          "caller": "categoryTree",
+          "callee": "rows.filter",
+          "lineNumber": 11
+        },
+        {
+          "caller": "categoryTree",
+          "callee": "roots.map",
+          "lineNumber": 12
+        },
+        {
+          "caller": "categoryTree",
+          "callee": "rows.filter",
+          "lineNumber": 14
+        },
+        {
+          "caller": "categoryTree",
+          "callee": "Number",
+          "lineNumber": 14
+        },
+        {
+          "caller": "categoryTree",
+          "callee": "Number",
+          "lineNumber": 14
+        },
+        {
+          "caller": "flatCategories",
+          "callee": "params.push",
+          "lineNumber": 22
+        },
+        {
+          "caller": "flatCategories",
+          "callee": "all(sql, ...params).map",
+          "lineNumber": 24
+        },
+        {
+          "caller": "flatCategories",
+          "callee": "all",
+          "lineNumber": 24
+        },
+        {
+          "caller": "accounts",
+          "callee": "all",
+          "lineNumber": 31
+        },
+        {
+          "caller": "archivedAccounts",
+          "callee": "all",
+          "lineNumber": 34
+        },
+        {
+          "caller": "members",
+          "callee": "all",
+          "lineNumber": 37
+        },
+        {
+          "caller": "tags",
+          "callee": "all",
+          "lineNumber": 45
+        },
+        {
+          "caller": "txFormData",
+          "callee": "flatCategories",
+          "lineNumber": 54
+        },
+        {
+          "caller": "txFormData",
+          "callee": "cats.filter",
+          "lineNumber": 56
+        },
+        {
+          "caller": "txFormData",
+          "callee": "cats.filter",
+          "lineNumber": 57
+        },
+        {
+          "caller": "txFormData",
+          "callee": "categoryTree",
+          "lineNumber": 58
+        },
+        {
+          "caller": "txFormData",
+          "callee": "categoryTree",
+          "lineNumber": 59
+        },
+        {
+          "caller": "txFormData",
+          "callee": "accounts",
+          "lineNumber": 60
+        },
+        {
+          "caller": "txFormData",
+          "callee": "members",
+          "lineNumber": 61
+        },
+        {
+          "caller": "txFormData",
+          "callee": "tags",
+          "lineNumber": 62
+        },
+        {
+          "caller": "kindOf",
+          "callee": "['income', 'interest', 'refund', 'reimburse'].includes",
+          "lineNumber": 68
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/routes/reports.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 99,
+      "nonEmptyLines": 89,
+      "functions": [
+        {
+          "name": "parseRange",
+          "startLine": 12,
+          "endLine": 40,
+          "params": [
+            "q"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parseRange",
+          "callee": "todayStr",
+          "lineNumber": 13
+        },
+        {
+          "caller": "parseRange",
+          "callee": "today.slice",
+          "lineNumber": 14
+        },
+        {
+          "caller": "parseRange",
+          "callee": "/^\\d{4}$/.test",
+          "lineNumber": 17
+        },
+        {
+          "caller": "parseRange",
+          "callee": "String",
+          "lineNumber": 17
+        },
+        {
+          "caller": "parseRange",
+          "callee": "today.slice",
+          "lineNumber": 17
+        },
+        {
+          "caller": "parseRange",
+          "callee": "Number",
+          "lineNumber": 24
+        },
+        {
+          "caller": "parseRange",
+          "callee": "curMonth.slice",
+          "lineNumber": 24
+        },
+        {
+          "caller": "parseRange",
+          "callee": "Math.floor",
+          "lineNumber": 25
+        },
+        {
+          "caller": "parseRange",
+          "callee": "curMonth.slice",
+          "lineNumber": 27
+        },
+        {
+          "caller": "parseRange",
+          "callee": "u.pad",
+          "lineNumber": 29
+        },
+        {
+          "caller": "parseRange",
+          "callee": "u.pad",
+          "lineNumber": 30
+        },
+        {
+          "caller": "parseRange",
+          "callee": "get",
+          "lineNumber": 35
+        },
+        {
+          "caller": "parseRange",
+          "callee": "Number",
+          "lineNumber": 35
+        },
+        {
+          "caller": "parseRange",
+          "callee": "/^\\d{4}-\\d{2}$/.test",
+          "lineNumber": 38
+        },
+        {
+          "caller": "parseRange",
+          "callee": "String",
+          "lineNumber": 38
+        },
+        {
+          "caller": "parseRange",
+          "callee": "u.monthLabel",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/routes/subscriptions.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 210,
+      "nonEmptyLines": 185,
+      "functions": [
+        {
+          "name": "readForm",
+          "startLine": 33,
+          "endLine": 69,
+          "params": [
+            "body",
+            "userId"
+          ]
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "readForm",
+          "callee": "String(body.name || '').trim",
+          "lineNumber": 34
+        },
+        {
+          "caller": "readForm",
+          "callee": "String",
+          "lineNumber": 34
+        },
+        {
+          "caller": "readForm",
+          "callee": "u.parseAmountToCents",
+          "lineNumber": 35
+        },
+        {
+          "caller": "readForm",
+          "callee": "subs.cycleOf",
+          "lineNumber": 36
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.max",
+          "lineNumber": 37
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.min",
+          "lineNumber": 37
+        },
+        {
+          "caller": "readForm",
+          "callee": "Number",
+          "lineNumber": 37
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.max",
+          "lineNumber": 38
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.min",
+          "lineNumber": 38
+        },
+        {
+          "caller": "readForm",
+          "callee": "Number",
+          "lineNumber": 38
+        },
+        {
+          "caller": "readForm",
+          "callee": "Number",
+          "lineNumber": 38
+        },
+        {
+          "caller": "readForm",
+          "callee": "todayStr().slice",
+          "lineNumber": 38
+        },
+        {
+          "caller": "readForm",
+          "callee": "todayStr",
+          "lineNumber": 38
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.max",
+          "lineNumber": 39
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.min",
+          "lineNumber": 39
+        },
+        {
+          "caller": "readForm",
+          "callee": "Number",
+          "lineNumber": 39
+        },
+        {
+          "caller": "readForm",
+          "callee": "DAY_RE.test",
+          "lineNumber": 40
+        },
+        {
+          "caller": "readForm",
+          "callee": "String",
+          "lineNumber": 40
+        },
+        {
+          "caller": "readForm",
+          "callee": "['trial', 'active', 'paused'].includes",
+          "lineNumber": 41
+        },
+        {
+          "caller": "readForm",
+          "callee": "DAY_RE.test",
+          "lineNumber": 44
+        },
+        {
+          "caller": "readForm",
+          "callee": "String",
+          "lineNumber": 44
+        },
+        {
+          "caller": "readForm",
+          "callee": "todayStr",
+          "lineNumber": 46
+        },
+        {
+          "caller": "readForm",
+          "callee": "todayStr",
+          "lineNumber": 48
+        },
+        {
+          "caller": "readForm",
+          "callee": "subs.advance",
+          "lineNumber": 48
+        },
+        {
+          "caller": "readForm",
+          "callee": "name.slice",
+          "lineNumber": 51
+        },
+        {
+          "caller": "readForm",
+          "callee": "String(body.icon || '🧾').slice",
+          "lineNumber": 52
+        },
+        {
+          "caller": "readForm",
+          "callee": "String",
+          "lineNumber": 52
+        },
+        {
+          "caller": "readForm",
+          "callee": "String(body.plan).slice",
+          "lineNumber": 53
+        },
+        {
+          "caller": "readForm",
+          "callee": "String",
+          "lineNumber": 53
+        },
+        {
+          "caller": "readForm",
+          "callee": "String(body.vendor_url).slice",
+          "lineNumber": 54
+        },
+        {
+          "caller": "readForm",
+          "callee": "String",
+          "lineNumber": 54
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.abs",
+          "lineNumber": 55
+        },
+        {
+          "caller": "readForm",
+          "callee": "Number",
+          "lineNumber": 59
+        },
+        {
+          "caller": "readForm",
+          "callee": "Number",
+          "lineNumber": 60
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.max",
+          "lineNumber": 64
+        },
+        {
+          "caller": "readForm",
+          "callee": "Math.min",
+          "lineNumber": 64
+        },
+        {
+          "caller": "readForm",
+          "callee": "Number",
+          "lineNumber": 64
+        },
+        {
+          "caller": "readForm",
+          "callee": "String(body.note).slice",
+          "lineNumber": 66
+        },
+        {
+          "caller": "readForm",
+          "callee": "String",
+          "lineNumber": 66
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 0,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    }
+  ]
+}

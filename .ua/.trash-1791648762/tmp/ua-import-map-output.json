@@ -1,0 +1,248 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 97,
+    "filesWithImports": 26,
+    "totalEdges": 114
+  },
+  "failures": [],
+  "importMap": {
+    ".claude/commands/opsx/apply.md": [],
+    ".claude/commands/opsx/archive.md": [],
+    ".claude/commands/opsx/explore.md": [],
+    ".claude/commands/opsx/propose.md": [],
+    ".claude/commands/opsx/sync.md": [],
+    ".claude/commands/opsx/update.md": [],
+    ".claude/skills/openspec-apply-change/SKILL.md": [],
+    ".claude/skills/openspec-archive-change/SKILL.md": [],
+    ".claude/skills/openspec-explore/SKILL.md": [],
+    ".claude/skills/openspec-propose/SKILL.md": [],
+    ".claude/skills/openspec-sync-specs/SKILL.md": [],
+    ".claude/skills/openspec-update-change/SKILL.md": [],
+    ".ua/config.json": [],
+    "Dockerfile": [],
+    "README.md": [],
+    "docker-compose-bak.yml": [],
+    "docker-compose.yml": [],
+    "openclaw-skill/homeledger-bookkeeping/SKILL.md": [],
+    "openspec/changes/archive/.gitkeep": [],
+    "openspec/config.yaml": [],
+    "openspec/specs/.gitkeep": [],
+    "package.json": [],
+    "packaging/fpk/README.md": [],
+    "packaging/fpk/build-fpk.sh": [],
+    "packaging/fpk/cmd-main": [],
+    "packaging/fpk/make-fpk.py": [],
+    "public/css/app.css": [],
+    "public/js/app.js": [],
+    "public/js/assistant.js": [],
+    "public/manifest.webmanifest": [],
+    "scripts/reset-password.js": [],
+    "scripts/seed-demo.js": [
+      "src/db.js",
+      "src/lib/attachments.js",
+      "src/lib/auth.js",
+      "src/lib/txn.js",
+      "src/lib/util.js"
+    ],
+    "server.js": [
+      "package.json",
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/auth.js",
+      "src/lib/charts.js",
+      "src/lib/scheduler.js",
+      "src/lib/util.js",
+      "src/routes/about.js",
+      "src/routes/accounts.js",
+      "src/routes/admin.js",
+      "src/routes/ai.js",
+      "src/routes/auth.js",
+      "src/routes/dashboard.js",
+      "src/routes/openapi.js",
+      "src/routes/planning.js",
+      "src/routes/reports.js",
+      "src/routes/subscriptions.js",
+      "src/routes/transactions.js"
+    ],
+    "src/db.js": [],
+    "src/lib/about.js": [],
+    "src/lib/ai.js": [
+      "src/db.js",
+      "src/lib/util.js"
+    ],
+    "src/lib/attachments.js": [
+      "src/db.js",
+      "src/lib/util.js"
+    ],
+    "src/lib/auth.js": [
+      "src/db.js"
+    ],
+    "src/lib/charts.js": [
+      "src/lib/util.js"
+    ],
+    "src/lib/formdata.js": [
+      "src/db.js"
+    ],
+    "src/lib/importers.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/util.js"
+    ],
+    "src/lib/scheduler.js": [
+      "src/db.js",
+      "src/lib/auth.js",
+      "src/lib/subscriptions.js",
+      "src/lib/util.js"
+    ],
+    "src/lib/subscriptions.js": [
+      "src/db.js",
+      "src/lib/auth.js",
+      "src/lib/util.js"
+    ],
+    "src/lib/txn.js": [
+      "src/db.js",
+      "src/lib/attachments.js",
+      "src/lib/util.js"
+    ],
+    "src/lib/util.js": [],
+    "src/routes/about.js": [
+      "src/db.js",
+      "src/lib/about.js",
+      "src/lib/auth.js"
+    ],
+    "src/routes/accounts.js": [
+      "src/db.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/txn.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/admin.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/importers.js",
+      "src/lib/scheduler.js",
+      "src/lib/txn.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/ai.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/attachments.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/txn.js"
+    ],
+    "src/routes/auth.js": [
+      "src/db.js",
+      "src/lib/auth.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/dashboard.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/attachments.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/scheduler.js",
+      "src/lib/subscriptions.js",
+      "src/lib/txn.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/openapi.js": [
+      "src/db.js",
+      "src/lib/ai.js",
+      "src/lib/attachments.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/txn.js"
+    ],
+    "src/routes/planning.js": [
+      "src/db.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/scheduler.js",
+      "src/lib/txn.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/reports.js": [
+      "src/db.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/txn.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/subscriptions.js": [
+      "src/db.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/subscriptions.js",
+      "src/lib/util.js"
+    ],
+    "src/routes/transactions.js": [
+      "src/db.js",
+      "src/lib/attachments.js",
+      "src/lib/auth.js",
+      "src/lib/formdata.js",
+      "src/lib/txn.js",
+      "src/lib/util.js"
+    ],
+    "src/views/about.ejs": [],
+    "src/views/account-detail.ejs": [],
+    "src/views/accounts.ejs": [],
+    "src/views/ai.ejs": [],
+    "src/views/attachments.ejs": [],
+    "src/views/budgets.ejs": [],
+    "src/views/calendar.ejs": [],
+    "src/views/categories.ejs": [],
+    "src/views/dashboard.ejs": [],
+    "src/views/debts.ejs": [],
+    "src/views/error.ejs": [],
+    "src/views/export.ejs": [],
+    "src/views/goals.ejs": [],
+    "src/views/import.ejs": [],
+    "src/views/layout-blank.ejs": [],
+    "src/views/layout.ejs": [],
+    "src/views/ledgers.ejs": [],
+    "src/views/login.ejs": [],
+    "src/views/members.ejs": [],
+    "src/views/no-ledger.ejs": [],
+    "src/views/notifications.ejs": [],
+    "src/views/partials/txn-list.ejs": [],
+    "src/views/recurring.ejs": [],
+    "src/views/register.ejs": [],
+    "src/views/reports.ejs": [],
+    "src/views/search.ejs": [],
+    "src/views/settings.ejs": [],
+    "src/views/setup.ejs": [],
+    "src/views/subscriptions.ejs": [],
+    "src/views/tags.ejs": [],
+    "src/views/transactions.ejs": [],
+    "src/views/txn-form.ejs": [],
+    "test/run-all.js": [],
+    "test/selfcheck-static.js": [],
+    "test/verify-about.js": [
+      "src/lib/about.js"
+    ],
+    "test/verify-ai-attachments.js": [],
+    "test/verify-ai-chat.js": [],
+    "test/verify-ai-image.js": [
+      "src/db.js",
+      "src/lib/ai.js"
+    ],
+    "test/verify-model-list.js": [
+      "src/db.js",
+      "src/lib/ai.js"
+    ],
+    "test/verify-settings-admin.js": [],
+    "test/verify-subscriptions.js": [
+      "src/db.js",
+      "src/lib/auth.js",
+      "src/lib/scheduler.js",
+      "src/lib/subscriptions.js"
+    ]
+  }
+}

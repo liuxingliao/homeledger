@@ -48,6 +48,9 @@ function tags(ledgerId) {
     ledgerId
   );
 }
+function people(ledgerId) {
+  return all('SELECT * FROM ledger_people WHERE ledger_id = ? ORDER BY sort_order, id', ledgerId);
+}
 
 /** 记一笔页面所需的全部下拉数据 */
 function txFormData(ledgerId, userId) {
@@ -60,6 +63,7 @@ function txFormData(ledgerId, userId) {
     accounts: accounts(ledgerId),
     members: members(ledgerId),
     tags: tags(ledgerId),
+    people: people(ledgerId),
   };
 }
 
@@ -68,4 +72,4 @@ function kindOf(type) {
   return ['income', 'interest', 'refund', 'reimburse'].includes(type) ? 'income' : 'expense';
 }
 
-module.exports = { categoryTree, flatCategories, accounts, archivedAccounts, members, tags, txFormData, kindOf };
+module.exports = { categoryTree, flatCategories, accounts, archivedAccounts, members, tags, people, txFormData, kindOf };

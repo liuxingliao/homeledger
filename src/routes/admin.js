@@ -354,6 +354,8 @@ router.post('/ledgers/:id/delete', auth.requireLogin, (req, res) => {
     run('DELETE FROM debts WHERE ledger_id = ?', id);
     run('DELETE FROM tags WHERE ledger_id = ?', id);
     run('DELETE FROM categories WHERE ledger_id = ?', id);
+    run('DELETE FROM transaction_participants WHERE transaction_id IN (SELECT id FROM transactions WHERE ledger_id = ?)', id);
+    run('DELETE FROM ledger_people WHERE ledger_id = ?', id);
     run('DELETE FROM ledger_members WHERE ledger_id = ?', id);
     run('DELETE FROM ledger_invites WHERE ledger_id = ?', id);
     run('DELETE FROM import_jobs WHERE ledger_id = ?', id);
@@ -375,11 +377,62 @@ router.get('/members', auth.requireLogin, (req, res) => {
   const invites = all('SELECT i.*, u.display_name AS creator FROM ledger_invites i LEFT JOIN users u ON u.id = i.created_by WHERE i.ledger_id = ? ORDER BY i.id DESC LIMIT 20', ledgerId);
   const stats = txn.memberBreakdown(ledgerId, `${todayStr().slice(0, 7)}-01`, `${todayStr().slice(0, 7)}-31`);
   const statMap = new Map(stats.map((s) => [Number(s.id), s]));
+  const people = all(
+    `SELECT p.*, (SELECT COUNT(*) FROM transaction_participants tp WHERE tp.person_id = p.id) AS cnt
+     FROM ledger_people p WHERE p.ledger_id = ? ORDER BY p.sort_order, p.id`,
+    ledgerId
+  );
   res.render('members', {
     title: '成员与权限', activeNav: 'members',
     members: members.map((m) => ({ ...m, stat: statMap.get(Number(m.user_id)) || { cnt: 0, expense: 0, income: 0 } })),
     invites,
+    people,
   });
+});
+
+/* --------------------- 参与成员（随手记式自由名单） ---------------------- */
+
+router.post('/people', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
+  const ledgerId = Number(res.locals.ledger.id);
+  const name = String(req.body.name || '').trim().slice(0, 20);
+  if (!name) { res.flash('error', '请输入成员名字'); return res.redirect('/members'); }
+  if (get('SELECT id FROM ledger_people WHERE ledger_id = ? AND name = ?', ledgerId, name)) {
+    res.flash('error', `成员「${name}」已存在`);
+    return res.redirect('/members');
+  }
+  run('INSERT INTO ledger_people (ledger_id, name, created_at) VALUES (?,?,?)', ledgerId, name, nowStr());
+  res.flash('success', `参与成员「${name}」已添加`);
+  res.redirect('/members');
+});
+
+router.post('/people/:id', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
+  const ledgerId = Number(res.locals.ledger.id);
+  const id = Number(req.params.id);
+  const p = get('SELECT * FROM ledger_people WHERE id = ? AND ledger_id = ?', id, ledgerId);
+  if (!p) { res.flash('error', '成员不存在'); return res.redirect('/members'); }
+  const name = String(req.body.name || '').trim().slice(0, 20);
+  if (!name) { res.flash('error', '请输入成员名字'); return res.redirect('/members'); }
+  if (get('SELECT id FROM ledger_people WHERE ledger_id = ? AND name = ? AND id != ?', ledgerId, name, id)) {
+    res.flash('error', `成员「${name}」已存在`);
+    return res.redirect('/members');
+  }
+  run('UPDATE ledger_people SET name = ? WHERE id = ?', name, id);
+  res.flash('success', '参与成员已更新');
+  res.redirect('/members');
+});
+
+router.post('/people/:id/delete', auth.requireLogin, auth.requireLedgerWrite, (req, res) => {
+  const ledgerId = Number(res.locals.ledger.id);
+  const id = Number(req.params.id);
+  const p = get('SELECT * FROM ledger_people WHERE id = ? AND ledger_id = ?', id, ledgerId);
+  if (!p) return res.redirect('/members');
+  tx(() => {
+    run('DELETE FROM transaction_participants WHERE person_id = ?', id);
+    run('DELETE FROM ledger_people WHERE id = ? AND ledger_id = ?', id, ledgerId);
+  });
+  auth.audit(req, 'people.delete', { ledgerId, detail: p.name });
+  res.flash('success', `参与成员「${p.name}」已删除,其参与记录一并移除(交易本身不受影响)`);
+  res.redirect('/members');
 });
 
 router.post('/members/invite', auth.requireLogin, auth.requireLedgerManage, (req, res) => {
@@ -435,21 +488,32 @@ router.post('/api/import/preview', auth.requireLogin, auth.requireLedgerWrite, (
   try {
     const { dataUrl, fileName } = req.body;
     const m = /^data:.*?;base64,(.+)$/s.exec(String(dataUrl || ''));
-    if (!m) return res.status(400).json({ ok: false, error: '请选择 CSV 账单文件' });
+    if (!m) return res.status(400).json({ ok: false, error: '请选择账单文件（CSV 或随手记 xlsx）' });
     const buf = Buffer.from(m[1], 'base64');
     if (buf.length > 20 * 1024 * 1024) return res.status(400).json({ ok: false, error: '文件请小于 20MB' });
-    const parsed = importer.parseBill(buf);
+    // 格式路由:zip 魔数 → 随手记 xlsx;否则走 CSV(支付宝/微信/通用)
+    let parsed;
+    if (importer.detectFormat(buf) === 'suishouji-candidate') {
+      parsed = importer.parseSuishouji(buf); // 非随手记结构会抛出说明性错误
+    } else {
+      parsed = importer.parseBill(buf);
+    }
     if (parsed.error) return res.status(400).json({ ok: false, error: parsed.error });
 
     const token = u.uid(24);
     previewCache.set(token, {
       records: parsed.records, neutralRecords: parsed.neutralRecords || [],
       source: parsed.source, fileName: fileName || 'bill.csv', encoding: parsed.encoding,
+      failedRows: parsed.failedRows || [], sheetStats: parsed.sheetStats || null,
       createdAt: Date.now(), ledgerId, userId: req.session.userId,
     });
 
     const cats = fd.flatCategories(ledgerId);
     const guessCat = (r) => {
+      if (r.ssj) {
+        // 随手记记录:分类由一级/二级两列重建,直接展示源分类
+        return [r.parent_category_hint, r.category_hint].filter(Boolean).join('/') || '未分类';
+      }
       if (r.neutral) return '账户间转账（不计收支）';
       const kind = r.type === 'income' ? 'income' : 'expense';
       const direct = r.category_hint ? ai.resolveCategoryId(ledgerId, r.category_hint, kind) : null;
@@ -464,9 +528,11 @@ router.post('/api/import/preview', auth.requireLogin, auth.requireLedgerWrite, (
     };
     const sample = parsed.records.slice(0, 200).map((r) => ({
       ...r,
+      meta: r.meta ? { ...r.meta, raw: undefined } : undefined, // 原始行快照不进预览响应
       type_label: require('../db').TXN_TYPE_MAP[r.type]?.label || r.type,
       guess_category: guessCat(r),
       guess_account: r.account_hint || '—',
+      people: r.people || undefined,
     }));
 
     const stat = { income: 0, expense: 0, transfer: 0, minDate: null, maxDate: null };
@@ -488,7 +554,7 @@ router.post('/api/import/preview', auth.requireLogin, auth.requireLedgerWrite, (
     res.json({
       ok: true, token,
       source: parsed.source,
-      sourceLabel: { alipay: '支付宝账单', wechat: '微信支付账单', generic: '通用 CSV' }[parsed.source] || parsed.source,
+      sourceLabel: { alipay: '支付宝账单', wechat: '微信支付账单', generic: '通用 CSV', suishouji: '随手记账本' }[parsed.source] || parsed.source,
       encoding: parsed.encoding,
       header: parsed.header,
       count: parsed.records.length,
@@ -496,6 +562,9 @@ router.post('/api/import/preview', auth.requireLogin, auth.requireLedgerWrite, (
       neutralCount: (parsed.neutralRecords || []).length,
       neutralSample,
       sample, stat,
+      failedRows: parsed.failedRows || [],
+      sheetStats: parsed.sheetStats || null,
+      sheetNames: parsed.sheetNames || null,
     });
   } catch (e) {
     res.status(400).json({ ok: false, error: e.message });
@@ -517,6 +586,7 @@ router.post('/api/import/commit', auth.requireLogin, auth.requireLedgerWrite, (r
       source: cached.source, fileName: cached.fileName,
       autoCreateAccount: req.body.auto_create_account !== false,
       defaultAccountId: req.body.default_account_id ? Number(req.body.default_account_id) : null,
+      failedRows: cached.failedRows || [], sheetStats: cached.sheetStats || null,
     });
     previewCache.delete(String(req.body.token));
     auth.audit(req, 'import.commit', { ledgerId, detail: `${cached.fileName} 导入 ${r.imported} 笔` });
