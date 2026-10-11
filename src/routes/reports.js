@@ -9,7 +9,7 @@ const u = require('../lib/util');
 
 const router = express.Router();
 
-function parseRange(q) {
+function parseRange(q, ledgerId) {
   const today = todayStr();
   const curMonth = today.slice(0, 7);
   const preset = q.preset || 'month';
@@ -32,7 +32,8 @@ function parseRange(q) {
     };
   }
   if (preset === 'all') {
-    const first = get('SELECT MIN(txn_date) AS d FROM transactions WHERE ledger_id = ?', Number(q.ledger_id) || 0);
+    // 「全部时间」按会话账本取最早交易日期(URL 不携带账本标识,历史缺陷:按 q.ledger_id=0 查询导致统计为空)
+    const first = get('SELECT MIN(txn_date) AS d FROM transactions WHERE ledger_id = ?', Number(ledgerId) || 0);
     return { start: first?.d || `${curMonth}-01`, end: today, label: '全部时间', preset, key: 'all' };
   }
   const month = /^\d{4}-\d{2}$/.test(String(q.month || '')) ? q.month : curMonth;
@@ -43,7 +44,7 @@ router.get('/reports', auth.requireLogin, (req, res) => {
   const ledger = res.locals.ledger;
   if (!ledger) return res.redirect('/');
   const ledgerId = Number(ledger.id);
-  const range = parseRange(req.query);
+  const range = parseRange(req.query, ledgerId);
   const kind = req.query.kind === 'income' ? 'income' : 'expense';
 
   const sum = txn.summary(ledgerId, range.start, range.end);
